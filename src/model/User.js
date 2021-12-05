@@ -7,17 +7,57 @@ const UserSchema = new Schema({
     },
     email: {
         type: String,
-        required: true,
-        match: /^\w+([.-]?\w+)*(@codexjr.com.br)+$/
+        required: true
     },
     password: {
         type: String,
         required: true,
     },
+    telefone: {
+        type: String,
+        required: true,
+        match: /^(?:\+)[0-9]{2}\s? (?:\()[0-9]{2}(?:\))\s? [0-9]{4,5}(?:-)[0-9]{4}$/
+    },
+    aniversario: {
+        type: Date,
+        required: true
+    },
     cpf: {
         type: String,
-        required: false,
-        default: null
+        required: true,
+        match: /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/
+    },
+    rg: {
+        type: String,
+        required: true
+    },
+    emissao: {
+        type: Date,
+        required: true
+    },
+    filiacao: {
+        type: String,
+        required: true
+    },
+    profissao: {
+        type: String,
+        required: true
+    },
+    rua: {
+        type: String,
+        required: true
+    },
+    bairro: {
+        type: String,
+        required: true
+    },
+    complemento: {
+        type: String,
+        required: false
+    },
+    numero: {
+        type: String,
+        required: false
     },
     urlUser: {
         type: String,
@@ -27,7 +67,7 @@ const UserSchema = new Schema({
         type: [String],
         required: false,
         default: []
-    }
+    },
 },
     {
         timestamps: true,

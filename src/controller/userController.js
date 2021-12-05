@@ -9,19 +9,30 @@ const HTTP_CODE_NOT_FOUND = 404;
 
 const UserController = {
     async store(req, res) {
-        const { name, email, password, cpf } = req.body;
+        const { name, email, password, telefone,
+          aniversario, cpf, rg, emissao, filiacao,
+          profissao, rua, bairro, complemento,
+          numero } = req.body;
 
-        if (name === undefined ||
-            email === undefined ||
-            password === undefined ||
-            cpf === undefined) return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
+        if (name === undefined || email === undefined ||
+            password === undefined || telefone === undefined ||
+            aniversario === undefined || cpf === undefined ||
+            rg === undefined || emissao === undefined ||
+            filiacao === undefined || profissao === undefined ||
+            rua === undefined || bairro === undefined) {
+              return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
+            }
 
         let regexCPF = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
         if (!(regexCPF.test(cpf))) {
-            return res.status(HTTP_CODE_BAD_REQUEST).json({ message: "O campo deve possuir o formato: xxx.xxx.xxx-xx" });
+            return res.status(HTTP_CODE_BAD_REQUEST).json({ message: "O campo de CPF deve possuir o formato: xxx.xxx.xxx-xx" });
+        }
+        let regexTelefone = /^(?:\+)[0-9]{2}\s? (?:\()[0-9]{2}(?:\))\s? [0-9]{4,5}(?:-)[0-9]{4}$/;
+        if (!(regexTelefone.test(telefone))) {
+            return res.status(HTTP_CODE_BAD_REQUEST).json({ message: "O campo de Telefone deve possuir o formato: +xx (xx) xxxxx-xxxx" });
         }
 
-        let user = await User.findOne({ email });
+        let user = await User.findOne({ cpf });
 
         if (!user) {
             var temporalUrl = name.replace(/\s/g, '').toLowerCase()
@@ -46,13 +57,23 @@ const UserController = {
                 name,
                 email,
                 password,
-                urlUser,
-                cpf
+                telefone,
+                aniversario,
+                cpf,
+                rg,
+                emissao,
+                filiacao,
+                profissao,
+                rua,
+                bairro,
+                complemento,
+                numero,
+                urlUser
             });
 
             return res.status(HTTP_CODE_CREATED).json({ message: 'Usuário cadastrado com sucesso.' });
         } else {
-            return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'E-mail já cadastrado.' });
+            return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'CPF já cadastrado.' });
         }
     },
 
