@@ -8,4 +8,6 @@ router.post('/signIn', UserController.login);
 
 router.get('/signOut', auth.authorizeUser, UserController.logout);
 
+router.put('/setPassword', auth.authorizeUser, UserController.setPassword);
+
 module.exports = router;

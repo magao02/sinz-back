@@ -126,6 +126,29 @@ const UserController = {
         return res.status(HTTP_CODE_OK).json({message: 'User has logout.' });
       },
       
+      async setPassword(req, res) {
+        const { password, cpf } = req.body;
+    
+        let user = await User.findOne({ cpf });
+    
+        if (!user) {
+          return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
+        }
+    
+        if (user._id.equals(req.userId)) {
+    
+          user = await User.findByIdAndUpdate(user._id, {
+            password: (password !== undefined) ? password : user.password
+          })
+    
+          user = await User.findOne({ cpf });
+          let response = {    
+            message: 'Senha alterada com sucesso.'
+          }
+          return res.status(HTTP_CODE_OK).json( response );
+        }
+        return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário não tem permissão.' });
+      }
 };
 
 module.exports = UserController;
