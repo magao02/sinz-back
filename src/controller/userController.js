@@ -77,15 +77,15 @@ const UserController = {
     },
 
     async login(req, res) {
-        const { email, password } = req.body;
+        const { cpf, password } = req.body;
     
-        if (email === undefined ||
+        if (cpf === undefined ||
           password === undefined) return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
     
-        let user = await User.findOne({ email });
+        let user = await User.findOne({ cpf });
     
         if (!user) {
-          return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Email não cadastrado' });
+          return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'CPF não cadastrado' });
         } else {
           if (user.password === password) {
             let idUser = user._id;
@@ -195,7 +195,6 @@ const UserController = {
             email,
             telefone,
             aniversario,
-            cpf,
             rg,
             filiacao,
             rua,
@@ -209,7 +208,6 @@ const UserController = {
             email: (newUserData.email !== undefined) ? newUserData.email : user.email,
             telefone: (newUserData.telefone !== undefined) ? newUserData.telefone : user.telefone,
             aniversario: (newUserData.aniversario !== undefined) ? newUserData.aniversario : user.aniversario,
-            cpf: (newUserData.cpf !== undefined) ? newUserData.cpf : user.cpf,
             rg: (newUserData.rg !== undefined) ? newUserData.rg : user.rg,
             filiacao: (newUserData.filiacao !== undefined) ? newUserData.filiacao : user.filiacao,
             rua: (newUserData.rua !== undefined) ? newUserData.rua : user.rua,
