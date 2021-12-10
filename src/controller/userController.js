@@ -223,6 +223,41 @@ const UserController = {
         return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário não tem permissão.' });
       },
 
+      async setUser(req, res) {
+        if (req.user.admin) {
+          const urlUser = req.params.urlUser;
+          let user = await User.findOne({ urlUser });
+    
+          if (!user) {
+            return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
+          }
+      
+          const newUserData = { 
+            email,
+            telefone,
+            filiacao,
+            rua,
+            bairro,
+            complemento,
+            numero
+            } = req.body;
+    
+          user = await User.findByIdAndUpdate(user._id, {
+            email: (newUserData.email !== undefined) ? newUserData.email : user.email,
+            telefone: (newUserData.telefone !== undefined) ? newUserData.telefone : user.telefone,
+            filiacao: (newUserData.filiacao !== undefined) ? newUserData.filiacao : user.filiacao,
+            rua: (newUserData.rua !== undefined) ? newUserData.rua : user.rua,
+            bairro: (newUserData.bairro !== undefined) ? newUserData.bairro : user.bairro,
+            complemento: (newUserData.complemento !== undefined) ? newUserData.complemento : user.complemento,
+            numero: (newUserData.numero !== undefined) ? newUserData.numero : user.numero,
+          })
+
+          return res.status(HTTP_CODE_OK).json( { message: 'Dados do usuário ' + user.name + ' atualizados.' } );
+        } else {
+          return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário sem permissão para atualizar dados de outro usuário.' });
+        }
+      }
+
 };
 
 module.exports = UserController;
