@@ -23,15 +23,6 @@ const UserController = {
               return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
             }
 
-        let regexCPF = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
-        if (!(regexCPF.test(cpf))) {
-            return res.status(HTTP_CODE_BAD_REQUEST).json({ message: "O campo de CPF deve possuir o formato: xxx.xxx.xxx-xx" });
-        }
-        let regexTelefone = /^(?:\+)[0-9]{2}\s? (?:\()[0-9]{2}(?:\))\s? [0-9]{4,5}(?:-)[0-9]{4}$/;
-        if (!(regexTelefone.test(telefone))) {
-            return res.status(HTTP_CODE_BAD_REQUEST).json({ message: "O campo de Telefone deve possuir o formato: +xx (xx) xxxxx-xxxx" });
-        }
-
         let user = await User.findOne({ cpf });
 
         if (!user) {
@@ -53,23 +44,27 @@ const UserController = {
                 }
             }
 
-            user = await User.create({
-                name,
-                email,
-                password,
-                telefone,
-                aniversario,
-                cpf,
-                rg,
-                emissao,
-                filiacao,
-                profissao,
-                rua,
-                bairro,
-                complemento,
-                numero,
-                urlUser
-            });
+            try {
+              user = await User.create({
+                  name,
+                  email,
+                  password,
+                  telefone,
+                  aniversario,
+                  cpf,
+                  rg,
+                  emissao,
+                  filiacao,
+                  profissao,
+                  rua,
+                  bairro,
+                  complemento,
+                  numero,
+                  urlUser
+              });
+            } catch (e) {
+              return res.status(HTTP_CODE_BAD_REQUEST).json({ message: e.message });
+            }
 
             return res.status(HTTP_CODE_CREATED).json({ message: 'Usuário cadastrado com sucesso.' });
         } else {
@@ -148,6 +143,37 @@ const UserController = {
           return res.status(HTTP_CODE_OK).json( response );
         }
         return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário não tem permissão.' });
+      },
+
+      async userPage(req, res) {
+        const urlUser = req.params.urlUser;
+    
+        let user = await User.findOne({ urlUser });
+    
+        if (!user) {
+          return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
+        } else {
+    
+          
+          dataPage = {
+            name: user.name,
+            email: user.email,
+            telefone: user.telefone,
+            aniversario: ((user.aniversario.getDate() )) + "/" + ((user.aniversario.getMonth() + 1)) + "/" + user.aniversario.getFullYear(),
+            cpf: user.cpf,
+            rg: user.rg,
+            emissao: ((user.emissao.getDate() )) + "/" + ((user.emissao.getMonth() + 1)) + "/" + user.emissao.getFullYear(),
+            filiacao: user.filiacao,
+            profissao: user.profissao,
+            rua: user.rua,
+            bairro: user.bairro,
+            complemento: user.complemento,
+            numero: user.numero,
+            urlUser: user.urlUser
+          }
+    
+          return res.status(HTTP_CODE_OK).json(dataPage);
+        }
       }
 };
 

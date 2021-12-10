@@ -16,7 +16,7 @@ const UserSchema = new Schema({
     telefone: {
         type: String,
         required: true,
-        match: /^(?:\+)[0-9]{2}\s? (?:\()[0-9]{2}(?:\))\s? [0-9]{4,5}(?:-)[0-9]{4}$/
+        validate: [/^(?:\+)[0-9]{2}\s? (?:\()[0-9]{2}(?:\))\s? [0-9]{4,5}(?:-)[0-9]{4}$/, "O campo de Telefone deve possuir o formato: +xx (xx) xxxxx-xxxx"]
     },
     aniversario: {
         type: Date,
@@ -25,7 +25,7 @@ const UserSchema = new Schema({
     cpf: {
         type: String,
         required: true,
-        match: /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/
+        validate: [/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, "O campo de CPF deve possuir o formato: xxx.xxx.xxx-xx"]
     },
     rg: {
         type: String,

@@ -10,4 +10,6 @@ router.get('/signOut', auth.authorizeUser, UserController.logout);
 
 router.put('/setPassword', auth.authorizeUser, UserController.setPassword);
 
+router.get('/user/:urlUser', auth.authorizeUser, UserController.userPage);
+
 module.exports = router;
