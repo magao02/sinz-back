@@ -8,8 +8,10 @@ router.post('/signIn', UserController.login);
 
 router.get('/signOut', auth.authorizeUser, UserController.logout);
 
+router.get('/user/:urlUser', auth.authorizeUser, UserController.userPage);
+
 router.put('/setPassword', auth.authorizeUser, UserController.setPassword);
 
-router.get('/user/:urlUser', auth.authorizeUser, UserController.userPage);
+router.put('/user/:urlUser/setPerfil', auth.authorizeUser, UserController.setPerfil);
 
 module.exports = router;

@@ -124,30 +124,6 @@ const UserController = {
     
         return res.status(HTTP_CODE_OK).json({message: 'User has logout.' });
       },
-      
-      async setPassword(req, res) {
-        const { password, cpf } = req.body;
-    
-        let user = await User.findOne({ cpf });
-    
-        if (!user) {
-          return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
-        }
-    
-        if (user._id.equals(req.userId)) {
-    
-          user = await User.findByIdAndUpdate(user._id, {
-            password: (password !== undefined) ? password : user.password
-          })
-    
-          user = await User.findOne({ cpf });
-          let response = {    
-            message: 'Senha alterada com sucesso.'
-          }
-          return res.status(HTTP_CODE_OK).json( response );
-        }
-        return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário não tem permissão.' });
-      },
 
       async userPage(req, res) {
         const urlUser = req.params.urlUser;
@@ -178,7 +154,75 @@ const UserController = {
     
           return res.status(HTTP_CODE_OK).json(dataPage);
         }
-      }
+      },
+      
+      async setPassword(req, res) {
+        const { password, cpf } = req.body;
+    
+        let user = await User.findOne({ cpf });
+    
+        if (!user) {
+          return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
+        }
+    
+        if (user._id.equals(req.userId)) {
+    
+          user = await User.findByIdAndUpdate(user._id, {
+            password: (password !== undefined) ? password : user.password
+          })
+    
+          user = await User.findOne({ cpf });
+          let response = {    
+            message: 'Senha alterada com sucesso.'
+          }
+          return res.status(HTTP_CODE_OK).json( response );
+        }
+        return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário não tem permissão.' });
+      },
+
+      async setPerfil(req, res) {          
+        const urlUser = req.params.urlUser;
+    
+        let user = await User.findOne({ urlUser });
+    
+        if (!user) {
+          return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
+        }
+    
+        if (user._id.equals(req.userId)) {
+          const newUserData = { 
+            name,
+            email,
+            telefone,
+            aniversario,
+            cpf,
+            rg,
+            filiacao,
+            rua,
+            bairro,
+            complemento,
+            numero
+            } = req.body;
+    
+          user = await User.findByIdAndUpdate(user._id, {
+            name: (newUserData.name !== undefined) ? newUserData.name : user.name,
+            email: (newUserData.email !== undefined) ? newUserData.email : user.email,
+            telefone: (newUserData.telefone !== undefined) ? newUserData.telefone : user.telefone,
+            aniversario: (newUserData.aniversario !== undefined) ? newUserData.aniversario : user.aniversario,
+            cpf: (newUserData.cpf !== undefined) ? newUserData.cpf : user.cpf,
+            rg: (newUserData.rg !== undefined) ? newUserData.rg : user.rg,
+            filiacao: (newUserData.filiacao !== undefined) ? newUserData.filiacao : user.filiacao,
+            rua: (newUserData.rua !== undefined) ? newUserData.rua : user.rua,
+            bairro: (newUserData.bairro !== undefined) ? newUserData.bairro : user.bairro,
+            complemento: (newUserData.complemento !== undefined) ? newUserData.complemento : user.complemento,
+            numero: (newUserData.numero !== undefined) ? newUserData.numero : user.numero,
+          })
+          
+          return res.status(HTTP_CODE_OK).json( { message: 'Perfil alterado com sucesso.' } );
+        }
+        return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário não tem permissão.' });
+      },
+
 };
 
 module.exports = UserController;
