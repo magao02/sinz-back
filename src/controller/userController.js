@@ -256,8 +256,24 @@ const UserController = {
         } else {
           return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário sem permissão para atualizar dados de outro usuário.' });
         }
-      }
+      },
 
+      async setNewAdmin(req, res) {
+        if (req.user.admin) {
+          const urlUser = req.params.urlUser;
+          let user = await User.findOne({ urlUser });
+      
+          if (!user) {
+            return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
+          }
+    
+          user = await User.findByIdAndUpdate(user._id, { admin: true })
+
+          return res.status(HTTP_CODE_OK).json( { message: 'Usuário ' + user.name + ', agora, é admin.' } );
+        } else {
+          return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário sem permissão para tornar outro usuário admin.' });
+        }
+      }
 };
 
 module.exports = UserController;

@@ -16,4 +16,6 @@ router.put('/user/:urlUser/setPerfil', auth.authorizeUser, UserController.setPer
 
 router.put('/user/:urlUser/setUser', auth.authorizeUser, UserController.setUser);
 
+router.put('/user/:urlUser/setNewAdmin', auth.authorizeUser, UserController.setNewAdmin);
+
 module.exports = router;
