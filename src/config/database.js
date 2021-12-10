@@ -21,6 +21,7 @@ module.exports = () =>  {
     mongoose.connect(DB_URL, {
         useNewUrlParser: true,
         poolSize: 5,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useCreateIndex: true
     });
 }
