@@ -7,15 +7,17 @@ const UserSchema = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: [true, "E-mail já cadastrado."],
     },
     password: {
         type: String,
-        required: true,
+        required: true
     },
     telefone: {
         type: String,
         required: true,
+        unique: [true, "Telefone já cadastrado."],
         validate: [/^(?:\+)[0-9]{2}\s? (?:\()[0-9]{2}(?:\))\s? [0-9]{4,5}(?:-)[0-9]{4}$/, "O campo de Telefone deve possuir o formato: +xx (xx) xxxxx-xxxx"]
     },
     aniversario: {
@@ -25,10 +27,12 @@ const UserSchema = new Schema({
     cpf: {
         type: String,
         required: true,
+        unique: [true, "CPF já cadastrado."],
         validate: [/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, "O campo de CPF deve possuir o formato: xxx.xxx.xxx-xx"]
     },
     rg: {
         type: String,
+        unique: [true, "RG já cadastrado."],
         required: true
     },
     emissao: {

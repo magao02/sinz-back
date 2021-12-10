@@ -63,7 +63,11 @@ const UserController = {
                   urlUser
               });
             } catch (e) {
-              return res.status(HTTP_CODE_BAD_REQUEST).json({ message: e.message });
+              if ((e.hasOwnProperty('code')) && e.code === 11000) {
+                return res.status(HTTP_CODE_BAD_REQUEST).json({ message: "Valor de " + Object.keys(e.keyValue)[0] + " já cadastrado." });
+              } else {
+                return res.status(HTTP_CODE_BAD_REQUEST).json({ message: e.message });
+              }
             }
 
             return res.status(HTTP_CODE_CREATED).json({ message: 'Usuário cadastrado com sucesso.' });
