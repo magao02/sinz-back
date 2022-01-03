@@ -18,4 +18,6 @@ router.put('/user/:urlUser/setUser', auth.authorizeUser, UserController.setUser)
 
 router.put('/user/:urlUser/setNewAdmin', auth.authorizeUser, UserController.setNewAdmin);
 
+router.delete('/user/:urlUser/deleteUser', auth.authorizeUser, UserController.deleteUser);
+
 module.exports = router;

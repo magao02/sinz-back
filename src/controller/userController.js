@@ -271,6 +271,29 @@ const UserController = {
         } else {
           return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário sem permissão para tornar outro usuário admin.' });
         }
+      },
+
+      async deleteUser(req, res) {
+        if (req.user.admin) {
+          const urlUser = req.params.urlUser;
+          let user = await User.findOne({ urlUser });
+      
+          if (!user) {
+            return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
+          }
+    
+          user = await User.deleteOne(user)
+          .then(deletedUser => {
+            if(deletedUser) {
+              return res.status(HTTP_CODE_OK).json( { message: `Usuário (${user.name}) deletado com sucesso.` } );
+            } else {
+              return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário sem permissão para deletar outro usuário.' });
+            }
+          })
+          .catch(err => console.error(`Falha ao buscar e deletar: ${err}`))
+        } else {
+          return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário sem permissão para deletar outro usuário.' });
+        }
       }
 };
 
