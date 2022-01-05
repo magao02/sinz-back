@@ -25,7 +25,7 @@ const UserSchema = new Schema({
         unique: [true, "Telefone já cadastrado."],
         validate: [/^(?:\+)[0-9]{2}\s? (?:\()[0-9]{2}(?:\))\s? [0-9]{4,5}(?:-)[0-9]{4}$/, "O campo de Telefone deve possuir o formato: +xx (xx) xxxxx-xxxx"]
     },
-    aniversario: {
+    nascimento: {
         type: Date,
         required: true
     },
@@ -71,6 +71,11 @@ const UserSchema = new Schema({
     urlUser: {
         type: String,
         required: false
+    },
+    dependentes: {
+        type: [String],
+        required: false,
+        default: []
     },
     token_list: {
         type: [String],

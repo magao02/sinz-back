@@ -1,4 +1,5 @@
 const User = require('../model/User');
+const Dependent = require('../model/Dependent');
 const jwt = require('jsonwebtoken');
 
 const HTTP_CODE_OK = 200;
@@ -10,13 +11,13 @@ const HTTP_CODE_NOT_FOUND = 404;
 const UserController = {
     async store(req, res) {
         const { name, email, password, telefone,
-          aniversario, cpf, rg, emissao, filiacao,
+          nascimento, cpf, rg, emissao, filiacao,
           profissao, rua, bairro, complemento,
           numero } = req.body;
 
         if (name === undefined || email === undefined ||
             password === undefined || telefone === undefined ||
-            aniversario === undefined || cpf === undefined ||
+            nascimento === undefined || cpf === undefined ||
             rg === undefined || emissao === undefined ||
             filiacao === undefined || profissao === undefined ||
             rua === undefined || bairro === undefined) {
@@ -50,7 +51,7 @@ const UserController = {
                   email,
                   password,
                   telefone,
-                  aniversario,
+                  nascimento,
                   cpf,
                   rg,
                   emissao,
@@ -139,7 +140,7 @@ const UserController = {
             name: user.name,
             email: user.email,
             telefone: user.telefone,
-            aniversario: ((user.aniversario.getDate() )) + "/" + ((user.aniversario.getMonth() + 1)) + "/" + user.aniversario.getFullYear(),
+            nascimento: ((user.nascimento.getDate() )) + "/" + ((user.nascimento.getMonth() + 1)) + "/" + user.nascimento.getFullYear(),
             cpf: user.cpf,
             rg: user.rg,
             emissao: ((user.emissao.getDate() )) + "/" + ((user.emissao.getMonth() + 1)) + "/" + user.emissao.getFullYear(),
@@ -194,7 +195,7 @@ const UserController = {
             name,
             email,
             telefone,
-            aniversario,
+            nascimento,
             rg,
             filiacao,
             rua,
@@ -207,7 +208,7 @@ const UserController = {
             name: (newUserData.name !== undefined) ? newUserData.name : user.name,
             email: (newUserData.email !== undefined) ? newUserData.email : user.email,
             telefone: (newUserData.telefone !== undefined) ? newUserData.telefone : user.telefone,
-            aniversario: (newUserData.aniversario !== undefined) ? newUserData.aniversario : user.aniversario,
+            nascimento: (newUserData.nascimento !== undefined) ? newUserData.nascimento : user.nascimento,
             rg: (newUserData.rg !== undefined) ? newUserData.rg : user.rg,
             filiacao: (newUserData.filiacao !== undefined) ? newUserData.filiacao : user.filiacao,
             rua: (newUserData.rua !== undefined) ? newUserData.rua : user.rua,
@@ -294,6 +295,59 @@ const UserController = {
         } else {
           return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário sem permissão para deletar outro usuário.' });
         }
+      },
+
+      async signUpDep(req, res) {
+        const urlUser = req.params.urlUser;
+    
+        let user = await User.findOne({ urlUser });
+    
+        if (!user) {
+          return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
+        }
+
+        const { name, nascimento, cpf, rg, emissao} = req.body;
+
+        if (name === undefined || nascimento === undefined || cpf === undefined
+            || rg === undefined || emissao === undefined) {
+          return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
+        }
+
+        if (user._id.equals(req.userId)) {
+          let dependent;
+          try {
+            dependent = await Dependent.create({
+                name,
+                nascimento,
+                cpf,
+                rg,
+                emissao,
+                idAssociado: req.userId
+            });
+          } catch (e) {
+            if ((e.hasOwnProperty('code')) && e.code === 11000) {
+              return res.status(HTTP_CODE_BAD_REQUEST).json({ message: "Valor de " + Object.keys(e.keyValue)[0] + " já cadastrado." });
+            } else {
+              return res.status(HTTP_CODE_BAD_REQUEST).json({ message: e.message });
+            }
+          }
+
+          try {
+            let dependentes = user.dependentes.concat(`${dependent._id}`)
+            user = await User.findByIdAndUpdate(user._id, {
+              dependentes
+            })
+          } catch (e) {
+            if ((e.hasOwnProperty('code')) && e.code === 11000) {
+              return res.status(HTTP_CODE_BAD_REQUEST).json({ message: "Valor de " + Object.keys(e.keyValue)[0] + " já cadastrado." });
+            } else {
+              return res.status(HTTP_CODE_BAD_REQUEST).json({ message: e.message });
+            }
+          }
+          
+          return res.status(HTTP_CODE_OK).json( { message: 'Dependente cadastrado com sucesso.' } );
+        }
+        return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário não tem permissão.' });
       }
 };
 
