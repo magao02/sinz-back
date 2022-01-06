@@ -22,4 +22,6 @@ router.delete('/user/:urlUser/deleteUser', auth.authorizeUser, UserController.de
 
 router.post('/user/:urlUser/signUpDep', auth.authorizeUser, UserController.signUpDep);
 
+router.get('/getUsers', auth.authorizeUser, UserController.getUsers);
+
 module.exports = router;

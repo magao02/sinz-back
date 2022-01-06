@@ -348,6 +348,23 @@ const UserController = {
           return res.status(HTTP_CODE_OK).json( { message: 'Dependente cadastrado com sucesso.' } );
         }
         return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário não tem permissão.' });
+      },
+
+      async getUsers(req, res) {
+        let users = await User.find();
+        let usersDTO = [];
+
+        users.forEach(user => {
+          usersDTO.push({
+            name: user.name,
+            nascimento: user.nascimento,
+            cpf: user.cpf,
+            rg: user.rg,
+            emissao: user.emissao,
+          })
+        })
+
+        return res.status(HTTP_CODE_OK).json(usersDTO);
       }
 };
 
