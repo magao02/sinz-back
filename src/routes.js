@@ -24,4 +24,6 @@ router.post('/user/:urlUser/signUpDep', auth.authorizeUser, UserController.signU
 
 router.get('/getUsers', auth.authorizeUser, UserController.getUsers);
 
+router.get('/getDependents/:urlUser', auth.authorizeUser, UserController.getDependents);
+
 module.exports = router;

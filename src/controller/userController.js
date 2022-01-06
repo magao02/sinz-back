@@ -365,6 +365,36 @@ const UserController = {
         })
 
         return res.status(HTTP_CODE_OK).json(usersDTO);
+      },
+
+      async getDependents(req, res) {
+        const urlUser = req.params.urlUser;
+    
+        let user = await User.findOne({ urlUser });
+    
+        if (!user) {
+          return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
+        } else {
+    
+          let dependentes = user.dependentes;
+          let dependetesDTO = [];
+
+          let dep;
+          let _id;
+
+          for (var i = 0; i < dependentes.length ; i++) {
+            _id = dependentes[i];
+            dep = await Dependent.findById({ _id });
+
+            if (!(!dep)) {
+              dependetesDTO.push({
+                name: dep.name,
+                cpf: dep.cpf
+              })
+            }
+          }
+          return res.status(HTTP_CODE_OK).json(dependetesDTO);
+        }
       }
 };
 
