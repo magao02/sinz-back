@@ -99,11 +99,11 @@ const UserSchema = new Schema({
         },
         complemento: {
             type: String,
-            required: false
+            required: true
         },
         numero: {
             type: String,
-            required: false
+            required: true
         },
     },
     regional: {
