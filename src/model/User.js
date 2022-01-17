@@ -48,7 +48,7 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    dataFiliacao: {
+    dataAfiliacao: {
         type: Date,
         required: true
     },
