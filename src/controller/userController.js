@@ -13,7 +13,7 @@ const UserController = {
         const { name, email, password, telefone,
           nascimento, cpf, rg, emissao, filiacao,
           profissao, endereco, regional, numInscricao,
-          dataFiliacao, formacaoSuperior, instituicaoSuperior,
+          dataAfiliacao, formacaoSuperior, instituicaoSuperior,
           dataFormacao, numRegistroConselho, dataRegistroConselho,
           empresa, salario } = req.body;
 
@@ -25,7 +25,7 @@ const UserController = {
             endereco.rua === undefined || endereco.bairro === undefined ||
             regional.municipio === undefined || regional.estado === undefined ||
             regional.naturalidade === undefined || regional.nacionalidade === undefined ||
-            numInscricao === undefined || dataFiliacao === undefined ||
+            numInscricao === undefined || dataAfiliacao === undefined ||
             formacaoSuperior === undefined || instituicaoSuperior === undefined ||
             dataFormacao === undefined || numRegistroConselho === undefined ||
             dataRegistroConselho === undefined || empresa === undefined ||
@@ -62,7 +62,7 @@ const UserController = {
                   emissao, filiacao,
                   profissao,
                   endereco, regional,
-                  numInscricao, dataFiliacao,
+                  numInscricao, dataAfiliacao,
                   formacaoSuperior, instituicaoSuperior, dataFormacao,
                   numRegistroConselho, dataRegistroConselho,
                   empresa, salario,
@@ -150,7 +150,7 @@ const UserController = {
             rg: user.rg,
             emissao: ((user.emissao.getDate() )) + "/" + ((user.emissao.getMonth() + 1)) + "/" + user.emissao.getFullYear(),
             filiacao: user.filiacao,
-            dataFiliacao: ((user.dataFiliacao.getDate() )) + "/" + ((user.dataFiliacao.getMonth() + 1)) + "/" + user.dataFiliacao.getFullYear(),
+            dataAfiliacao: ((user.dataAfiliacao.getDate() )) + "/" + ((user.dataAfiliacao.getMonth() + 1)) + "/" + user.dataAfiliacao.getFullYear(),
             profissao: user.profissao,
             endereco: user.endereco,
             salario: user.salario,
@@ -205,7 +205,7 @@ const UserController = {
             rg,
             filiacao,
             endereco, regional,
-            numInscricao, dataFiliacao,
+            numInscricao, dataAfiliacao,
             formacaoSuperior, instituicaoSuperior, dataFormacao,
             numRegistroConselho, dataRegistroConselho,
             empresa, salario,
@@ -222,7 +222,7 @@ const UserController = {
             endereco: (newUserData.filiacao !== undefined) ? newUserData.filiacao : user.filiacao,
             regional: (newUserData.filiacao !== undefined) ? newUserData.filiacao : user.filiacao,
             numInscricao: (newUserData.numInscricao !== undefined) ? newUserData.numInscricao : user.numInscricao,
-            dataFiliacao: (newUserData.dataFiliacao !== undefined) ? newUserData.dataFiliacao : user.dataFiliacao,
+            dataAfiliacao: (newUserData.dataAfiliacao !== undefined) ? newUserData.dataAfiliacao : user.dataAfiliacao,
             formacaoSuperior: (newUserData.formacaoSuperior !== undefined) ? newUserData.formacaoSuperior : user.formacaoSuperior,
             instituicaoSuperior: (newUserData.instituicaoSuperior !== undefined) ? newUserData.instituicaoSuperior : user.instituicaoSuperior,
             dataFormacao: (newUserData.dataFormacao !== undefined) ? newUserData.dataFormacao : user.dataFormacao,
