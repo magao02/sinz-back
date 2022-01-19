@@ -26,4 +26,8 @@ router.get('/getUsers', auth.authorizeUser, UserController.getUsers);
 
 router.get('/getDependents/:urlUser', auth.authorizeUser, UserController.getDependents);
 
+router.put('/user/:urlUser/setImpostoDeRenda', auth.authorizeUser, UserController.setImpostoDeRenda);
+
+router.put('/user/:urlUser/setImpostoDeRendaDep', auth.authorizeUser, UserController.setImpostoDeRendaDep);
+
 module.exports = router;
