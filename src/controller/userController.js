@@ -12,15 +12,24 @@ const UserController = {
     async store(req, res) {
         const { name, email, password, telefone,
           nascimento, cpf, rg, emissao, filiacao,
-          profissao, rua, bairro, complemento,
-          numero } = req.body;
+          profissao, endereco, regional, numInscricao,
+          dataAfiliacao, formacaoSuperior, instituicaoSuperior,
+          dataFormacao, numRegistroConselho, dataRegistroConselho,
+          empresa, salario } = req.body;
 
         if (name === undefined || email === undefined ||
             password === undefined || telefone === undefined ||
             nascimento === undefined || cpf === undefined ||
             rg === undefined || emissao === undefined ||
             filiacao === undefined || profissao === undefined ||
-            rua === undefined || bairro === undefined) {
+            endereco.rua === undefined || endereco.bairro === undefined ||
+            regional.municipio === undefined || regional.estado === undefined ||
+            regional.naturalidade === undefined || regional.nacionalidade === undefined ||
+            numInscricao === undefined || dataAfiliacao === undefined ||
+            formacaoSuperior === undefined || instituicaoSuperior === undefined ||
+            dataFormacao === undefined || numRegistroConselho === undefined ||
+            dataRegistroConselho === undefined || empresa === undefined ||
+            salario === undefined) {
               return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
             }
 
@@ -47,20 +56,16 @@ const UserController = {
 
             try {
               user = await User.create({
-                  name,
-                  email,
-                  password,
-                  telefone,
-                  nascimento,
-                  cpf,
-                  rg,
-                  emissao,
-                  filiacao,
+                  name, email, password,
+                  telefone, nascimento,
+                  cpf, rg,
+                  emissao, filiacao,
                   profissao,
-                  rua,
-                  bairro,
-                  complemento,
-                  numero,
+                  endereco, regional,
+                  numInscricao, dataAfiliacao,
+                  formacaoSuperior, instituicaoSuperior, dataFormacao,
+                  numRegistroConselho, dataRegistroConselho,
+                  empresa, salario,
                   urlUser
               });
             } catch (e) {
@@ -145,11 +150,12 @@ const UserController = {
             rg: user.rg,
             emissao: ((user.emissao.getDate() )) + "/" + ((user.emissao.getMonth() + 1)) + "/" + user.emissao.getFullYear(),
             filiacao: user.filiacao,
+            dataAfiliacao: ((user.dataAfiliacao.getDate() )) + "/" + ((user.dataAfiliacao.getMonth() + 1)) + "/" + user.dataAfiliacao.getFullYear(),
             profissao: user.profissao,
-            rua: user.rua,
-            bairro: user.bairro,
-            complemento: user.complemento,
-            numero: user.numero,
+            endereco: user.endereco,
+            salario: user.salario,
+            empresa: user.empresa,
+            numInscricao: user.numInscricao,
             urlUser: user.urlUser
           }
     
@@ -198,10 +204,12 @@ const UserController = {
             nascimento,
             rg,
             filiacao,
-            rua,
-            bairro,
-            complemento,
-            numero
+            endereco, regional,
+            numInscricao, dataAfiliacao,
+            formacaoSuperior, instituicaoSuperior, dataFormacao,
+            numRegistroConselho, dataRegistroConselho,
+            empresa, salario,
+            urlUser
             } = req.body;
     
           user = await User.findByIdAndUpdate(user._id, {
@@ -211,10 +219,18 @@ const UserController = {
             nascimento: (newUserData.nascimento !== undefined) ? newUserData.nascimento : user.nascimento,
             rg: (newUserData.rg !== undefined) ? newUserData.rg : user.rg,
             filiacao: (newUserData.filiacao !== undefined) ? newUserData.filiacao : user.filiacao,
-            rua: (newUserData.rua !== undefined) ? newUserData.rua : user.rua,
-            bairro: (newUserData.bairro !== undefined) ? newUserData.bairro : user.bairro,
-            complemento: (newUserData.complemento !== undefined) ? newUserData.complemento : user.complemento,
-            numero: (newUserData.numero !== undefined) ? newUserData.numero : user.numero,
+            endereco: (newUserData.filiacao !== undefined) ? newUserData.filiacao : user.filiacao,
+            regional: (newUserData.filiacao !== undefined) ? newUserData.filiacao : user.filiacao,
+            numInscricao: (newUserData.numInscricao !== undefined) ? newUserData.numInscricao : user.numInscricao,
+            dataAfiliacao: (newUserData.dataAfiliacao !== undefined) ? newUserData.dataAfiliacao : user.dataAfiliacao,
+            formacaoSuperior: (newUserData.formacaoSuperior !== undefined) ? newUserData.formacaoSuperior : user.formacaoSuperior,
+            instituicaoSuperior: (newUserData.instituicaoSuperior !== undefined) ? newUserData.instituicaoSuperior : user.instituicaoSuperior,
+            dataFormacao: (newUserData.dataFormacao !== undefined) ? newUserData.dataFormacao : user.dataFormacao,
+            numRegistroConselho: (newUserData.numRegistroConselho !== undefined) ? newUserData.numRegistroConselho : user.numRegistroConselho,
+            dataRegistroConselho: (newUserData.dataRegistroConselho !== undefined) ? newUserData.dataRegistroConselho : user.dataRegistroConselho,
+            empresa: (newUserData.empresa !== undefined) ? newUserData.empresa : user.empresa,
+            salario: (newUserData.salario !== undefined) ? newUserData.salario : user.salario,
+            urlUser: (newUserData.urlUser !== undefined) ? newUserData.urlUser : user.urlUser,
           })
           
           return res.status(HTTP_CODE_OK).json( { message: 'Perfil alterado com sucesso.' } );

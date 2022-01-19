@@ -48,25 +48,81 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    dataAfiliacao: {
+        type: Date,
+        required: true
+    },
     profissao: {
         type: String,
         required: true
     },
-    rua: {
+    numInscricao: {
         type: String,
         required: true
     },
-    bairro: {
+    formacaoSuperior: {
         type: String,
         required: true
     },
-    complemento: {
+    instituicaoSuperior: {
         type: String,
-        required: false
+        required: true
     },
-    numero: {
+    dataFormacao: {
+        type: Date,
+        required: true
+    },
+    numRegistroConselho: {
         type: String,
-        required: false
+        required: true
+    },
+    dataRegistroConselho: {
+        type: Date,
+        required: true
+    },
+    empresa: {
+        type: String,
+        required: true
+    },
+    salario: {
+        type: Number,
+        required: true
+    },
+    endereco: {
+        rua: {
+            type: String,
+            required: true
+        },
+        bairro: {
+            type: String,
+            required: true
+        },
+        complemento: {
+            type: String,
+            required: true
+        },
+        numero: {
+            type: String,
+            required: true
+        },
+    },
+    regional: {
+        municipio: {
+            type: String,
+            required: true
+        },
+        estado: {
+            type: String,
+            required: true
+        },
+        naturalidade: {
+            type: String,
+            required: true
+        },
+        nacionalidade: {
+            type: String,
+            required: true
+        }
     },
     urlUser: {
         type: String,
