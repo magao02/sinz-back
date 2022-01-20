@@ -23,7 +23,7 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         unique: [true, "Telefone já cadastrado."],
-        validate: [/^(?:\+)[0-9]{2}\s? (?:\()[0-9]{2}(?:\))\s? [0-9]{4,5}(?:-)[0-9]{4}$/, "O campo de Telefone deve possuir o formato: +xx (xx) xxxxx-xxxx"]
+        validate: [/^[(][0-9]{2}[)][ ][-][ ]([0-9]{8}|[0-9]{9})$/, "O campo de Telefone deve possuir o formato: +xx (xx) xxxxx-xxxx"]
     },
     nascimento: {
         type: Date,
@@ -87,6 +87,68 @@ const UserSchema = new Schema({
     salario: {
         type: Number,
         required: true
+    },
+    impostoDeRenda: {
+        janeiro: {
+            type: Number,
+            required: false,
+            default: ""
+        },
+        fevereiro: {
+            type: Number,
+            required: false,
+            default: ""
+        },
+        marco: {
+            type: Number,
+            required: false,
+            default: ""
+        },
+        abril: {
+            type: Number,
+            required: false,
+            default: ""
+        },
+        maio: {
+            type: Number,
+            required: false,
+            default: ""
+        },
+        junho: {
+            type: Number,
+            required: false,
+            default: ""
+        },
+        julho: {
+            type: Number,
+            required: false,
+            default: ""
+        },
+        agosto: {
+            type: Number,
+            required: false,
+            default: ""
+        },
+        setembro: {
+            type: Number,
+            required: false,
+            default: ""
+        },
+        outubro: {
+            type: Number,
+            required: false,
+            default: ""
+        },
+        novembro: {
+            type: Number,
+            required: false,
+            default: ""
+        },
+        dezembro: {
+            type: Number,
+            required: false,
+            default: ""
+        }
     },
     endereco: {
         rua: {
