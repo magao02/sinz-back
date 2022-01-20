@@ -21,7 +21,7 @@ const UserController = {
             password === undefined || telefone === undefined ||
             nascimento === undefined || cpf === undefined ||
             rg === undefined || emissao === undefined ||
-            filiacao === undefined || profissao === undefined ||
+            filiacao === undefined || profissao === undefined || endereco === undefined ||
             endereco.rua === undefined || endereco.bairro === undefined ||
             regional.municipio === undefined || regional.estado === undefined ||
             regional.naturalidade === undefined || regional.nacionalidade === undefined ||
@@ -367,20 +367,24 @@ const UserController = {
       },
 
       async getUsers(req, res) {
-        let users = await User.find();
-        let usersDTO = [];
+        if (req.user.admin) {
+          let users = await User.find();
+          let usersDTO = [];
 
-        users.forEach(user => {
-          usersDTO.push({
-            name: user.name,
-            nascimento: user.nascimento,
-            cpf: user.cpf,
-            rg: user.rg,
-            emissao: user.emissao,
+          users.forEach(user => {
+            usersDTO.push({
+              name: user.name,
+              nascimento: user.nascimento,
+              cpf: user.cpf,
+              rg: user.rg,
+              emissao: user.emissao,
+            })
           })
-        })
 
-        return res.status(HTTP_CODE_OK).json(usersDTO);
+          return res.status(HTTP_CODE_OK).json(usersDTO);
+        } else {
+          return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário sem permissão de visualizar os assessores.' });
+        }
       },
 
       async getDependents(req, res) {
@@ -390,8 +394,9 @@ const UserController = {
     
         if (!user) {
           return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
-        } else {
-    
+        }
+
+        if (user._id.equals(req.userId) || req.user.admin) {
           let dependentes = user.dependentes;
           let dependetesDTO = [];
 
@@ -410,6 +415,8 @@ const UserController = {
             }
           }
           return res.status(HTTP_CODE_OK).json(dependetesDTO);
+        } else {
+          return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário sem permissão de visualizar os dependentes desse assessor.' });
         }
       },
 
