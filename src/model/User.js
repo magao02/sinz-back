@@ -85,67 +85,67 @@ const UserSchema = new Schema({
         required: true
     },
     salario: {
-        type: String,
+        type: Number,
         required: true
     },
     impostoDeRenda: {
         janeiro: {
-            type: String,
+            type: Number,
             required: false,
             default: ""
         },
         fevereiro: {
-            type: String,
+            type: Number,
             required: false,
             default: ""
         },
         marco: {
-            type: String,
+            type: Number,
             required: false,
             default: ""
         },
         abril: {
-            type: String,
+            type: Number,
             required: false,
             default: ""
         },
         maio: {
-            type: String,
+            type: Number,
             required: false,
             default: ""
         },
         junho: {
-            type: String,
+            type: Number,
             required: false,
             default: ""
         },
         julho: {
-            type: String,
+            type: Number,
             required: false,
             default: ""
         },
         agosto: {
-            type: String,
+            type: Number,
             required: false,
             default: ""
         },
         setembro: {
-            type: String,
+            type: Number,
             required: false,
             default: ""
         },
         outubro: {
-            type: String,
+            type: Number,
             required: false,
             default: ""
         },
         novembro: {
-            type: String,
+            type: Number,
             required: false,
             default: ""
         },
         dezembro: {
-            type: String,
+            type: Number,
             required: false,
             default: ""
         }
