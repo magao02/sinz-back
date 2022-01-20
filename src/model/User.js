@@ -23,7 +23,7 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         unique: [true, "Telefone já cadastrado."],
-        validate: [/^(?:\+)[0-9]{2}\s? (?:\()[0-9]{2}(?:\))\s? [0-9]{4,5}(?:-)[0-9]{4}$/, "O campo de Telefone deve possuir o formato: +xx (xx) xxxxx-xxxx"]
+        validate: [/^[(][0-9]{2}[)][ ][-][ ]([0-9]{8}|[0-9]{9})$/, "O campo de Telefone deve possuir o formato: +xx (xx) xxxxx-xxxx"]
     },
     nascimento: {
         type: Date,
@@ -85,69 +85,69 @@ const UserSchema = new Schema({
         required: true
     },
     salario: {
-        type: Number,
+        type: String,
         required: true
     },
     impostoDeRenda: {
         janeiro: {
-            type: Number,
+            type: String,
             required: false,
-            default: 0
+            default: ""
         },
         fevereiro: {
-            type: Number,
+            type: String,
             required: false,
-            default: 0
+            default: ""
         },
         marco: {
-            type: Number,
+            type: String,
             required: false,
-            default: 0
+            default: ""
         },
         abril: {
-            type: Number,
+            type: String,
             required: false,
-            default: 0
+            default: ""
         },
         maio: {
-            type: Number,
+            type: String,
             required: false,
-            default: 0
+            default: ""
         },
         junho: {
-            type: Number,
+            type: String,
             required: false,
-            default: 0
+            default: ""
         },
         julho: {
-            type: Number,
+            type: String,
             required: false,
-            default: 0
+            default: ""
         },
         agosto: {
-            type: Number,
+            type: String,
             required: false,
-            default: 0
+            default: ""
         },
         setembro: {
-            type: Number,
+            type: String,
             required: false,
-            default: 0
+            default: ""
         },
         outubro: {
-            type: Number,
+            type: String,
             required: false,
-            default: 0
+            default: ""
         },
         novembro: {
-            type: Number,
+            type: String,
             required: false,
-            default: 0
+            default: ""
         },
         dezembro: {
-            type: Number,
+            type: String,
             required: false,
-            default: 0
+            default: ""
         }
     },
     endereco: {
