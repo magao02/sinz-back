@@ -56,6 +56,14 @@ const UserController = {
 
             nascimento = nascimento.split('/')
             nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
+            emissao = emissao.split('/')
+            emissao = new Date(`${emissao[2]}-${emissao[1]}-${emissao[0]}T01:00:00+01:00`);
+            dataAfiliacao = dataAfiliacao.split('/')
+            dataAfiliacao = new Date(`${dataAfiliacao[2]}-${dataAfiliacao[1]}-${dataAfiliacao[0]}T01:00:00+01:00`);
+            dataFormacao = dataFormacao.split('/')
+            dataFormacao = new Date(`${dataFormacao[2]}-${dataFormacao[1]}-${dataFormacao[0]}T01:00:00+01:00`);
+            dataRegistroConselho = dataRegistroConselho.split('/')
+            dataRegistroConselho = new Date(`${dataRegistroConselho[2]}-${dataFormacdataRegistroConselhoao[1]}-${dataRegistroConselho[0]}T01:00:00+01:00`);
             try {
               user = await User.create({
                   name, email, password,
@@ -152,7 +160,7 @@ const UserController = {
             rg: user.rg,
             emissao: ((user.emissao.getDate() )) + "/" + ((user.emissao.getMonth() + 1)) + "/" + user.emissao.getFullYear(),
             filiacao: user.filiacao,
-            dataAfiliacao: ((user.dataAfiliacao.getDate() )) + "/" + ((user.dataAfiliacao.getMonth() + 1)) + "/" + user.dataAfiliacao.getFullYear(),
+            dataAfiliacao: ((user.dataAfiliacao.getDate() + 1)) + "/" + ((user.dataAfiliacao.getMonth() + 1)) + "/" + user.dataAfiliacao.getFullYear(),
             profissao: user.profissao,
             endereco: user.endereco,
             salario: user.salario,
@@ -213,7 +221,16 @@ const UserController = {
             empresa, salario,
             urlUser
             } = req.body;
-    
+
+          nascimento = nascimento.split('/')
+          nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
+          dataAfiliacao = dataAfiliacao.split('/')
+          dataAfiliacao = new Date(`${dataAfiliacao[2]}-${dataAfiliacao[1]}-${dataAfiliacao[0]}T01:00:00+01:00`);
+          dataFormacao = dataFormacao.split('/')
+          dataFormacao = new Date(`${dataFormacao[2]}-${dataFormacao[1]}-${dataFormacao[0]}T01:00:00+01:00`);
+          dataRegistroConselho = dataRegistroConselho.split('/')
+          dataRegistroConselho = new Date(`${dataRegistroConselho[2]}-${dataFormacdataRegistroConselhoao[1]}-${dataRegistroConselho[0]}T01:00:00+01:00`);
+
           user = await User.findByIdAndUpdate(user._id, {
             name: (newUserData.name !== undefined) ? newUserData.name : user.name,
             email: (newUserData.email !== undefined) ? newUserData.email : user.email,
@@ -333,6 +350,8 @@ const UserController = {
 
         nascimento = nascimento.split('/')
         nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
+        emissao = emissao.split('/')
+        emissao = new Date(`${emissao[2]}-${emissao[1]}-${emissao[0]}T01:00:00+01:00`);
         if (user._id.equals(req.userId)) {
           let dependent;
           try {
