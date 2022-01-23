@@ -320,8 +320,11 @@ const UserController = {
           }
     
           user = await User.deleteOne(user)
-          .then(deletedUser => {
+          .then(async function (deletedUser) {
             if(deletedUser) {
+              for (let i = 0; i < user.dependentes.length; i++) {
+                await Dependent.findByIdAndDelete(user.dependentes[i]);
+              }
               return res.status(HTTP_CODE_OK).json( { message: `Usuário (${user.name}) deletado com sucesso.` } );
             } else {
               return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário sem permissão para deletar outro usuário.' });
