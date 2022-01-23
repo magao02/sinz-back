@@ -480,9 +480,9 @@ const UserController = {
               dependetesDTO.push({
                 name: dep.name,
                 cpf: dep.cpf,
-                nascimento: ((dep.nascimento.getDate() + 1)) + "/" + ((dep.nascimento.getMonth() + 1)) + "/" + dep.nascimento.getFullYear(),
+                nascimento: ((dep.nascimento.getDate())) + "/" + ((dep.nascimento.getMonth() + 1)) + "/" + dep.nascimento.getFullYear(),
                 rg: dep.rg,
-                emissao: ((dep.emissao.getDate() + 1)) + "/" + ((dep.emissao.getMonth() + 1)) + "/" + dep.emissao.getFullYear()
+                emissao: ((dep.emissao.getDate())) + "/" + ((dep.emissao.getMonth() + 1)) + "/" + dep.emissao.getFullYear()
               })
             }
           }
