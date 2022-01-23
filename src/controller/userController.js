@@ -118,6 +118,7 @@ const UserController = {
             let response = {
               auth: true,
               token: `Bearer ` + token,
+              admin: user.admin,
     
               name: user.name,
               urlUser: user.urlUser
