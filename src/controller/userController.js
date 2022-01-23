@@ -376,10 +376,10 @@ const UserController = {
           users.forEach(user => {
             usersDTO.push({
               name: user.name,
-              nascimento: user.nascimento,
+              nascimento: ((user.nascimento.getDate() + 1)) + "/" + ((user.nascimento.getMonth() + 1)) + "/" + user.nascimento.getFullYear(),
               cpf: user.cpf,
               rg: user.rg,
-              emissao: user.emissao,
+              emissao: ((user.emissao.getDate() + 1)) + "/" + ((user.emissao.getMonth() + 1)) + "/" + user.emissao.getFullYear(),
             })
           })
 
@@ -413,9 +413,9 @@ const UserController = {
               dependetesDTO.push({
                 name: dep.name,
                 cpf: dep.cpf,
-                nascimento: dep.nascimento,
+                nascimento: ((dep.nascimento.getDate() + 1)) + "/" + ((dep.nascimento.getMonth() + 1)) + "/" + dep.nascimento.getFullYear(),
                 rg: dep.rg,
-                emissao: dep.emissao
+                emissao: ((dep.emissao.getDate() + 1)) + "/" + ((dep.emissao.getMonth() + 1)) + "/" + dep.emissao.getFullYear()
               })
             }
           }
