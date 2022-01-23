@@ -10,7 +10,7 @@ const HTTP_CODE_NOT_FOUND = 404;
 
 const UserController = {
     async store(req, res) {
-        const { name, email, password, telefone,
+        let { name, email, password, telefone,
           nascimento, cpf, rg, emissao, filiacao,
           profissao, endereco, regional, numInscricao,
           dataAfiliacao, formacaoSuperior, instituicaoSuperior,
@@ -54,6 +54,8 @@ const UserController = {
                 }
             }
 
+            nascimento = nascimento.split('/')
+            nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
             try {
               user = await User.create({
                   name, email, password,
@@ -145,7 +147,7 @@ const UserController = {
             name: user.name,
             email: user.email,
             telefone: user.telefone,
-            nascimento: ((user.nascimento.getDate() )) + "/" + ((user.nascimento.getMonth() + 1)) + "/" + user.nascimento.getFullYear(),
+            nascimento: ((user.nascimento.getDate() + 1)) + "/" + ((user.nascimento.getMonth() + 1)) + "/" + user.nascimento.getFullYear(),
             cpf: user.cpf,
             rg: user.rg,
             emissao: ((user.emissao.getDate() )) + "/" + ((user.emissao.getMonth() + 1)) + "/" + user.emissao.getFullYear(),
