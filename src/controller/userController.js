@@ -412,7 +412,10 @@ const UserController = {
             if (!(!dep)) {
               dependetesDTO.push({
                 name: dep.name,
-                cpf: dep.cpf
+                cpf: dep.cpf,
+                nascimento: dep.nascimento,
+                rg: dep.rg,
+                emissao: dep.emissao
               })
             }
           }
