@@ -324,13 +324,15 @@ const UserController = {
           return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
         }
 
-        const { name, nascimento, cpf, rg, emissao} = req.body;
+        let { name, nascimento, cpf, rg, emissao} = req.body;
 
         if (name === undefined || nascimento === undefined || cpf === undefined
             || rg === undefined || emissao === undefined) {
           return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
         }
 
+        nascimento = nascimento.split('/')
+        nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
         if (user._id.equals(req.userId)) {
           let dependent;
           try {
