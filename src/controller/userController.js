@@ -63,7 +63,7 @@ const UserController = {
             dataFormacao = dataFormacao.split('/')
             dataFormacao = new Date(`${dataFormacao[2]}-${dataFormacao[1]}-${dataFormacao[0]}T01:00:00+01:00`);
             dataRegistroConselho = dataRegistroConselho.split('/')
-            dataRegistroConselho = new Date(`${dataRegistroConselho[2]}-${dataFormacdataRegistroConselhoao[1]}-${dataRegistroConselho[0]}T01:00:00+01:00`);
+            dataRegistroConselho = new Date(`${dataRegistroConselho[2]}-${dataRegistroConselho[1]}-${dataRegistroConselho[0]}T01:00:00+01:00`);
             try {
               user = await User.create({
                   name, email, password,
@@ -388,6 +388,48 @@ const UserController = {
           return res.status(HTTP_CODE_OK).json( { message: 'Dependente cadastrado com sucesso.' } );
         }
         return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário não tem permissão.' });
+      },
+
+      async deleteDep(req, res) {
+        const urlUser = req.params.urlUser;
+    
+        let user = await User.findOne({ urlUser });
+    
+        if (!user) {
+          return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
+        }
+
+        let { cpf } = req.body;
+
+        if (cpf === undefined) {
+          return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
+        }
+
+        let dep = await Dependent.findOne({ cpf });
+
+        if (!dep) {
+          return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Dependente não encontrado.' });
+        } else {
+          if (user.dependentes.includes(dep._id)) {
+            dep = await Dependent.deleteOne(dep)
+            .then(async function (deletedUser) {
+              if(deletedUser) {
+                let newArrayDeps = user.dependentes.filter(depOfUser => depOfUser._id === dep._id);
+
+                await User.findByIdAndUpdate(user._id, {
+                   dependentes: newArrayDeps
+                });
+
+                return res.status(HTTP_CODE_OK).json( { message: `Dependente (${dep.name}) deletado com sucesso.` } );
+              } else {
+                return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário sem permissão para deletar esse dependente.' });
+              }
+            })
+            .catch(err => console.error(`Falha ao buscar e deletar: ${err}`))
+          } else {
+            return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Esse Dependente não pertence ao usuário que solicitou remoção.' });
+          }
+        }
       },
 
       async getUsers(req, res) {
