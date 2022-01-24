@@ -161,7 +161,7 @@ const UserController = {
             rg: user.rg,
             emissao: ((user.emissao.getDate() )) + "/" + ((user.emissao.getMonth() + 1)) + "/" + user.emissao.getFullYear(),
             filiacao: user.filiacao,
-            dataAfiliacao: ((user.dataAfiliacao.getDate() + 1)) + "/" + ((user.dataAfiliacao.getMonth() + 1)) + "/" + user.dataAfiliacao.getFullYear(),
+            dataAfiliacao: ((user.dataAfiliacao.getDate())) + "/" + ((user.dataAfiliacao.getMonth() + 1)) + "/" + user.dataAfiliacao.getFullYear(),
             profissao: user.profissao,
             endereco: user.endereco,
             salario: user.salario,
