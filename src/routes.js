@@ -32,4 +32,6 @@ router.put('/user/:urlUser/setImpostoDeRenda', auth.authorizeUser, UserControlle
 
 router.put('/user/:urlUser/setImpostoDeRendaDep/:urlDep', auth.authorizeUser, UserController.setImpostoDeRendaDep);
 
+router.get('/getPDF/:urlUser', auth.authorizeUser, UserController.getPDF);
+
 module.exports = router;

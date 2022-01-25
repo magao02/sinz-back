@@ -623,7 +623,36 @@ const UserController = {
         } else {
           return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário sem permissão para atualizar imposto de renda.' });
         }
+      },
+
+      async getPDF(req, res) {
+        const urlUser = req.params.urlUser;
+        let user = await User.findOne({ urlUser });
+
+        if (!user) {
+          return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
+        } else {
+          if (req.user.admin || user._id.equals(req.userId)) { 
+              let impRendaDeps = []
+              let dep;
+              let depDTO;
+              for (let i = 0 ; i < user.dependentes.length ; i++) {
+                dep = await Dependent.findById(user.dependentes[i]);
+  
+                if (!(!dep)) {
+                  depDTO = {
+                    name: dep.name,
+                    impostoDeRenda: dep.impostoDeRenda
+                  }
+                  impRendaDeps.push(depDTO);
+                }
+              }
+              return res.status(HTTP_CODE_OK).json( { name: user.name, impostoDeRenda: user.impostoDeRenda, dependentes: impRendaDeps } );
+            } else {
+            return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário sem permissão para baixar esse imposto de renda.' });
+        }
       }
+    }
 };
 
 module.exports = UserController;
