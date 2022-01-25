@@ -22,27 +22,27 @@ const UserSchema = new Schema({
     telefone: {
         type: String,
         required: true,
-        unique: [true, "Telefone já cadastrado."],
-        validate: [/^[(][0-9]{2}[)][ ][-][ ]([0-9]{8}|[0-9]{9})$/, "O campo de Telefone deve possuir o formato: +xx (xx) xxxxx-xxxx"]
+        // unique: [true, "Telefone já cadastrado."],
+        // validate: [/^[(][0-9]{2}[)][ ][-][ ]([0-9]{8}|[0-9]{9})$/, "O campo de Telefone deve possuir o formato: (xx) - xxxxx-xxxx"]
     },
     nascimento: {
         type: Date,
-        required: true
+        // required: true
     },
     cpf: {
         type: String,
         required: true,
         unique: [true, "CPF já cadastrado."],
-        validate: [/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, "O campo de CPF deve possuir o formato: xxx.xxx.xxx-xx"]
+        // validate: [/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, "O campo de CPF deve possuir o formato: xxx.xxx.xxx-xx"]
     },
     rg: {
         type: String,
-        unique: [true, "RG já cadastrado."],
+        // unique: [true, "RG já cadastrado."],
         required: true
     },
     emissao: {
         type: Date,
-        required: true
+        // required: true
     },
     filiacao: {
         type: String,
@@ -50,7 +50,7 @@ const UserSchema = new Schema({
     },
     dataAfiliacao: {
         type: Date,
-        required: true
+        // required: true
     },
     profissao: {
         type: String,
@@ -70,15 +70,15 @@ const UserSchema = new Schema({
     },
     dataFormacao: {
         type: Date,
-        required: true
+        // required: true
     },
     numRegistroConselho: {
         type: String,
-        required: true
+        // required: true
     },
     dataRegistroConselho: {
         type: Date,
-        required: true
+        // required: true
     },
     empresa: {
         type: String,
