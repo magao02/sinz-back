@@ -30,6 +30,6 @@ router.get('/getDependents/:urlUser', auth.authorizeUser, UserController.getDepe
 
 router.put('/user/:urlUser/setImpostoDeRenda', auth.authorizeUser, UserController.setImpostoDeRenda);
 
-router.put('/user/:urlUser/setImpostoDeRendaDep', auth.authorizeUser, UserController.setImpostoDeRendaDep);
+router.put('/user/:urlUser/setImpostoDeRendaDep/:urlDep', auth.authorizeUser, UserController.setImpostoDeRendaDep);
 
 module.exports = router;

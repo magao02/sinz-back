@@ -502,6 +502,7 @@ const UserController = {
                 cpf: dep.cpf,
                 nascimento: ((dep.nascimento.getDate())) + "/" + ((dep.nascimento.getMonth() + 1)) + "/" + dep.nascimento.getFullYear(),
                 rg: dep.rg,
+                urlDep: dep.urlDep,
                 emissao: ((dep.emissao.getDate())) + "/" + ((dep.emissao.getMonth() + 1)) + "/" + dep.emissao.getFullYear()
               })
             }
@@ -566,13 +567,14 @@ const UserController = {
       async setImpostoDeRendaDep(req, res) {
         if (req.user.admin) {
           const urlUser = req.params.urlUser;
+          const urlDep = req.params.urlDep;
           let user = await User.findOne({ urlUser });
       
           if (!user) {
             return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
           }
 
-          const { impostoDeRenda, cpf } = req.body;
+          const { impostoDeRenda } = req.body;
           
           if (impostoDeRenda.janeiro === undefined &&
             impostoDeRenda.fevereiro === undefined &&
@@ -590,10 +592,7 @@ const UserController = {
               return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha algum dos campos.' });
             }
           
-          if (cpf === undefined) {
-            return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Não houve o envio do cpf do dependente na requisição.' });
-          }
-          let dependent = await Dependent.findOne( { cpf })
+          let dependent = await Dependent.findOne( { urlDep })
           if (!dependent) {
             return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Dependente não encontrado.' });
           }
@@ -618,7 +617,7 @@ const UserController = {
             })
             return res.status(HTTP_CODE_OK).json( { message: 'Imposto de Renda do Dependente atualizado.' } );
           } else {
-            return res.status(HTTP_CODE_OK).json( { message: 'O CPF informado não pertence ao Dependente do Associado informado.' } );
+            return res.status(HTTP_CODE_OK).json( { message: 'O Dependente informado não pertence ao Associado informado.' } );
           }
 
         } else {
