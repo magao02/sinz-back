@@ -188,7 +188,8 @@ const UserSchema = new Schema({
     },
     urlUser: {
         type: String,
-        required: false
+        required: false,
+        unique: true
     },
     dependentes: {
         type: [String],

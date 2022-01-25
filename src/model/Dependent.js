@@ -89,6 +89,11 @@ const DependentSchema = new Schema({
             required: false,
             default: 0
         }
+    },
+    urlDep: {
+        type: String,
+        required: false,
+        unique: true
     }
 },
     {

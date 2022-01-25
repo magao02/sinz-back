@@ -156,7 +156,7 @@ const UserController = {
             name: user.name,
             email: user.email,
             telefone: user.telefone,
-            nascimento: ((user.nascimento.getDate() + 1)) + "/" + ((user.nascimento.getMonth() + 1)) + "/" + user.nascimento.getFullYear(),
+            nascimento: ((user.nascimento.getDate())) + "/" + ((user.nascimento.getMonth() + 1)) + "/" + user.nascimento.getFullYear(),
             cpf: user.cpf,
             rg: user.rg,
             emissao: ((user.emissao.getDate() )) + "/" + ((user.emissao.getMonth() + 1)) + "/" + user.emissao.getFullYear(),
@@ -352,6 +352,24 @@ const UserController = {
           return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
         }
 
+        var temporalUrl = name.replace(/\s/g, '').toLowerCase()
+          .normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+
+        let urlDep = temporalUrl;
+        let urlUnavailable = true;
+
+        while (urlUnavailable) {
+          let depWithThisURL = await Dependent.findOne({ urlDep });
+
+          if (!depWithThisURL) {
+            urlUnavailable = false;
+          } else {
+            urlDep = temporalUrl;
+            let randonNum = Math.floor(Math.random() * 1001);
+            urlDep = temporalUrl + randonNum.toString();
+          }
+        }
+
         nascimento = nascimento.split('/')
         nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
         emissao = emissao.split('/')
@@ -365,6 +383,7 @@ const UserController = {
                 cpf,
                 rg,
                 emissao,
+                urlDep,
                 idAssociado: req.userId
             });
           } catch (e) {
@@ -446,6 +465,7 @@ const UserController = {
               nascimento: ((user.nascimento.getDate() + 1)) + "/" + ((user.nascimento.getMonth() + 1)) + "/" + user.nascimento.getFullYear(),
               cpf: user.cpf,
               rg: user.rg,
+              urlUser: user.urlUser,
               emissao: ((user.emissao.getDate() + 1)) + "/" + ((user.emissao.getMonth() + 1)) + "/" + user.emissao.getFullYear(),
             })
           })
