@@ -165,7 +165,7 @@ const UserSchema = new Schema({
         },
         numero: {
             type: String,
-            required: true
+            // required: true
         },
     },
     regional: {
