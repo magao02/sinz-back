@@ -426,7 +426,7 @@ const UserController = {
             dep = await Dependent.deleteOne(dep)
             .then(async function (deletedUser) {
               if(deletedUser) {
-                let newArrayDeps = user.dependentes.filter(depOfUser => depOfUser._id === dep._id);
+                let newArrayDeps = user.dependentes.pull(dep._id);
 
                 await User.findByIdAndUpdate(user._id, {
                    dependentes: newArrayDeps
