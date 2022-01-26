@@ -599,7 +599,7 @@ const UserController = {
 
           if (user.dependentes.includes(dependent._id)) {
             dependent = await Dependent.updateOne(
-              { cpf: cpf }, { $set: { impostoDeRenda : {
+              { urlDep: urlDep }, { $set: { impostoDeRenda : {
                 janeiro: (impostoDeRenda.janeiro !== undefined) ? impostoDeRenda.janeiro : dependent.impostoDeRenda.janeiro,
                 fevereiro: (impostoDeRenda.fevereiro !== undefined) ? impostoDeRenda.fevereiro : dependent.impostoDeRenda.fevereiro,
                 marco: (impostoDeRenda.marco !== undefined) ? impostoDeRenda.marco : dependent.impostoDeRenda.marco,
