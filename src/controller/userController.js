@@ -413,21 +413,11 @@ const UserController = {
       },
 
       async deleteDep(req, res) {
-        const urlUser = req.params.urlUser;
+        const urlDep = req.params.urlDep;
     
-        let user = await User.findOne({ urlUser });
-    
-        if (!user) {
-          return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
-        }
+        let dep = await Dependent.findOne({ urlDep });
 
-        let { cpf } = req.body;
-
-        if (cpf === undefined) {
-          return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
-        }
-
-        let dep = await Dependent.findOne({ cpf });
+        let user = req.user;
 
         if (!dep) {
           return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Dependente não encontrado.' });
