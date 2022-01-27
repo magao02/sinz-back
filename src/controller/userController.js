@@ -449,14 +449,15 @@ const UserController = {
           let users = await User.find();
           let usersDTO = [];
 
+          // (newUserData.email !== undefined) ? newUserData.email : user.email,
           users.forEach(user => {
             usersDTO.push({
-              name: user.name,
-              nascimento: ((user.nascimento.getDate() + 1)) + "/" + ((user.nascimento.getMonth() + 1)) + "/" + user.nascimento.getFullYear(),
-              cpf: user.cpf,
-              rg: user.rg,
-              urlUser: user.urlUser,
-              emissao: ((user.emissao.getDate() + 1)) + "/" + ((user.emissao.getMonth() + 1)) + "/" + user.emissao.getFullYear(),
+              name: (user.name !== "") ? user.name : "",
+              nascimento: (user.nascimento !== "") ? ((user.nascimento.getDate() + 1)) + "/" + ((user.nascimento.getMonth() + 1)) + "/" + user.nascimento.getFullYear() : "",
+              cpf: (user.cpf !== "") ? user.cpf : "",
+              rg: (user.rg !== "") ? user.rg : "",
+              urlUser: (user.urlUser !== "") ? user.urlUser : "",
+              emissao: (user.emissao !== "") ? ((user.emissao.getDate() + 1)) + "/" + ((user.emissao.getMonth() + 1)) + "/" + user.emissao.getFullYear() : "",
             })
           })
 
