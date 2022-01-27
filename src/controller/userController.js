@@ -453,11 +453,11 @@ const UserController = {
           users.forEach(user => {
             usersDTO.push({
               name: (user.name !== "") ? user.name : "",
-              nascimento: (user.nascimento !== "" || user.nascimento !== null || user.nascimento !== undefined) ? ((user.nascimento.getDate() + 1)) + "/" + ((user.nascimento.getMonth() + 1)) + "/" + user.nascimento.getFullYear() : "",
+              nascimento: (user.nascimento !== "" && user.nascimento !== null && user.nascimento !== undefined) ? ((user.nascimento.getDate() + 1)) + "/" + ((user.nascimento.getMonth() + 1)) + "/" + user.nascimento.getFullYear() : "",
               cpf: (user.cpf !== "") ? user.cpf : "",
-              rg: (user.rg !== "" || user.rg !== null || user.rg !== undefined) ? user.rg : "",
+              rg: (user.rg !== "" && user.rg !== null && user.rg !== undefined) ? user.rg : "",
               urlUser: (user.urlUser !== "") ? user.urlUser : "",
-              emissao: (user.emissao !== "" || user.emissao !== null || user.emissao !== undefined) ? ((user.emissao.getDate() + 1)) + "/" + ((user.emissao.getMonth() + 1)) + "/" + user.emissao.getFullYear() : "",
+              emissao: (user.emissao !== "" && user.emissao !== null && user.emissao !== undefined) ? ((user.emissao.getDate() + 1)) + "/" + ((user.emissao.getMonth() + 1)) + "/" + user.emissao.getFullYear() : "",
             })
           })
 
