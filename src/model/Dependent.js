@@ -13,7 +13,7 @@ const DependentSchema = new Schema({
         type: String,
         required: true,
         unique: [true, "CPF já cadastrado."],
-        validate: [/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, "O campo de CPF deve possuir o formato: xxx.xxx.xxx-xx"]
+        validate: [/^\d{3}\d{3}\d{3}\d{2}$/, "O campo de CPF deve possuir apenas 11 digitos."]
     },
     rg: {
         type: String,
