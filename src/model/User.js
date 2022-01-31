@@ -23,7 +23,7 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         unique: [true, "Telefone já cadastrado."],
-        validate: [/^[(][0-9]{2}[)][ ][-][ ]([0-9]{8}|[0-9]{9})$/, "O campo de Telefone deve possuir o formato: (xx) - xxxxx-xxxx"]
+        validate: [/^[0-9]{2}([0-9]{8}|[0-9]{9})$/, "O campo de Telefone deve possuir apenas 10 ou 11 dígitos."]
     },
     nascimento: {
         type: Date,
@@ -33,7 +33,7 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         unique: [true, "CPF já cadastrado."],
-        validate: [/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, "O campo de CPF deve possuir o formato: xxx.xxx.xxx-xx"]
+        validate: [/^\d{3}\d{3}\d{3}\d{2}$/, "O campo de CPF deve possuir apenas 11 digitos."]
     },
     rg: {
         type: String,
