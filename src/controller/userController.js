@@ -74,7 +74,7 @@ const UserController = {
             // dataRegistroConselho = new Date(`${dataRegistroConselho[2]}-${dataRegistroConselho[1]}-${dataRegistroConselho[0]}T01:00:00+01:00`);
             
             // Criação de dado emergencial
-            if (telefone === undefined || telefone === "") telefone = "00000000000"
+            // if (telefone === undefined || telefone === "") telefone = "00000000000"
             if (password === undefined || password === "") password = cpf
             
             try {
