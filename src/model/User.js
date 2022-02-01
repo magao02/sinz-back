@@ -8,7 +8,7 @@ const UserSchema = new Schema({
     email: {
         type: String,
         // required: true,
-        unique: [true, "E-mail já cadastrado."],
+        // unique: [true, "E-mail já cadastrado."],
     },
     password: {
         type: String,
@@ -22,7 +22,7 @@ const UserSchema = new Schema({
     telefone: {
         type: String,
         // required: true,
-        unique: [true, "Telefone já cadastrado."],
+        // unique: [true, "Telefone já cadastrado."],
         validate: [/^[0-9]{2}([0-9]{8}|[0-9]{9})$/, "O campo de Telefone deve possuir apenas 10 ou 11 dígitos."]
     },
     nascimento: {
