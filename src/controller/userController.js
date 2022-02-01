@@ -487,6 +487,18 @@ const UserController = {
             })
           })
 
+          function compare( a, b ) {
+            if ( a.name < b.name ){
+              return -1;
+            }
+            if ( a.name > b.name ){
+              return 1;
+            }
+            return 0;
+          }
+          
+          usersDTO.sort( compare );
+
           return res.status(HTTP_CODE_OK).json(usersDTO);
         } else {
           return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário sem permissão de visualizar os assessores.' });
