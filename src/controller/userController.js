@@ -536,6 +536,19 @@ const UserController = {
               })
             }
           }
+
+          function compare( a, b ) {
+            if ( a.name < b.name ){
+              return -1;
+            }
+            if ( a.name > b.name ){
+              return 1;
+            }
+            return 0;
+          }
+          
+          dependetesDTO.sort( compare );
+
           return res.status(HTTP_CODE_OK).json(dependetesDTO);
         } else {
           return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário sem permissão de visualizar os dependentes desse assessor.' });
