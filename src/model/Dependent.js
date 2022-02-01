@@ -7,22 +7,22 @@ const DependentSchema = new Schema({
     },
     nascimento: {
         type: Date,
-        required: true
+        // required: true
     },
     cpf: {
         type: String,
-        required: true,
+        // required: true,
         unique: [true, "CPF já cadastrado."],
-        validate: [/^\d{3}\d{3}\d{3}\d{2}$/, "O campo de CPF deve possuir apenas 11 digitos."]
+        // validate: [/^\d{3}\d{3}\d{3}\d{2}$/, "O campo de CPF deve possuir apenas 11 digitos."]
     },
     rg: {
         type: String,
         unique: [true, "RG já cadastrado."],
-        required: true
+        // required: true
     },
     emissao: {
         type: Date,
-        required: true
+        // required: true
     },
     idAssociado: {
         type: String,

@@ -17,21 +17,27 @@ const UserController = {
           dataFormacao, numRegistroConselho, dataRegistroConselho,
           empresa, salario } = req.body;
 
-        if (name === undefined || email === undefined ||
-            password === undefined || telefone === undefined ||
-            nascimento === undefined || cpf === undefined ||
-            rg === undefined || emissao === undefined ||
-            filiacao === undefined || profissao === undefined || endereco === undefined ||
-            endereco.rua === undefined || endereco.bairro === undefined ||
-            regional.municipio === undefined || regional.estado === undefined ||
-            regional.naturalidade === undefined || regional.nacionalidade === undefined ||
-            numInscricao === undefined || dataAfiliacao === undefined ||
-            formacaoSuperior === undefined || instituicaoSuperior === undefined ||
-            dataFormacao === undefined || numRegistroConselho === undefined ||
-            dataRegistroConselho === undefined || empresa === undefined ||
-            salario === undefined) {
-              return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
-            }
+        // Verificações Não Emergenciais
+        
+        // if (name === undefined || email === undefined ||
+        //     password === undefined || telefone === undefined ||
+        //     nascimento === undefined || cpf === undefined ||
+        //     rg === undefined || emissao === undefined ||
+        //     filiacao === undefined || profissao === undefined || endereco === undefined ||
+        //     endereco.rua === undefined || endereco.bairro === undefined ||
+        //     regional.municipio === undefined || regional.estado === undefined ||
+        //     regional.naturalidade === undefined || regional.nacionalidade === undefined ||
+        //     numInscricao === undefined || dataAfiliacao === undefined ||
+        //     formacaoSuperior === undefined || instituicaoSuperior === undefined ||
+        //     dataFormacao === undefined || numRegistroConselho === undefined ||
+        //     dataRegistroConselho === undefined || empresa === undefined ||
+        //     salario === undefined) {
+        //       return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
+        //     }
+
+        if (name === undefined || cpf === undefined) {
+            return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
+          }
 
         let user = await User.findOne({ cpf });
 
@@ -54,16 +60,23 @@ const UserController = {
                 }
             }
 
-            nascimento = nascimento.split('/')
-            nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
-            emissao = emissao.split('/')
-            emissao = new Date(`${emissao[2]}-${emissao[1]}-${emissao[0]}T01:00:00+01:00`);
-            dataAfiliacao = dataAfiliacao.split('/')
-            dataAfiliacao = new Date(`${dataAfiliacao[2]}-${dataAfiliacao[1]}-${dataAfiliacao[0]}T01:00:00+01:00`);
-            dataFormacao = dataFormacao.split('/')
-            dataFormacao = new Date(`${dataFormacao[2]}-${dataFormacao[1]}-${dataFormacao[0]}T01:00:00+01:00`);
-            dataRegistroConselho = dataRegistroConselho.split('/')
-            dataRegistroConselho = new Date(`${dataRegistroConselho[2]}-${dataRegistroConselho[1]}-${dataRegistroConselho[0]}T01:00:00+01:00`);
+            // Estruturação de dados Não Emergenciais
+
+            // nascimento = nascimento.split('/')
+            // nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
+            // emissao = emissao.split('/')
+            // emissao = new Date(`${emissao[2]}-${emissao[1]}-${emissao[0]}T01:00:00+01:00`);
+            // dataAfiliacao = dataAfiliacao.split('/')
+            // dataAfiliacao = new Date(`${dataAfiliacao[2]}-${dataAfiliacao[1]}-${dataAfiliacao[0]}T01:00:00+01:00`);
+            // dataFormacao = dataFormacao.split('/')
+            // dataFormacao = new Date(`${dataFormacao[2]}-${dataFormacao[1]}-${dataFormacao[0]}T01:00:00+01:00`);
+            // dataRegistroConselho = dataRegistroConselho.split('/')
+            // dataRegistroConselho = new Date(`${dataRegistroConselho[2]}-${dataRegistroConselho[1]}-${dataRegistroConselho[0]}T01:00:00+01:00`);
+            
+            // Criação de dado emergencial
+            if (telefone === undefined || telefone === "") telefone = "00000000000"
+            if (password === undefined || password === "") password = cpf
+            
             try {
               user = await User.create({
                   name, email, password,
@@ -189,7 +202,6 @@ const UserController = {
             password: (password !== undefined) ? password : user.password
           })
     
-          user = await User.findOne({ cpf });
           let response = {    
             message: 'Senha alterada com sucesso.'
           }
@@ -223,14 +235,22 @@ const UserController = {
             urlUser
             } = req.body;
 
-          nascimento = nascimento.split('/')
-          nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
-          dataAfiliacao = dataAfiliacao.split('/')
-          dataAfiliacao = new Date(`${dataAfiliacao[2]}-${dataAfiliacao[1]}-${dataAfiliacao[0]}T01:00:00+01:00`);
-          dataFormacao = dataFormacao.split('/')
-          dataFormacao = new Date(`${dataFormacao[2]}-${dataFormacao[1]}-${dataFormacao[0]}T01:00:00+01:00`);
-          dataRegistroConselho = dataRegistroConselho.split('/')
-          dataRegistroConselho = new Date(`${dataRegistroConselho[2]}-${dataFormacdataRegistroConselhoao[1]}-${dataRegistroConselho[0]}T01:00:00+01:00`);
+          if (nascimento !== undefined || nascimento !== "" || nascimento !== null) {
+            nascimento = nascimento.split('/')
+            nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
+          }
+          if (dataAfiliacao !== undefined || dataAfiliacao !== "" || dataAfiliacao !== null) {
+            dataAfiliacao = dataAfiliacao.split('/')
+            dataAfiliacao = new Date(`${dataAfiliacao[2]}-${dataAfiliacao[1]}-${dataAfiliacao[0]}T01:00:00+01:00`);
+          }
+          if (dataFormacao !== undefined || dataFormacao !== "" || dataFormacao !== null) {
+            dataFormacao = dataFormacao.split('/')
+            dataFormacao = new Date(`${dataFormacao[2]}-${dataFormacao[1]}-${dataFormacao[0]}T01:00:00+01:00`);
+          }
+          if (dataRegistroConselho !== undefined || dataRegistroConselho !== "" || dataRegistroConselho !== null) {
+            dataRegistroConselho = dataRegistroConselho.split('/')
+            dataRegistroConselho = new Date(`${dataRegistroConselho[2]}-${dataFormacdataRegistroConselhoao[1]}-${dataRegistroConselho[0]}T01:00:00+01:00`);
+          }
 
           user = await User.findByIdAndUpdate(user._id, {
             name: (newUserData.name !== undefined) ? newUserData.name : user.name,
@@ -347,10 +367,14 @@ const UserController = {
 
         let { name, nascimento, cpf, rg, emissao} = req.body;
 
-        if (name === undefined || nascimento === undefined || cpf === undefined
-            || rg === undefined || emissao === undefined) {
-          return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
-        }
+        // if (name === undefined || nascimento === undefined || cpf === undefined
+        //     || rg === undefined || emissao === undefined) {
+        //   return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
+        // }
+
+        if (name === undefined) {
+        return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
+      }
 
         var temporalUrl = name.replace(/\s/g, '').toLowerCase()
           .normalize('NFD').replace(/[\u0300-\u036f]/g, "");
@@ -370,10 +394,12 @@ const UserController = {
           }
         }
 
-        nascimento = nascimento.split('/')
-        nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
-        emissao = emissao.split('/')
-        emissao = new Date(`${emissao[2]}-${emissao[1]}-${emissao[0]}T01:00:00+01:00`);
+        // Estruturação de dados que não são de emergencia
+
+        // nascimento = nascimento.split('/')
+        // nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
+        // emissao = emissao.split('/')
+        // emissao = new Date(`${emissao[2]}-${emissao[1]}-${emissao[0]}T01:00:00+01:00`);
         if (user._id.equals(req.userId)) {
           let dependent;
           try {
@@ -491,10 +517,10 @@ const UserController = {
               dependetesDTO.push({
                 name: dep.name,
                 cpf: dep.cpf,
-                nascimento: ((dep.nascimento.getDate())) + "/" + ((dep.nascimento.getMonth() + 1)) + "/" + dep.nascimento.getFullYear(),
+                nascimento: (dep.nascimento !== "" && dep.nascimento !== null && dep.nascimento !== undefined) ? ((dep.nascimento.getDate())) + "/" + ((dep.nascimento.getMonth() + 1)) + "/" + dep.nascimento.getFullYear() : "",
                 rg: dep.rg,
                 urlDep: dep.urlDep,
-                emissao: ((dep.emissao.getDate())) + "/" + ((dep.emissao.getMonth() + 1)) + "/" + dep.emissao.getFullYear()
+                emissao: (dep.emissao !== "" && dep.emissao !== null && dep.emissao !== undefined) ? ((dep.emissao.getDate())) + "/" + ((dep.emissao.getMonth() + 1)) + "/" + dep.emissao.getFullYear() : ""
               })
             }
           }
