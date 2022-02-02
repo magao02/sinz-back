@@ -406,11 +406,11 @@ const UserController = {
 
         // Estruturação de dados que não são de emergencia
 
-        if (nascimento !== undefined || nascimento !== "" || nascimento !== null) {
+        if (nascimento !== undefined && nascimento !== "" && nascimento !== null) {
           nascimento = nascimento.split('/')
           nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
         }
-        if (emissao !== undefined || emissao !== "" || emissao !== null) {
+        if (emissao !== undefined && emissao !== "" && emissao !== null) {
           emissao = emissao.split('/')
           emissao = new Date(`${emissao[2]}-${emissao[1]}-${emissao[0]}T01:00:00+01:00`);
         }
