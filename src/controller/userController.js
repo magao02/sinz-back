@@ -60,7 +60,7 @@ const UserController = {
         }
       }
 
-      // Estruturação de dados Não Emergenciais
+      // Verificação de dados Não Emergenciais
 
       if (nascimento !== undefined && nascimento !== "" && nascimento !== null) {
         nascimento = nascimento.split('/')
@@ -81,6 +81,65 @@ const UserController = {
       if (dataRegistroConselho !== undefined && dataRegistroConselho !== "" && dataRegistroConselho !== null) {
         dataRegistroConselho = dataRegistroConselho.split('/')
         dataRegistroConselho = new Date(`${dataRegistroConselho[2]}-${dataRegistroConselho[1]}-${dataRegistroConselho[0]}T01:00:00+01:00`);
+      }
+
+      // Verificações de dados préviamente cadastrados como Required no BD:
+
+      if (rg !== undefined && rg !== "" && rg !== null) {
+        var rgProvisorio = "rg_provisorio_numero_";
+  
+        let rg = rgProvisorio;
+        let rgUnavailable = true;
+  
+        while (rgUnavailable) {
+          let userWithThisRG = await User.findOne({ rg });
+  
+          if (!userWithThisRG) {
+            rgUnavailable = false;
+          } else {
+            rg = rgProvisorio;
+            let randonNum = Math.floor(Math.random() * 10001);
+            rg = rgProvisorio + randonNum.toString();
+          }
+        }
+      }
+
+      if (email !== undefined && email !== "" && email !== null) {
+        var emailProvisorio = "email_provisorio_numero_";
+  
+        let email = emailProvisorio + "1@email.com";
+        let emailUnavailable = true;
+  
+        while (emailUnavailable) {
+          let userWithThisEmail = await User.findOne({ email });
+  
+          if (!userWithThisEmail) {
+            emailUnavailable = false;
+          } else {
+            email = emailProvisorio;
+            let randonNum = Math.floor(Math.random() * 10001);
+            email = emailProvisorio + randonNum.toString() + "@email.com";
+          }
+        }
+      }
+
+      if (telefone !== undefined && telefone !== "" && telefone !== null) {
+        var telefoneProvisorio = "telefone_provisorio_numero_";
+  
+        let telefone = telefoneProvisorio;
+        let telefoneUnavailable = true;
+
+        while (telefoneUnavailable) {
+          let userWithThisTelefone = await User.findOne({ telefone });
+  
+          if (!userWithThisTelefone) {
+            telefoneUnavailable = false;
+          } else {
+            telefone = telefoneProvisorio;
+            let randonNum = Math.floor(Math.random() * 10001);
+            telefone = telefoneProvisorio + randonNum.toString();
+          }
+        }
       }
 
       // Criação de dado emergencial
