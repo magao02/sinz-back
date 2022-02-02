@@ -85,10 +85,10 @@ const UserController = {
 
       // Verificações de dados préviamente cadastrados como Required no BD:
 
-      if (rg !== undefined && rg !== "" && rg !== null) {
+      if (rg === undefined || rg === "" && rg === null) {
         var rgProvisorio = "rg_provisorio_numero_";
   
-        let rg = rgProvisorio;
+        rg = rgProvisorio;
         let rgUnavailable = true;
   
         while (rgUnavailable) {
@@ -104,10 +104,10 @@ const UserController = {
         }
       }
 
-      if (email !== undefined && email !== "" && email !== null) {
+      if (email === undefined || email === "" || email === null) {
         var emailProvisorio = "email_provisorio_numero_";
   
-        let email = emailProvisorio + "1@email.com";
+        email = emailProvisorio + "1@email.com";
         let emailUnavailable = true;
   
         while (emailUnavailable) {
@@ -123,10 +123,10 @@ const UserController = {
         }
       }
 
-      if (telefone !== undefined && telefone !== "" && telefone !== null) {
+      if (telefone === undefined || telefone === "" || telefone === null) {
         var telefoneProvisorio = "telefone_provisorio_numero_";
   
-        let telefone = telefoneProvisorio;
+        telefone = telefoneProvisorio;
         let telefoneUnavailable = true;
 
         while (telefoneUnavailable) {
@@ -476,16 +476,16 @@ const UserController = {
 
     // Verificações para dados requeridos pré-registrados:
 
-    if (rg !== undefined && rg !== "" && rg !== null) {
+    if (rg === undefined || rg === "" && rg === null) {
       var rgProvisorio = "rg_provisorio_numero_";
-
-      let rg = rgProvisorio;
+      
+      rg = rgProvisorio;
       let rgUnavailable = true;
-
+      
       while (rgUnavailable) {
-        let userWithThisRG = await User.findOne({ rg });
-
-        if (!userWithThisRG) {
+        let depWithThisRG = await Dependent.findOne({ rg });
+        
+        if (!depWithThisRG) {
           rgUnavailable = false;
         } else {
           rg = rgProvisorio;
@@ -495,6 +495,25 @@ const UserController = {
       }
     }
 
+    if (cpf === undefined || cpf === "" && cpf === null) {
+      var cpfProvisorio = "cpf_provisorio_numero_";
+      
+      cpf = cpfProvisorio;
+      let cpfUnavailable = true;
+      
+      while (cpfUnavailable) {
+        let depWithThisCPF = await Dependent.findOne({ cpf });
+        
+        if (!depWithThisCPF) {
+          cpfUnavailable = false;
+        } else {
+          cpf = cpfProvisorio;
+          let randonNum = Math.floor(Math.random() * 10001);
+          cpf = cpfProvisorio + randonNum.toString();
+        }
+      }
+    }
+    
     if (user._id.equals(req.userId)) {
       let dependent;
       try {
