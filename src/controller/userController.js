@@ -85,7 +85,7 @@ const UserController = {
 
       // Verificações de dados préviamente cadastrados como Required no BD:
 
-      if (rg === undefined || rg === "" && rg === null) {
+      if (rg === undefined || rg === "" || rg === null) {
         var rgProvisorio = "rg_provisorio_numero_";
   
         rg = rgProvisorio;
@@ -476,7 +476,7 @@ const UserController = {
 
     // Verificações para dados requeridos pré-registrados:
 
-    if (rg === undefined || rg === "" && rg === null) {
+    if (rg === undefined || rg === "" || rg === null) {
       var rgProvisorio = "rg_provisorio_numero_";
       
       rg = rgProvisorio;
@@ -495,7 +495,7 @@ const UserController = {
       }
     }
 
-    if (cpf === undefined || cpf === "" && cpf === null) {
+    if (cpf === undefined || cpf === "" || cpf === null) {
       var cpfProvisorio = "cpf_provisorio_numero_";
       
       cpf = cpfProvisorio;
