@@ -473,6 +473,28 @@ const UserController = {
       emissao = emissao.split('/')
       emissao = new Date(`${emissao[2]}-${emissao[1]}-${emissao[0]}T01:00:00+01:00`);
     }
+
+    // Verificações para dados requeridos pré-registrados:
+
+    if (rg !== undefined && rg !== "" && rg !== null) {
+      var rgProvisorio = "rg_provisorio_numero_";
+
+      let rg = rgProvisorio;
+      let rgUnavailable = true;
+
+      while (rgUnavailable) {
+        let userWithThisRG = await User.findOne({ rg });
+
+        if (!userWithThisRG) {
+          rgUnavailable = false;
+        } else {
+          rg = rgProvisorio;
+          let randonNum = Math.floor(Math.random() * 10001);
+          rg = rgProvisorio + randonNum.toString();
+        }
+      }
+    }
+
     if (user._id.equals(req.userId)) {
       let dependent;
       try {
