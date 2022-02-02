@@ -62,23 +62,23 @@ const UserController = {
 
             // Estruturação de dados Não Emergenciais
 
-            if (nascimento !== undefined || nascimento !== "" || nascimento !== null) {
+            if (nascimento !== undefined && nascimento !== "" && nascimento !== null) {
               nascimento = nascimento.split('/')
               nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
             }
-            if (emissao !== undefined || emissao !== "" || emissao !== null) {
+            if (emissao !== undefined && emissao !== "" && emissao !== null) {
               emissao = emissao.split('/')
               emissao = new Date(`${emissao[2]}-${emissao[1]}-${emissao[0]}T01:00:00+01:00`);
             }
-            if (dataAfiliacao !== undefined || dataAfiliacao !== "" || dataAfiliacao !== null) {
+            if (dataAfiliacao !== undefined && dataAfiliacao !== "" && dataAfiliacao !== null) {
               dataAfiliacao = dataAfiliacao.split('/')
               dataAfiliacao = new Date(`${dataAfiliacao[2]}-${dataAfiliacao[1]}-${dataAfiliacao[0]}T01:00:00+01:00`);
             }
-            if (dataFormacao !== undefined || dataFormacao !== "" || dataFormacao !== null) {
+            if (dataFormacao !== undefined && dataFormacao !== "" && dataFormacao !== null) {
               dataFormacao = dataFormacao.split('/')
               dataFormacao = new Date(`${dataFormacao[2]}-${dataFormacao[1]}-${dataFormacao[0]}T01:00:00+01:00`);
             }
-            if (dataRegistroConselho !== undefined || dataRegistroConselho !== "" || dataRegistroConselho !== null) {
+            if (dataRegistroConselho !== undefined && dataRegistroConselho !== "" && dataRegistroConselho !== null) {
               dataRegistroConselho = dataRegistroConselho.split('/')
               dataRegistroConselho = new Date(`${dataRegistroConselho[2]}-${dataRegistroConselho[1]}-${dataRegistroConselho[0]}T01:00:00+01:00`);
             }            
@@ -245,19 +245,19 @@ const UserController = {
             urlUser
             } = req.body;
 
-          if (nascimento !== undefined || nascimento !== "" || nascimento !== null) {
+          if (nascimento !== undefined && nascimento !== "" && nascimento !== null) {
             nascimento = nascimento.split('/')
             nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
           }
-          if (dataAfiliacao !== undefined || dataAfiliacao !== "" || dataAfiliacao !== null) {
+          if (dataAfiliacao !== undefined && dataAfiliacao !== "" && dataAfiliacao !== null) {
             dataAfiliacao = dataAfiliacao.split('/')
             dataAfiliacao = new Date(`${dataAfiliacao[2]}-${dataAfiliacao[1]}-${dataAfiliacao[0]}T01:00:00+01:00`);
           }
-          if (dataFormacao !== undefined || dataFormacao !== "" || dataFormacao !== null) {
+          if (dataFormacao !== undefined && dataFormacao !== "" && dataFormacao !== null) {
             dataFormacao = dataFormacao.split('/')
             dataFormacao = new Date(`${dataFormacao[2]}-${dataFormacao[1]}-${dataFormacao[0]}T01:00:00+01:00`);
           }
-          if (dataRegistroConselho !== undefined || dataRegistroConselho !== "" || dataRegistroConselho !== null) {
+          if (dataRegistroConselho !== undefined && dataRegistroConselho !== "" && dataRegistroConselho !== null) {
             dataRegistroConselho = dataRegistroConselho.split('/')
             dataRegistroConselho = new Date(`${dataRegistroConselho[2]}-${dataFormacdataRegistroConselhoao[1]}-${dataRegistroConselho[0]}T01:00:00+01:00`);
           }
