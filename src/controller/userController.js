@@ -300,7 +300,7 @@ const UserController = {
         numInscricao, dataAfiliacao,
         formacaoSuperior, instituicaoSuperior, dataFormacao,
         numRegistroConselho, dataRegistroConselho,
-        empresa, salario
+        empresa, salario, password
       } = req.body;
 
       if (nascimento !== undefined && nascimento !== "" && nascimento !== null) {
@@ -337,7 +337,8 @@ const UserController = {
         numRegistroConselho: (newUserData.numRegistroConselho !== undefined && newUserData.numRegistroConselho !== "") ? newUserData.numRegistroConselho : user.numRegistroConselho,
         dataRegistroConselho: (newUserData.dataRegistroConselho !== undefined && newUserData.dataRegistroConselho !== "") ? newUserData.dataRegistroConselho : user.dataRegistroConselho,
         empresa: (newUserData.empresa !== undefined && newUserData.empresa !== "") ? newUserData.empresa : user.empresa,
-        salario: (newUserData.salario !== undefined && newUserData.salario !== "") ? newUserData.salario : user.salario
+        salario: (newUserData.salario !== undefined && newUserData.salario !== "") ? newUserData.salario : user.salario,
+        password: (newUserData.password !== undefined && newUserData.password !== "") ? newUserData.password : user.password
       })
 
       return res.status(HTTP_CODE_OK).json({ message: 'Perfil alterado com sucesso.' });
