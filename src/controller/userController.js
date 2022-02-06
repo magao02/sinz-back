@@ -289,7 +289,7 @@ const UserController = {
     }
 
     if (user._id.equals(req.userId)) {
-      const newUserData = {
+      let newUserData = {
         name,
         email,
         telefone,
@@ -300,8 +300,7 @@ const UserController = {
         numInscricao, dataAfiliacao,
         formacaoSuperior, instituicaoSuperior, dataFormacao,
         numRegistroConselho, dataRegistroConselho,
-        empresa, salario,
-        urlUser
+        empresa, salario
       } = req.body;
 
       if (nascimento !== undefined && nascimento !== "" && nascimento !== null) {
@@ -322,24 +321,23 @@ const UserController = {
       }
 
       user = await User.findByIdAndUpdate(user._id, {
-        name: (newUserData.name !== undefined) ? newUserData.name : user.name,
-        email: (newUserData.email !== undefined) ? newUserData.email : user.email,
-        telefone: (newUserData.telefone !== undefined) ? newUserData.telefone : user.telefone,
-        nascimento: (newUserData.nascimento !== undefined) ? newUserData.nascimento : user.nascimento,
-        rg: (newUserData.rg !== undefined) ? newUserData.rg : user.rg,
-        filiacao: (newUserData.filiacao !== undefined) ? newUserData.filiacao : user.filiacao,
-        endereco: (newUserData.filiacao !== undefined) ? newUserData.filiacao : user.filiacao,
-        regional: (newUserData.filiacao !== undefined) ? newUserData.filiacao : user.filiacao,
-        numInscricao: (newUserData.numInscricao !== undefined) ? newUserData.numInscricao : user.numInscricao,
-        dataAfiliacao: (newUserData.dataAfiliacao !== undefined) ? newUserData.dataAfiliacao : user.dataAfiliacao,
-        formacaoSuperior: (newUserData.formacaoSuperior !== undefined) ? newUserData.formacaoSuperior : user.formacaoSuperior,
-        instituicaoSuperior: (newUserData.instituicaoSuperior !== undefined) ? newUserData.instituicaoSuperior : user.instituicaoSuperior,
-        dataFormacao: (newUserData.dataFormacao !== undefined) ? newUserData.dataFormacao : user.dataFormacao,
-        numRegistroConselho: (newUserData.numRegistroConselho !== undefined) ? newUserData.numRegistroConselho : user.numRegistroConselho,
-        dataRegistroConselho: (newUserData.dataRegistroConselho !== undefined) ? newUserData.dataRegistroConselho : user.dataRegistroConselho,
-        empresa: (newUserData.empresa !== undefined) ? newUserData.empresa : user.empresa,
-        salario: (newUserData.salario !== undefined) ? newUserData.salario : user.salario,
-        urlUser: (newUserData.urlUser !== undefined) ? newUserData.urlUser : user.urlUser,
+        name: (newUserData.name !== undefined && newUserData.name !== "") ? newUserData.name : user.name,
+        email: (newUserData.email !== undefined && newUserData.email !== "") ? newUserData.email : user.email,
+        telefone: (newUserData.telefone !== undefined && newUserData.telefone !== "") ? newUserData.telefone : user.telefone,
+        nascimento: (newUserData.nascimento !== undefined && newUserData.nascimento !== "") ? newUserData.nascimento : user.nascimento,
+        rg: (newUserData.rg !== undefined && newUserData.rg !== "") ? newUserData.rg : user.rg,
+        filiacao: (newUserData.filiacao !== undefined && newUserData.filiacao !== "") ? newUserData.filiacao : user.filiacao,
+        endereco: (newUserData.endereco !== undefined && newUserData.endereco !== "") ? newUserData.endereco : user.endereco,
+        regional: (newUserData.regional !== undefined && newUserData.regional !== "") ? newUserData.regional : user.regional,
+        numInscricao: (newUserData.numInscricao !== undefined && newUserData.numInscricao !== "") ? newUserData.numInscricao : user.numInscricao,
+        dataAfiliacao: (newUserData.dataAfiliacao !== undefined && newUserData.dataAfiliacao !== "") ? newUserData.dataAfiliacao : user.dataAfiliacao,
+        formacaoSuperior: (newUserData.formacaoSuperior !== undefined && newUserData.formacaoSuperior !== "") ? newUserData.formacaoSuperior : user.formacaoSuperior,
+        instituicaoSuperior: (newUserData.instituicaoSuperior !== undefined && newUserData.instituicaoSuperior !== "") ? newUserData.instituicaoSuperior : user.instituicaoSuperior,
+        dataFormacao: (newUserData.dataFormacao !== undefined && newUserData.dataFormacao !== "") ? newUserData.dataFormacao : user.dataFormacao,
+        numRegistroConselho: (newUserData.numRegistroConselho !== undefined && newUserData.numRegistroConselho !== "") ? newUserData.numRegistroConselho : user.numRegistroConselho,
+        dataRegistroConselho: (newUserData.dataRegistroConselho !== undefined && newUserData.dataRegistroConselho !== "") ? newUserData.dataRegistroConselho : user.dataRegistroConselho,
+        empresa: (newUserData.empresa !== undefined && newUserData.empresa !== "") ? newUserData.empresa : user.empresa,
+        salario: (newUserData.salario !== undefined && newUserData.salario !== "") ? newUserData.salario : user.salario
       })
 
       return res.status(HTTP_CODE_OK).json({ message: 'Perfil alterado com sucesso.' });
