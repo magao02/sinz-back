@@ -453,79 +453,82 @@ const UserController = {
     // }
 
     if (name === undefined) {
-      return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
+      // return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
+      return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha o campo de nome do Dependente.' });
     }
 
-    var temporalUrl = name.replace(/\s/g, '').toLowerCase()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-
-    let urlDep = temporalUrl;
-    let urlUnavailable = true;
-
-    while (urlUnavailable) {
-      let depWithThisURL = await Dependent.findOne({ urlDep });
-
-      if (!depWithThisURL) {
-        urlUnavailable = false;
-      } else {
-        urlDep = temporalUrl;
-        let randonNum = Math.floor(Math.random() * 1001);
-        urlDep = temporalUrl + randonNum.toString();
-      }
-    }
-
-    // Estruturação de dados que não são de emergencia
-
-    if (nascimento !== undefined && nascimento !== "" && nascimento !== null) {
-      nascimento = nascimento.split('/')
-      nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
-    }
-    if (emissao !== undefined && emissao !== "" && emissao !== null) {
-      emissao = emissao.split('/')
-      emissao = new Date(`${emissao[2]}-${emissao[1]}-${emissao[0]}T01:00:00+01:00`);
-    }
-
-    // Verificações para dados requeridos pré-registrados:
-
-    if (rg === undefined || rg === "" || rg === null) {
-      var rgProvisorio = "rg_provisorio_numero_";
-      
-      rg = rgProvisorio;
-      let rgUnavailable = true;
-      
-      while (rgUnavailable) {
-        let depWithThisRG = await Dependent.findOne({ rg });
-        
-        if (!depWithThisRG) {
-          rgUnavailable = false;
-        } else {
-          rg = rgProvisorio;
-          let randonNum = Math.floor(Math.random() * 10001);
-          rg = rgProvisorio + randonNum.toString();
-        }
-      }
-    }
-
-    if (cpf === undefined || cpf === "" || cpf === null) {
-      var cpfProvisorio = "cpf_provisorio_numero_";
-      
-      cpf = cpfProvisorio;
-      let cpfUnavailable = true;
-      
-      while (cpfUnavailable) {
-        let depWithThisCPF = await Dependent.findOne({ cpf });
-        
-        if (!depWithThisCPF) {
-          cpfUnavailable = false;
-        } else {
-          cpf = cpfProvisorio;
-          let randonNum = Math.floor(Math.random() * 10001);
-          cpf = cpfProvisorio + randonNum.toString();
-        }
-      }
-    }
     
-    if (user._id.equals(req.userId)) {
+    if (req.user.admin || user._id.equals(req.userId)) {
+
+      var temporalUrl = name.replace(/\s/g, '').toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+  
+      let urlDep = temporalUrl;
+      let urlUnavailable = true;
+  
+      while (urlUnavailable) {
+        let depWithThisURL = await Dependent.findOne({ urlDep });
+  
+        if (!depWithThisURL) {
+          urlUnavailable = false;
+        } else {
+          urlDep = temporalUrl;
+          let randonNum = Math.floor(Math.random() * 1001);
+          urlDep = temporalUrl + randonNum.toString();
+        }
+      }
+  
+      // Estruturação de dados que não são de emergencia
+  
+      if (nascimento !== undefined && nascimento !== "" && nascimento !== null) {
+        nascimento = nascimento.split('/')
+        nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
+      }
+      if (emissao !== undefined && emissao !== "" && emissao !== null) {
+        emissao = emissao.split('/')
+        emissao = new Date(`${emissao[2]}-${emissao[1]}-${emissao[0]}T01:00:00+01:00`);
+      }
+  
+      // Verificações para dados requeridos pré-registrados:
+  
+      if (rg === undefined || rg === "" || rg === null) {
+        var rgProvisorio = "rg_provisorio_numero_";
+        
+        rg = rgProvisorio;
+        let rgUnavailable = true;
+        
+        while (rgUnavailable) {
+          let depWithThisRG = await Dependent.findOne({ rg });
+          
+          if (!depWithThisRG) {
+            rgUnavailable = false;
+          } else {
+            rg = rgProvisorio;
+            let randonNum = Math.floor(Math.random() * 10001);
+            rg = rgProvisorio + randonNum.toString();
+          }
+        }
+      }
+  
+      if (cpf === undefined || cpf === "" || cpf === null) {
+        var cpfProvisorio = "cpf_provisorio_numero_";
+        
+        cpf = cpfProvisorio;
+        let cpfUnavailable = true;
+        
+        while (cpfUnavailable) {
+          let depWithThisCPF = await Dependent.findOne({ cpf });
+          
+          if (!depWithThisCPF) {
+            cpfUnavailable = false;
+          } else {
+            cpf = cpfProvisorio;
+            let randonNum = Math.floor(Math.random() * 10001);
+            cpf = cpfProvisorio + randonNum.toString();
+          }
+        }
+      }
+
       let dependent;
       try {
         dependent = await Dependent.create({
