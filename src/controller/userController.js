@@ -327,8 +327,8 @@ const UserController = {
         nascimento: (newUserData.nascimento !== undefined && newUserData.nascimento !== "") ? newUserData.nascimento : user.nascimento,
         rg: (newUserData.rg !== undefined && newUserData.rg !== "") ? newUserData.rg : user.rg,
         filiacao: (newUserData.filiacao !== undefined && newUserData.filiacao !== "") ? newUserData.filiacao : user.filiacao,
-        endereco: (newUserData.endereco !== undefined && newUserData.endereco !== "") ? newUserData.endereco : user.endereco,
-        regional: (newUserData.regional !== undefined && newUserData.regional !== "") ? newUserData.regional : user.regional,
+        // endereco: (newUserData.endereco !== undefined && newUserData.endereco !== "") ? newUserData.endereco : user.endereco,
+        // regional: (newUserData.regional !== undefined && newUserData.regional !== "") ? newUserData.regional : user.regional,
         numInscricao: (newUserData.numInscricao !== undefined && newUserData.numInscricao !== "") ? newUserData.numInscricao : user.numInscricao,
         dataAfiliacao: (newUserData.dataAfiliacao !== undefined && newUserData.dataAfiliacao !== "") ? newUserData.dataAfiliacao : user.dataAfiliacao,
         formacaoSuperior: (newUserData.formacaoSuperior !== undefined && newUserData.formacaoSuperior !== "") ? newUserData.formacaoSuperior : user.formacaoSuperior,
@@ -338,7 +338,19 @@ const UserController = {
         dataRegistroConselho: (newUserData.dataRegistroConselho !== undefined && newUserData.dataRegistroConselho !== "") ? newUserData.dataRegistroConselho : user.dataRegistroConselho,
         empresa: (newUserData.empresa !== undefined && newUserData.empresa !== "") ? newUserData.empresa : user.empresa,
         salario: (newUserData.salario !== undefined && newUserData.salario !== "") ? newUserData.salario : user.salario,
-        password: (newUserData.password !== undefined && newUserData.password !== "") ? newUserData.password : user.password
+        password: (newUserData.password !== undefined && newUserData.password !== "") ? newUserData.password : user.password,
+        endereco: {
+          rua: (newUserData.endereco !== undefined && newUserData.endereco.rua !== undefined) ? newUserData.endereco.rua : user.endereco.rua,
+          bairro: (newUserData.endereco !== undefined && newUserData.endereco.bairro !== undefined) ? newUserData.endereco.bairro : user.endereco.bairro,
+          complemento: (newUserData.endereco !== undefined && newUserData.endereco.complemento !== undefined) ? newUserData.endereco.complemento : user.endereco.complemento,
+          numero: (newUserData.endereco !== undefined && newUserData.endereco.numero !== undefined) ? newUserData.endereco.numero : user.endereco.numero
+        },
+        regional: {
+          municipio: (newUserData.regional !== undefined && newUserData.regional.municipio !== undefined) ? newUserData.regional.municipio : user.regional.municipio,
+          estado: (newUserData.regional !== undefined && newUserData.regional.estado !== undefined) ? newUserData.regional.estado : user.regional.estado,
+          naturalidade: (newUserData.regional !== undefined && newUserData.regional.naturalidade !== undefined) ? newUserData.regional.naturalidade : user.regional.naturalidade,
+          nacionalidade: (newUserData.regional !== undefined && newUserData.regional.nacionalidade !== undefined) ? newUserData.regional.nacionalidade : user.regional.nacionalidade
+        }
       })
 
       return res.status(HTTP_CODE_OK).json({ message: 'Perfil alterado com sucesso.' });
