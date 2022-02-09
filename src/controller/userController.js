@@ -288,7 +288,7 @@ const UserController = {
       return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
     }
 
-    if (user._id.equals(req.userId)) {
+    if (user._id.equals(req.userId) || req.user.admin) {
       let newUserData = {
         name,
         email,
