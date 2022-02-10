@@ -289,7 +289,7 @@ const UserController = {
     }
 
     if (user._id.equals(req.userId) || req.user.admin) {
-      let newUserData = {
+      let {
         name,
         email,
         telefone,
@@ -317,39 +317,39 @@ const UserController = {
       }
       if (dataRegistroConselho !== undefined && dataRegistroConselho !== "" && dataRegistroConselho !== null) {
         dataRegistroConselho = dataRegistroConselho.split('/')
-        dataRegistroConselho = new Date(`${dataRegistroConselho[2]}-${dataFormacdataRegistroConselhoao[1]}-${dataRegistroConselho[0]}T01:00:00+01:00`);
+        dataRegistroConselho = new Date(`${dataRegistroConselho[2]}-${dataFormacdataRegistroConselho[1]}-${dataRegistroConselho[0]}T01:00:00+01:00`);
       }
 
       user = await User.findByIdAndUpdate(user._id, {
-        name: (newUserData.name !== undefined && newUserData.name !== "") ? newUserData.name : user.name,
-        email: (newUserData.email !== undefined && newUserData.email !== "") ? newUserData.email : user.email,
-        telefone: (newUserData.telefone !== undefined && newUserData.telefone !== "") ? newUserData.telefone : user.telefone,
-        nascimento: (newUserData.nascimento !== undefined && newUserData.nascimento !== "") ? newUserData.nascimento : user.nascimento,
-        rg: (newUserData.rg !== undefined && newUserData.rg !== "") ? newUserData.rg : user.rg,
-        filiacao: (newUserData.filiacao !== undefined && newUserData.filiacao !== "") ? newUserData.filiacao : user.filiacao,
-        // endereco: (newUserData.endereco !== undefined && newUserData.endereco !== "") ? newUserData.endereco : user.endereco,
-        // regional: (newUserData.regional !== undefined && newUserData.regional !== "") ? newUserData.regional : user.regional,
-        numInscricao: (newUserData.numInscricao !== undefined && newUserData.numInscricao !== "") ? newUserData.numInscricao : user.numInscricao,
-        dataAfiliacao: (newUserData.dataAfiliacao !== undefined && newUserData.dataAfiliacao !== "") ? newUserData.dataAfiliacao : user.dataAfiliacao,
-        formacaoSuperior: (newUserData.formacaoSuperior !== undefined && newUserData.formacaoSuperior !== "") ? newUserData.formacaoSuperior : user.formacaoSuperior,
-        instituicaoSuperior: (newUserData.instituicaoSuperior !== undefined && newUserData.instituicaoSuperior !== "") ? newUserData.instituicaoSuperior : user.instituicaoSuperior,
-        dataFormacao: (newUserData.dataFormacao !== undefined && newUserData.dataFormacao !== "") ? newUserData.dataFormacao : user.dataFormacao,
-        numRegistroConselho: (newUserData.numRegistroConselho !== undefined && newUserData.numRegistroConselho !== "") ? newUserData.numRegistroConselho : user.numRegistroConselho,
-        dataRegistroConselho: (newUserData.dataRegistroConselho !== undefined && newUserData.dataRegistroConselho !== "") ? newUserData.dataRegistroConselho : user.dataRegistroConselho,
-        empresa: (newUserData.empresa !== undefined && newUserData.empresa !== "") ? newUserData.empresa : user.empresa,
-        salario: (newUserData.salario !== undefined && newUserData.salario !== "") ? newUserData.salario : user.salario,
-        password: (newUserData.password !== undefined && newUserData.password !== "") ? newUserData.password : user.password,
+        name: (name !== undefined && name !== "") ? name : user.name,
+        email: (email !== undefined && email !== "") ? email : user.email,
+        telefone: (telefone !== undefined && telefone !== "") ? telefone : user.telefone,
+        nascimento: (nascimento !== undefined && nascimento !== "") ? nascimento : user.nascimento,
+        rg: (rg !== undefined && rg !== "") ? rg : user.rg,
+        filiacao: (filiacao !== undefined && filiacao !== "") ? filiacao : user.filiacao,
+        // endereco: (endereco !== undefined && endereco !== "") ? endereco : user.endereco,
+        // regional: (regional !== undefined && regional !== "") ? regional : user.regional,
+        numInscricao: (numInscricao !== undefined && numInscricao !== "") ? numInscricao : user.numInscricao,
+        dataAfiliacao: (dataAfiliacao !== undefined && dataAfiliacao !== "") ? dataAfiliacao : user.dataAfiliacao,
+        formacaoSuperior: (formacaoSuperior !== undefined && formacaoSuperior !== "") ? formacaoSuperior : user.formacaoSuperior,
+        instituicaoSuperior: (instituicaoSuperior !== undefined && instituicaoSuperior !== "") ? instituicaoSuperior : user.instituicaoSuperior,
+        dataFormacao: (dataFormacao !== undefined && dataFormacao !== "") ? dataFormacao : user.dataFormacao,
+        numRegistroConselho: (numRegistroConselho !== undefined && numRegistroConselho !== "") ? numRegistroConselho : user.numRegistroConselho,
+        dataRegistroConselho: (dataRegistroConselho !== undefined && dataRegistroConselho !== "") ? dataRegistroConselho : user.dataRegistroConselho,
+        empresa: (empresa !== undefined && empresa !== "") ? empresa : user.empresa,
+        salario: (salario !== undefined && salario !== "") ? salario : user.salario,
+        password: (password !== undefined && password !== "") ? password : user.password,
         endereco: {
-          rua: (newUserData.endereco !== undefined && newUserData.endereco.rua !== undefined) ? newUserData.endereco.rua : user.endereco.rua,
-          bairro: (newUserData.endereco !== undefined && newUserData.endereco.bairro !== undefined) ? newUserData.endereco.bairro : user.endereco.bairro,
-          complemento: (newUserData.endereco !== undefined && newUserData.endereco.complemento !== undefined) ? newUserData.endereco.complemento : user.endereco.complemento,
-          numero: (newUserData.endereco !== undefined && newUserData.endereco.numero !== undefined) ? newUserData.endereco.numero : user.endereco.numero
+          rua: (endereco !== undefined && endereco.rua !== undefined) ? endereco.rua : user.endereco.rua,
+          bairro: (endereco !== undefined && endereco.bairro !== undefined) ? endereco.bairro : user.endereco.bairro,
+          complemento: (endereco !== undefined && endereco.complemento !== undefined) ? endereco.complemento : user.endereco.complemento,
+          numero: (endereco !== undefined && endereco.numero !== undefined) ? endereco.numero : user.endereco.numero
         },
         regional: {
-          municipio: (newUserData.regional !== undefined && newUserData.regional.municipio !== undefined) ? newUserData.regional.municipio : user.regional.municipio,
-          estado: (newUserData.regional !== undefined && newUserData.regional.estado !== undefined) ? newUserData.regional.estado : user.regional.estado,
-          naturalidade: (newUserData.regional !== undefined && newUserData.regional.naturalidade !== undefined) ? newUserData.regional.naturalidade : user.regional.naturalidade,
-          nacionalidade: (newUserData.regional !== undefined && newUserData.regional.nacionalidade !== undefined) ? newUserData.regional.nacionalidade : user.regional.nacionalidade
+          municipio: (regional !== undefined && regional.municipio !== undefined) ? regional.municipio : user.regional.municipio,
+          estado: (regional !== undefined && regional.estado !== undefined) ? regional.estado : user.regional.estado,
+          naturalidade: (regional !== undefined && regional.naturalidade !== undefined) ? regional.naturalidade : user.regional.naturalidade,
+          nacionalidade: (regional !== undefined && regional.nacionalidade !== undefined) ? regional.nacionalidade : user.regional.nacionalidade
         }
       })
 
@@ -367,7 +367,7 @@ const UserController = {
         return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
       }
 
-      const newUserData = {
+      let {
         email,
         telefone,
         filiacao,
@@ -378,13 +378,13 @@ const UserController = {
       } = req.body;
 
       user = await User.findByIdAndUpdate(user._id, {
-        email: (newUserData.email !== undefined) ? newUserData.email : user.email,
-        telefone: (newUserData.telefone !== undefined) ? newUserData.telefone : user.telefone,
-        filiacao: (newUserData.filiacao !== undefined) ? newUserData.filiacao : user.filiacao,
-        rua: (newUserData.rua !== undefined) ? newUserData.rua : user.rua,
-        bairro: (newUserData.bairro !== undefined) ? newUserData.bairro : user.bairro,
-        complemento: (newUserData.complemento !== undefined) ? newUserData.complemento : user.complemento,
-        numero: (newUserData.numero !== undefined) ? newUserData.numero : user.numero,
+        email: (email !== undefined) ? email : user.email,
+        telefone: (telefone !== undefined) ? telefone : user.telefone,
+        filiacao: (filiacao !== undefined) ? filiacao : user.filiacao,
+        rua: (rua !== undefined) ? rua : user.rua,
+        bairro: (bairro !== undefined) ? bairro : user.bairro,
+        complemento: (complemento !== undefined) ? complemento : user.complemento,
+        numero: (numero !== undefined) ? numero : user.numero,
       })
 
       return res.status(HTTP_CODE_OK).json({ message: 'Dados do usuário ' + user.name + ' atualizados.' });
@@ -603,7 +603,6 @@ const UserController = {
       let users = await User.find();
       let usersDTO = [];
 
-      // (newUserData.email !== undefined) ? newUserData.email : user.email,
       users.forEach(user => {
         usersDTO.push({
           name: (user.name !== "") ? user.name : "",
