@@ -300,7 +300,7 @@ const UserController = {
         numInscricao, dataAfiliacao,
         formacaoSuperior, instituicaoSuperior, dataFormacao,
         numRegistroConselho, dataRegistroConselho,
-        empresa, salario, password
+        empresa, salario, password, profissao
       } = req.body;
 
       if (nascimento !== undefined && nascimento !== "" && nascimento !== null) {
@@ -339,6 +339,7 @@ const UserController = {
         empresa: (empresa !== undefined && empresa !== "") ? empresa : user.empresa,
         salario: (salario !== undefined && salario !== "") ? salario : user.salario,
         password: (password !== undefined && password !== "") ? password : user.password,
+        profissao: (profissao !== undefined && profissao !== "") ? profissao : user.profissao,
         endereco: {
           rua: (endereco !== undefined && endereco.rua !== undefined) ? endereco.rua : user.endereco.rua,
           bairro: (endereco !== undefined && endereco.bairro !== undefined) ? endereco.bairro : user.endereco.bairro,
