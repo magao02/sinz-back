@@ -1,6 +1,7 @@
 const User = require('../model/User');
 const Dependent = require('../model/Dependent');
 const jwt = require('jsonwebtoken');
+const geradores = require('@geradores');
 
 const HTTP_CODE_OK = 200;
 const HTTP_CODE_CREATED = 201;
@@ -17,23 +18,25 @@ const UserController = {
       dataFormacao, numRegistroConselho, dataRegistroConselho,
       empresa, salario } = req.body;
 
-    // Verificações Não Emergenciais
+    //Verificações Não Emergenciais
 
-    // if (name === undefined || email === undefined ||
-    //     password === undefined || telefone === undefined ||
-    //     nascimento === undefined || cpf === undefined ||
-    //     rg === undefined || emissao === undefined ||
-    //     filiacao === undefined || profissao === undefined || endereco === undefined ||
-    //     endereco.rua === undefined || endereco.bairro === undefined ||
-    //     regional.municipio === undefined || regional.estado === undefined ||
-    //     regional.naturalidade === undefined || regional.nacionalidade === undefined ||
-    //     numInscricao === undefined || dataAfiliacao === undefined ||
-    //     formacaoSuperior === undefined || instituicaoSuperior === undefined ||
-    //     dataFormacao === undefined || numRegistroConselho === undefined ||
-    //     dataRegistroConselho === undefined || empresa === undefined ||
-    //     salario === undefined) {
-    //       return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
-    //     }
+    if (name === undefined || email === undefined || telefone === undefined ||
+      nascimento === undefined || cpf === undefined ||
+      rg === undefined || emissao === undefined ||
+      filiacao === undefined || profissao === undefined || endereco === undefined ||
+      endereco.rua === undefined || endereco.bairro === undefined ||
+      regional.municipio === undefined || regional.estado === undefined ||
+      regional.naturalidade === undefined || regional.nacionalidade === undefined ||
+      numInscricao === undefined || dataAfiliacao === undefined ||
+      formacaoSuperior === undefined || instituicaoSuperior === undefined ||
+      dataFormacao === undefined || numRegistroConselho === undefined ||
+      dataRegistroConselho === undefined || empresa === undefined ||
+      salario === undefined) {
+      return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
+    }
+
+
+    await geradores.CreateURL;
 
     if (name === undefined || cpf === undefined) {
       return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
@@ -87,13 +90,13 @@ const UserController = {
 
       if (rg === undefined || rg === "" || rg === null) {
         var rgProvisorio = "rg_provisorio_numero_";
-  
+
         rg = rgProvisorio;
         let rgUnavailable = true;
-  
+
         while (rgUnavailable) {
           let userWithThisRG = await User.findOne({ rg });
-  
+
           if (!userWithThisRG) {
             rgUnavailable = false;
           } else {
@@ -106,13 +109,13 @@ const UserController = {
 
       if (email === undefined || email === "" || email === null) {
         var emailProvisorio = "email_provisorio_numero_";
-  
+
         email = emailProvisorio + "1@email.com";
         let emailUnavailable = true;
-  
+
         while (emailUnavailable) {
           let userWithThisEmail = await User.findOne({ email });
-  
+
           if (!userWithThisEmail) {
             emailUnavailable = false;
           } else {
@@ -125,13 +128,13 @@ const UserController = {
 
       if (telefone === undefined || telefone === "" || telefone === null) {
         var telefoneProvisorio = "telefone_provisorio_numero_";
-  
+
         telefone = telefoneProvisorio;
         let telefoneUnavailable = true;
 
         while (telefoneUnavailable) {
           let userWithThisTelefone = await User.findOne({ telefone });
-  
+
           if (!userWithThisTelefone) {
             telefoneUnavailable = false;
           } else {
@@ -458,18 +461,18 @@ const UserController = {
       return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha o campo de nome do Dependente.' });
     }
 
-    
+
     if (req.user.admin || user._id.equals(req.userId)) {
 
       var temporalUrl = name.replace(/\s/g, '').toLowerCase()
         .normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-  
+
       let urlDep = temporalUrl;
       let urlUnavailable = true;
-  
+
       while (urlUnavailable) {
         let depWithThisURL = await Dependent.findOne({ urlDep });
-  
+
         if (!depWithThisURL) {
           urlUnavailable = false;
         } else {
@@ -478,9 +481,9 @@ const UserController = {
           urlDep = temporalUrl + randonNum.toString();
         }
       }
-  
+
       // Estruturação de dados que não são de emergencia
-  
+
       if (nascimento !== undefined && nascimento !== "" && nascimento !== null) {
         nascimento = nascimento.split('/')
         nascimento = new Date(`${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`);
@@ -489,18 +492,18 @@ const UserController = {
         emissao = emissao.split('/')
         emissao = new Date(`${emissao[2]}-${emissao[1]}-${emissao[0]}T01:00:00+01:00`);
       }
-  
+
       // Verificações para dados requeridos pré-registrados:
-  
+
       if (rg === undefined || rg === "" || rg === null) {
         var rgProvisorio = "rg_provisorio_numero_";
-        
+
         rg = rgProvisorio;
         let rgUnavailable = true;
-        
+
         while (rgUnavailable) {
           let depWithThisRG = await Dependent.findOne({ rg });
-          
+
           if (!depWithThisRG) {
             rgUnavailable = false;
           } else {
@@ -510,16 +513,16 @@ const UserController = {
           }
         }
       }
-  
+
       if (cpf === undefined || cpf === "" || cpf === null) {
         var cpfProvisorio = "cpf_provisorio_numero_";
-        
+
         cpf = cpfProvisorio;
         let cpfUnavailable = true;
-        
+
         while (cpfUnavailable) {
           let depWithThisCPF = await Dependent.findOne({ cpf });
-          
+
           if (!depWithThisCPF) {
             cpfUnavailable = false;
           } else {
@@ -712,22 +715,22 @@ const UserController = {
 
       user = await User.updateOne(
         { _id: user._id }, {
-          $set: {
-            impostoDeRenda: {
-              janeiro: (impostoDeRenda.janeiro !== undefined) ? impostoDeRenda.janeiro : user.impostoDeRenda.janeiro,
-              fevereiro: (impostoDeRenda.fevereiro !== undefined) ? impostoDeRenda.fevereiro : user.impostoDeRenda.fevereiro,
-              marco: (impostoDeRenda.marco !== undefined) ? impostoDeRenda.marco : user.impostoDeRenda.marco,
-              abril: (impostoDeRenda.abril !== undefined) ? impostoDeRenda.abril : user.impostoDeRenda.abril,
-              maio: (impostoDeRenda.maio !== undefined) ? impostoDeRenda.maio : user.impostoDeRenda.maio,
-              junho: (impostoDeRenda.junho !== undefined) ? impostoDeRenda.junho : user.impostoDeRenda.junho,
-              julho: (impostoDeRenda.julho !== undefined) ? impostoDeRenda.julho : user.impostoDeRenda.julho,
-              agosto: (impostoDeRenda.agosto !== undefined) ? impostoDeRenda.agosto : user.impostoDeRenda.agosto,
-              setembro: (impostoDeRenda.setembro !== undefined) ? impostoDeRenda.setembro : user.impostoDeRenda.setembro,
-              outubro: (impostoDeRenda.outubro !== undefined) ? impostoDeRenda.outubro : user.impostoDeRenda.outubro,
-              novembro: (impostoDeRenda.novembro !== undefined) ? impostoDeRenda.novembro : user.impostoDeRenda.novembro,
-              dezembro: (impostoDeRenda.dezembro !== undefined) ? impostoDeRenda.dezembro : user.impostoDeRenda.dezembro,
-            }
+        $set: {
+          impostoDeRenda: {
+            janeiro: (impostoDeRenda.janeiro !== undefined) ? impostoDeRenda.janeiro : user.impostoDeRenda.janeiro,
+            fevereiro: (impostoDeRenda.fevereiro !== undefined) ? impostoDeRenda.fevereiro : user.impostoDeRenda.fevereiro,
+            marco: (impostoDeRenda.marco !== undefined) ? impostoDeRenda.marco : user.impostoDeRenda.marco,
+            abril: (impostoDeRenda.abril !== undefined) ? impostoDeRenda.abril : user.impostoDeRenda.abril,
+            maio: (impostoDeRenda.maio !== undefined) ? impostoDeRenda.maio : user.impostoDeRenda.maio,
+            junho: (impostoDeRenda.junho !== undefined) ? impostoDeRenda.junho : user.impostoDeRenda.junho,
+            julho: (impostoDeRenda.julho !== undefined) ? impostoDeRenda.julho : user.impostoDeRenda.julho,
+            agosto: (impostoDeRenda.agosto !== undefined) ? impostoDeRenda.agosto : user.impostoDeRenda.agosto,
+            setembro: (impostoDeRenda.setembro !== undefined) ? impostoDeRenda.setembro : user.impostoDeRenda.setembro,
+            outubro: (impostoDeRenda.outubro !== undefined) ? impostoDeRenda.outubro : user.impostoDeRenda.outubro,
+            novembro: (impostoDeRenda.novembro !== undefined) ? impostoDeRenda.novembro : user.impostoDeRenda.novembro,
+            dezembro: (impostoDeRenda.dezembro !== undefined) ? impostoDeRenda.dezembro : user.impostoDeRenda.dezembro,
           }
+        }
       })
 
       return res.status(HTTP_CODE_OK).json({ message: 'Imposto de Renda atualizado.' });
@@ -772,22 +775,22 @@ const UserController = {
       if (user.dependentes.includes(dependent._id)) {
         dependent = await Dependent.updateOne(
           { urlDep: urlDep }, {
-            $set: {
-              impostoDeRenda: {
-                janeiro: (impostoDeRenda.janeiro !== undefined) ? impostoDeRenda.janeiro : dependent.impostoDeRenda.janeiro,
-                fevereiro: (impostoDeRenda.fevereiro !== undefined) ? impostoDeRenda.fevereiro : dependent.impostoDeRenda.fevereiro,
-                marco: (impostoDeRenda.marco !== undefined) ? impostoDeRenda.marco : dependent.impostoDeRenda.marco,
-                abril: (impostoDeRenda.abril !== undefined) ? impostoDeRenda.abril : dependent.impostoDeRenda.abril,
-                maio: (impostoDeRenda.maio !== undefined) ? impostoDeRenda.maio : dependent.impostoDeRenda.maio,
-                junho: (impostoDeRenda.junho !== undefined) ? impostoDeRenda.junho : dependent.impostoDeRenda.junho,
-                julho: (impostoDeRenda.julho !== undefined) ? impostoDeRenda.julho : dependent.impostoDeRenda.julho,
-                agosto: (impostoDeRenda.agosto !== undefined) ? impostoDeRenda.agosto : dependent.impostoDeRenda.agosto,
-                setembro: (impostoDeRenda.setembro !== undefined) ? impostoDeRenda.setembro : dependent.impostoDeRenda.setembro,
-                outubro: (impostoDeRenda.outubro !== undefined) ? impostoDeRenda.outubro : dependent.impostoDeRenda.outubro,
-                novembro: (impostoDeRenda.novembro !== undefined) ? impostoDeRenda.novembro : dependent.impostoDeRenda.novembro,
-                dezembro: (impostoDeRenda.dezembro !== undefined) ? impostoDeRenda.dezembro : dependent.impostoDeRenda.dezembro,
-              }
+          $set: {
+            impostoDeRenda: {
+              janeiro: (impostoDeRenda.janeiro !== undefined) ? impostoDeRenda.janeiro : dependent.impostoDeRenda.janeiro,
+              fevereiro: (impostoDeRenda.fevereiro !== undefined) ? impostoDeRenda.fevereiro : dependent.impostoDeRenda.fevereiro,
+              marco: (impostoDeRenda.marco !== undefined) ? impostoDeRenda.marco : dependent.impostoDeRenda.marco,
+              abril: (impostoDeRenda.abril !== undefined) ? impostoDeRenda.abril : dependent.impostoDeRenda.abril,
+              maio: (impostoDeRenda.maio !== undefined) ? impostoDeRenda.maio : dependent.impostoDeRenda.maio,
+              junho: (impostoDeRenda.junho !== undefined) ? impostoDeRenda.junho : dependent.impostoDeRenda.junho,
+              julho: (impostoDeRenda.julho !== undefined) ? impostoDeRenda.julho : dependent.impostoDeRenda.julho,
+              agosto: (impostoDeRenda.agosto !== undefined) ? impostoDeRenda.agosto : dependent.impostoDeRenda.agosto,
+              setembro: (impostoDeRenda.setembro !== undefined) ? impostoDeRenda.setembro : dependent.impostoDeRenda.setembro,
+              outubro: (impostoDeRenda.outubro !== undefined) ? impostoDeRenda.outubro : dependent.impostoDeRenda.outubro,
+              novembro: (impostoDeRenda.novembro !== undefined) ? impostoDeRenda.novembro : dependent.impostoDeRenda.novembro,
+              dezembro: (impostoDeRenda.dezembro !== undefined) ? impostoDeRenda.dezembro : dependent.impostoDeRenda.dezembro,
             }
+          }
         })
         return res.status(HTTP_CODE_OK).json({ message: 'Imposto de Renda do Dependente atualizado.' });
       } else {

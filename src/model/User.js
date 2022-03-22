@@ -7,8 +7,8 @@ const UserSchema = new Schema({
     },
     email: {
         type: String,
-        // required: true,
-        // unique: [true, "E-mail já cadastrado."],
+        required: true,
+        unique: [true, "E-mail já cadastrado."],
     },
     password: {
         type: String,
@@ -21,13 +21,13 @@ const UserSchema = new Schema({
     },
     telefone: {
         type: String,
-        // required: true,
-        // unique: [true, "Telefone já cadastrado."],
-        // validate: [/^[0-9]{2}([0-9]{8}|[0-9]{9})$/, "O campo de Telefone deve possuir apenas 10 ou 11 dígitos."]
+        required: true,
+        unique: [true, "Telefone já cadastrado."],
+        validate: [/^[0-9]{2}([0-9]{8}|[0-9]{9})$/, "O campo de Telefone deve possuir apenas 10 ou 11 dígitos."]
     },
     nascimento: {
         type: Date,
-        // required: true
+        required: true
     },
     cpf: {
         type: String,
@@ -38,55 +38,55 @@ const UserSchema = new Schema({
     rg: {
         type: String,
         unique: [true, "RG já cadastrado."],
-        // required: true
+        required: true
     },
     emissao: {
         type: Date,
-        // required: true
+        required: true
     },
     filiacao: {
         type: String,
-        // required: true
+        required: true
     },
     dataAfiliacao: {
         type: Date,
-        // required: true
+        required: true
     },
     profissao: {
         type: String,
-        // required: true
+        required: true
     },
     numInscricao: {
         type: String,
-        // required: true
+        required: true
     },
     formacaoSuperior: {
         type: String,
-        // required: true
+        required: true
     },
     instituicaoSuperior: {
         type: String,
-        // required: true
+        required: true
     },
     dataFormacao: {
         type: Date,
-        // required: true
+        required: true
     },
     numRegistroConselho: {
         type: String,
-        // required: true
+        required: true
     },
     dataRegistroConselho: {
         type: Date,
-        // required: true
+        required: true
     },
     empresa: {
         type: String,
-        // required: true
+        required: true
     },
     salario: {
         type: Number,
-        // required: true
+        required: true
     },
     impostoDeRenda: {
         janeiro: {
@@ -153,37 +153,37 @@ const UserSchema = new Schema({
     endereco: {
         rua: {
             type: String,
-            // required: true
+            required: true
         },
         bairro: {
             type: String,
-            // required: true
+            required: true
         },
         complemento: {
             type: String,
-            // required: true
+            required: true
         },
         numero: {
             type: String,
-            // required: true
+            required: true
         },
     },
     regional: {
         municipio: {
             type: String,
-            // required: true
+            required: true
         },
         estado: {
             type: String,
-            // required: true
+            required: true
         },
         naturalidade: {
             type: String,
-            // required: true
+            required: true
         },
         nacionalidade: {
             type: String,
-            // required: true
+            required: true
         }
     },
     urlUser: {
