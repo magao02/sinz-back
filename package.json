@@ -29,7 +29,9 @@
     "@controller": "src/controller",
     "@service": "src/service",
     "@helper": "src/helper",
-    "@model": "src/model"
+    "@model": "src/model",
+    "@userController": "src/controller/userController",
+    "@geradores": "src/utils/geradores"
   },
   "devDependencies": {
     "chai": "^4.2.0",
