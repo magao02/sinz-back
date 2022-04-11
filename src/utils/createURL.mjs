@@ -1,15 +1,8 @@
-module.exports = {
-  async CreateURL(name, cpf) {
-    let { name, cpf } = req.body;
+const User = require('../model/User');
 
-    if (name === undefined || cpf === undefined) {
-      return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
-    }
 
-    let user = await User.findOne({ cpf });
-
-    if (!user) {
-      var temporalUrl = name.replace(/\s/g, '').toLowerCase()
+async function createURL(name) {
+  var temporalUrl = name.replace(/\s/g, '').toLowerCase()
         .normalize('NFD').replace(/[\u0300-\u036f]/g, "");
 
       let urlUser = temporalUrl;
@@ -26,7 +19,11 @@ module.exports = {
           urlUser = temporalUrl + randonNum.toString();
         }
       }
-    }
-  }
+
+      return urlUser;
 };
+
+module.exports = createURL;
+
+
 
