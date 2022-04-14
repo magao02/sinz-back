@@ -30,8 +30,7 @@ const DependentSchema = new Schema({
     },
 
     ImpostoDeRenda: {
-        type: Schema.Types.ObjectId,
-        ref: 'ImpostoDeRenda'
+        type: String
     },
     urlDep: {
         type: String,
