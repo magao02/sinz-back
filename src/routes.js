@@ -10,6 +10,7 @@ router.get('/signOut', auth.authorizeUser, UserController.logout);
 
 router.get('/user/:urlUser', auth.authorizeUser, UserController.userPage);
 
+//recuperar a senha
 router.put('/setPassword', auth.authorizeUser, UserController.setPassword);
 
 router.put('/user/:urlUser/setPerfil', auth.authorizeUser, UserController.setPerfil);
