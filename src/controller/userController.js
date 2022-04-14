@@ -19,8 +19,6 @@ const UserController = {
         dataFormacao, numRegistroConselho, dataRegistroConselho,
         empresa, salario } = req.body;
 
-    //Verificações Não Emergenciais
-
     if (name === undefined || email === undefined || telefone === undefined ||
       nascimento === undefined || cpf === undefined ||
       rg === undefined || emissao === undefined ||
@@ -42,7 +40,7 @@ const UserController = {
     if (!user) {
       let urlUser = await createURL(name);
 
-      // Verificação de dados Não Emergenciais
+      // Modificando formato das datas
 
       if (nascimento !== undefined && nascimento !== "" && nascimento !== null) {
         nascimento = nascimento.split('/')
@@ -253,8 +251,6 @@ const UserController = {
         nascimento: (nascimento !== undefined && nascimento !== "") ? nascimento : user.nascimento,
         rg: (rg !== undefined && rg !== "") ? rg : user.rg,
         filiacao: (filiacao !== undefined && filiacao !== "") ? filiacao : user.filiacao,
-        // endereco: (endereco !== undefined && endereco !== "") ? endereco : user.endereco,
-        // regional: (regional !== undefined && regional !== "") ? regional : user.regional,
         numInscricao: (numInscricao !== undefined && numInscricao !== "") ? numInscricao : user.numInscricao,
         dataAfiliacao: (dataAfiliacao !== undefined && dataAfiliacao !== "") ? dataAfiliacao : user.dataAfiliacao,
         formacaoSuperior: (formacaoSuperior !== undefined && formacaoSuperior !== "") ? formacaoSuperior : user.formacaoSuperior,
@@ -374,13 +370,7 @@ const UserController = {
 
     let { name, nascimento, cpf, rg, emissao } = req.body;
 
-    // if (name === undefined || nascimento === undefined || cpf === undefined
-    //     || rg === undefined || emissao === undefined) {
-    //   return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
-    // }
-
     if (name === undefined) {
-      // return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha todos os campos.' });
       return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha o campo de nome do Dependente.' });
     }
 
@@ -405,7 +395,7 @@ const UserController = {
         }
       }
 
-      // Estruturação de dados que não são de emergencia
+      // Modificando formato de datas
 
       if (nascimento !== undefined && nascimento !== "" && nascimento !== null) {
         nascimento = nascimento.split('/')
@@ -414,46 +404,6 @@ const UserController = {
       if (emissao !== undefined && emissao !== "" && emissao !== null) {
         emissao = emissao.split('/')
         emissao = new Date(`${emissao[2]}-${emissao[1]}-${emissao[0]}T01:00:00+01:00`);
-      }
-
-      // Verificações para dados requeridos pré-registrados:
-
-      if (rg === undefined || rg === "" || rg === null) {
-        var rgProvisorio = "rg_provisorio_numero_";
-
-        rg = rgProvisorio;
-        let rgUnavailable = true;
-
-        while (rgUnavailable) {
-          let depWithThisRG = await Dependent.findOne({ rg });
-
-          if (!depWithThisRG) {
-            rgUnavailable = false;
-          } else {
-            rg = rgProvisorio;
-            let randonNum = Math.floor(Math.random() * 10001);
-            rg = rgProvisorio + randonNum.toString();
-          }
-        }
-      }
-
-      if (cpf === undefined || cpf === "" || cpf === null) {
-        var cpfProvisorio = "cpf_provisorio_numero_";
-
-        cpf = cpfProvisorio;
-        let cpfUnavailable = true;
-
-        while (cpfUnavailable) {
-          let depWithThisCPF = await Dependent.findOne({ cpf });
-
-          if (!depWithThisCPF) {
-            cpfUnavailable = false;
-          } else {
-            cpf = cpfProvisorio;
-            let randonNum = Math.floor(Math.random() * 10001);
-            cpf = cpfProvisorio + randonNum.toString();
-          }
-        }
       }
 
       let dependent;
@@ -610,52 +560,48 @@ const UserController = {
   },
 
   async setImpostoDeRenda(req, res) {
-    const urlUser = req.params.urlUser;
-    let user = await User.findOne({ urlUser });
-    console.log(req.user);
-
     if (req.user.admin) {
+      const urlUser = req.params.urlUser;
       let user = await User.findOne({ urlUser });
 
       if (!user) {
         return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
       }
-      const _id = req.user.impostoDeRenda;
 
-      let novoImposto = req.body;
+      let impostoDeRenda = req.body;
 
-      if (novoImposto.janeiro === undefined &&
-      novoImposto.fevereiro === undefined &&
-      novoImposto.marco === undefined &&
-      novoImposto.abril === undefined &&
-      novoImposto.maio === undefined &&
-      novoImposto.junho === undefined &&
-      novoImposto.julho === undefined &&
-      novoImposto.agosto === undefined &&
-      novoImposto.setembro === undefined &&
-      novoImposto.outubro === undefined &&
-      novoImposto.novembro === undefined &&
-      novoImposto.dezembro === undefined
+      if (impostoDeRenda.janeiro === undefined &&
+        impostoDeRenda.fevereiro === undefined &&
+        impostoDeRenda.marco === undefined &&
+        impostoDeRenda.abril === undefined &&
+        impostoDeRenda.maio === undefined &&
+        impostoDeRenda.junho === undefined &&
+        impostoDeRenda.julho === undefined &&
+        impostoDeRenda.agosto === undefined &&
+        impostoDeRenda.setembro === undefined &&
+        impostoDeRenda.outubro === undefined &&
+        impostoDeRenda.novembro === undefined &&
+        impostoDeRenda.dezembro === undefined
       ) {
         return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha algum dos campos.' });
       }
 
       let antigoImposto = await Imposto.findById({_id: user.impostoDeRenda});
-      const impostoDeRenda  = await Imposto.updateOne(
+      const novoImposto  = await Imposto.updateOne(
         { _id: user.impostoDeRenda }, {
           $set: {
-              janeiro: (novoImposto.janeiro !== undefined) ? novoImposto.janeiro : antigoImposto.janeiro,
-              fevereiro: (novoImposto.fevereiro !== undefined) ? novoImposto.fevereiro : antigoImposto.fevereiro,
-              marco: (novoImposto.marco !== undefined) ?novoImposto.marco : antigoImposto.marco,
-              abril: (novoImposto.abril !== undefined) ?novoImposto.abril : antigoImposto.abril,
-              maio: (novoImposto.maio !== undefined) ? novoImposto.maio : antigoImposto.maio,
-              junho: (novoImposto.junho !== undefined) ? novoImposto.junho : antigoImposto.junho,
-              julho: (novoImposto.julho !== undefined) ? novoImposto.julho : antigoImposto.julho,
-              agosto: (novoImposto.agosto !== undefined) ? novoImposto.agosto : antigoImposto.agosto,
-              setembro: (novoImposto.setembro !== undefined) ? novoImposto.setembro : antigoImposto.setembro,
-              outubro: (novoImposto.outubro !== undefined) ? novoImposto.outubro : antigoImposto.outubro,
-              novembro: (novoImposto.novembro !== undefined) ? novoImposto.novembro : antigoImposto.novembro,
-              dezembro: (novoImposto.dezembro !== undefined) ? novoImposto.dezembro : antigoImposto.dezembro,
+              janeiro: (impostoDeRenda.janeiro !== undefined) ? impostoDeRenda.janeiro : antigoImposto.janeiro,
+              fevereiro: (impostoDeRenda.fevereiro !== undefined) ? impostoDeRenda.fevereiro : antigoImposto.fevereiro,
+              marco: (impostoDeRenda.marco !== undefined) ? impostoDeRenda.marco : antigoImposto.marco,
+              abril: (impostoDeRenda.abril !== undefined) ? impostoDeRenda.abril : antigoImposto.abril,
+              maio: (impostoDeRenda.maio !== undefined) ? impostoDeRenda.maio : antigoImposto.maio,
+              junho: (impostoDeRenda.junho !== undefined) ? impostoDeRenda.junho : antigoImposto.junho,
+              julho: (impostoDeRenda.julho !== undefined) ? impostoDeRenda.julho : antigoImposto.julho,
+              agosto: (impostoDeRenda.agosto !== undefined) ? impostoDeRenda.agosto : antigoImposto.agosto,
+              setembro: (impostoDeRenda.setembro !== undefined) ? impostoDeRenda.setembro : antigoImposto.setembro,
+              outubro: (impostoDeRenda.outubro !== undefined) ? impostoDeRenda.outubro : antigoImposto.outubro,
+              novembro: (impostoDeRenda.novembro !== undefined) ? impostoDeRenda.novembro : antigoImposto.novembro,
+              dezembro: (impostoDeRenda.dezembro !== undefined) ? impostoDeRenda.dezembro : antigoImposto.dezembro,
           }
       })
 
@@ -666,81 +612,62 @@ const UserController = {
   },
 
   async setImpostoDeRendaDep(req, res) {
-    
-    const { impostoDeRenda } = req.body;
+    if (req.user.admin) {
 
+      const urlUser = req.params.urlUser;
+      let user = await User.findOne({ urlUser });
+      if (!user) {
+        return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
+      }
+      
+      const urlDep = req.params.urlDep;
+      let dep = await Dependent.findOne({ urlDep });
 
-      if (user.impostoDeRenda === undefined){
-        const impostoDeRendaCompleto = await ImpostoDeRenda.create(impostoDeRenda);
-        User.ImpostoDeRenda = impostoDeRendaCompleto._id;
-
+      if (!dep) {
+        return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Dependente não encontrado.' });
       }
 
-      else{
-        
-        await ImpostoDeRenda.updateOne({ _id: user.impostoDeRenda});
+      let impostoDeRenda = req.body;
 
-            if (req.user.admin) {
-              const urlUser = req.params.urlUser;
-              const urlDep = req.params.urlDep;
-              let user = await User.findOne({ urlUser });
+      if (impostoDeRenda.janeiro === undefined &&
+        impostoDeRenda.fevereiro === undefined &&
+        impostoDeRenda.marco === undefined &&
+        impostoDeRenda.abril === undefined &&
+        impostoDeRenda.maio === undefined &&
+        impostoDeRenda.junho === undefined &&
+        impostoDeRenda.julho === undefined &&
+        impostoDeRenda.agosto === undefined &&
+        impostoDeRenda.setembro === undefined &&
+        impostoDeRenda.outubro === undefined &&
+        impostoDeRenda.novembro === undefined &&
+        impostoDeRenda.dezembro === undefined
+      ) {
+        return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha algum dos campos.' });
+      }
 
-              if (!user) {
-                return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Perfil não encontrado.' });
-              }
-
-              //const { impostoDeRenda } = req.body;
-
-              if (impostoDeRenda.janeiro === undefined &&
-                impostoDeRenda.fevereiro === undefined &&
-                impostoDeRenda.marco === undefined &&
-                impostoDeRenda.abril === undefined &&
-                impostoDeRenda.maio === undefined &&
-                impostoDeRenda.junho === undefined &&
-                impostoDeRenda.julho === undefined &&
-                impostoDeRenda.agosto === undefined &&
-                impostoDeRenda.setembro === undefined &&
-                impostoDeRenda.outubro === undefined &&
-                impostoDeRenda.novembro === undefined &&
-                impostoDeRenda.dezembro === undefined
-              ) {
-                return res.status(HTTP_CODE_BAD_REQUEST).json({ message: 'Preencha algum dos campos.' });
-              }
-
-              let dependent = await Dependent.findOne({ urlDep })
-              if (!dependent) {
-                return res.status(HTTP_CODE_NOT_FOUND).json({ message: 'Dependente não encontrado.' });
-              }
-
-              if (user.dependentes.includes(dependent._id)) {
-                dependent = await Dependent.updateOne(
-                  { urlDep: urlDep }, {
-                  $set: {
-                    impostoDeRenda: {
-                      janeiro: (impostoDeRenda.janeiro !== undefined) ? impostoDeRenda.janeiro : dependent.impostoDeRenda.janeiro,
-                      fevereiro: (impostoDeRenda.fevereiro !== undefined) ? impostoDeRenda.fevereiro : dependent.impostoDeRenda.fevereiro,
-                      marco: (impostoDeRenda.marco !== undefined) ? impostoDeRenda.marco : dependent.impostoDeRenda.marco,
-                      abril: (impostoDeRenda.abril !== undefined) ? impostoDeRenda.abril : dependent.impostoDeRenda.abril,
-                      maio: (impostoDeRenda.maio !== undefined) ? impostoDeRenda.maio : dependent.impostoDeRenda.maio,
-                      junho: (impostoDeRenda.junho !== undefined) ? impostoDeRenda.junho : dependent.impostoDeRenda.junho,
-                      julho: (impostoDeRenda.julho !== undefined) ? impostoDeRenda.julho : dependent.impostoDeRenda.julho,
-                      agosto: (impostoDeRenda.agosto !== undefined) ? impostoDeRenda.agosto : dependent.impostoDeRenda.agosto,
-                      setembro: (impostoDeRenda.setembro !== undefined) ? impostoDeRenda.setembro : dependent.impostoDeRenda.setembro,
-                      outubro: (impostoDeRenda.outubro !== undefined) ? impostoDeRenda.outubro : dependent.impostoDeRenda.outubro,
-                      novembro: (impostoDeRenda.novembro !== undefined) ? impostoDeRenda.novembro : dependent.impostoDeRenda.novembro,
-                      dezembro: (impostoDeRenda.dezembro !== undefined) ? impostoDeRenda.dezembro : dependent.impostoDeRenda.dezembro,
-                    }
-                  }
-                })
-                return res.status(HTTP_CODE_OK).json({ message: 'Imposto de Renda do Dependente atualizado.' });
-              } else {
-                return res.status(HTTP_CODE_OK).json({ message: 'O Dependente informado não pertence ao Associado informado.' });
-              }
-
-            } else {
-              return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário sem permissão para atualizar imposto de renda.' });
-            }
+      let antigoImposto = await Imposto.findById({_id: dep.impostoDeRenda});
+      const novoImposto  = await Imposto.updateOne(
+        { _id: user.impostoDeRenda }, {
+          $set: {
+              janeiro: (impostoDeRenda.janeiro !== undefined) ? impostoDeRenda.janeiro : antigoImposto.janeiro,
+              fevereiro: (impostoDeRenda.fevereiro !== undefined) ? impostoDeRenda.fevereiro : antigoImposto.fevereiro,
+              marco: (impostoDeRenda.marco !== undefined) ? impostoDeRenda.marco : antigoImposto.marco,
+              abril: (impostoDeRenda.abril !== undefined) ? impostoDeRenda.abril : antigoImposto.abril,
+              maio: (impostoDeRenda.maio !== undefined) ? impostoDeRenda.maio : antigoImposto.maio,
+              junho: (impostoDeRenda.junho !== undefined) ? impostoDeRenda.junho : antigoImposto.junho,
+              julho: (impostoDeRenda.julho !== undefined) ? impostoDeRenda.julho : antigoImposto.julho,
+              agosto: (impostoDeRenda.agosto !== undefined) ? impostoDeRenda.agosto : antigoImposto.agosto,
+              setembro: (impostoDeRenda.setembro !== undefined) ? impostoDeRenda.setembro : antigoImposto.setembro,
+              outubro: (impostoDeRenda.outubro !== undefined) ? impostoDeRenda.outubro : antigoImposto.outubro,
+              novembro: (impostoDeRenda.novembro !== undefined) ? impostoDeRenda.novembro : antigoImposto.novembro,
+              dezembro: (impostoDeRenda.dezembro !== undefined) ? impostoDeRenda.dezembro : antigoImposto.dezembro,
           }
+      })
+
+      return res.status(HTTP_CODE_OK).json({ message: 'Imposto de Renda atualizado.' });
+    } else {
+      return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: 'Usuário sem permissão para atualizar imposto de renda.' });
+    }
   },
 
   async getPDF(req, res) {
