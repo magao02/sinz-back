@@ -4,8 +4,10 @@ const config = require('@config');
 module.exports = () =>  {
     let DB_URL;
     if (process.env.NODE_ENV === "prod") {
+        console.log('Conectando com banco de produção...')
         DB_URL = config.db.production;
     } else if (process.env.NODE_ENV === "dev") {
+        console.log('Conectando com banco de desenvolvimento...')
         DB_URL = config.db.develop;
     }
     
