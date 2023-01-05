@@ -2,7 +2,7 @@ const User = require('../model/User');
 const Dependent = require('../model/Dependent');
 const Imposto = require ('../model/Imposto');
 const jwt = require('jsonwebtoken');
-const createURL = require('../utils/createURL.mjs');
+const createURL = require('../utils/createURL.js');
 
 const HTTP_CODE_OK = 200;
 const HTTP_CODE_CREATED = 201;
