@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+var Imposto = require('./Imposto.js');
 
 const UserSchema = new Schema({
     name: {
@@ -141,9 +142,9 @@ const UserSchema = new Schema({
         default: []
     },
     impostoDeRenda: {
-        type: String,
+        type: [Imposto.schema],
         required: false,
-        deafult: ""
+        deafult: []
     },
 },
     {

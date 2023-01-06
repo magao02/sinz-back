@@ -1,6 +1,12 @@
 const { Schema, model } = require('mongoose');
 
  const ImpostoSchema = new Schema ({
+    ano: {
+        type: Number,
+        required: true,
+        default: new Date().getFullYear()
+    },
+
     janeiro: {
         type: Number,
         required: false,
