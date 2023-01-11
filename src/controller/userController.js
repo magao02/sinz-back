@@ -3,6 +3,7 @@ const Dependent = require("../model/Dependent");
 const Imposto = require("../model/Imposto");
 const jwt = require("jsonwebtoken");
 const createURL = require("../utils/createURL.js");
+const { findById } = require("../model/Imposto");
 
 const HTTP_CODE_OK = 200;
 const HTTP_CODE_CREATED = 201;
@@ -655,7 +656,7 @@ const UserController = {
           urlDep,
           idAssociado: req.userId,
         });
-        let impostoDependente = await Imposto.create({ idUser: dependent.id});
+        let impostoDependente = await Imposto.create({ idUser: dependent.id });
         dependent = await Dependent.findByIdAndUpdate(dependent.id, {
           impostoDeRenda: impostoDependente._id,
         });
@@ -880,82 +881,100 @@ const UserController = {
       }
 
       let impostoDeRenda = req.body;
+      let impostos = await user.impostoDeRenda;
 
-      if (
-        impostoDeRenda.janeiro === undefined &&
-        impostoDeRenda.fevereiro === undefined &&
-        impostoDeRenda.marco === undefined &&
-        impostoDeRenda.abril === undefined &&
-        impostoDeRenda.maio === undefined &&
-        impostoDeRenda.junho === undefined &&
-        impostoDeRenda.julho === undefined &&
-        impostoDeRenda.agosto === undefined &&
-        impostoDeRenda.setembro === undefined &&
-        impostoDeRenda.outubro === undefined &&
-        impostoDeRenda.novembro === undefined &&
-        impostoDeRenda.dezembro === undefined
-      ) {
-        return res
-          .status(HTTP_CODE_BAD_REQUEST)
-          .json({ message: "Preencha algum dos campos." });
+      //Seleciona o imposto do ano correto.
+      for (var i = 0; i < impostos.length; i++) {
+        if (impostos[i].ano === +impostoDeRenda.ano) {
+          var antigoImposto = await Imposto.find({ idUser: user.id });
+          var indiceImpostoAtualizado = i;
+          break;
+        }
       }
+      antigoImposto = antigoImposto[0];
 
-      let antigoImposto = await Imposto.findById({ _id: user.impostoDeRenda });
       const novoImposto = await Imposto.updateOne(
-        { _id: user.impostoDeRenda },
+        { idUser: user.id },
         {
           $set: {
             janeiro:
-              impostoDeRenda.janeiro !== undefined
+              impostoDeRenda.janeiro !== undefined &&
+              impostoDeRenda.janeiro !== null &&
+              impostoDeRenda.janeiro
                 ? impostoDeRenda.janeiro
                 : antigoImposto.janeiro,
             fevereiro:
-              impostoDeRenda.fevereiro !== undefined
+              impostoDeRenda.fevereiro !== undefined &&
+              impostoDeRenda.fevereiro !== null &&
+              impostoDeRenda.feveiro !== ""
                 ? impostoDeRenda.fevereiro
                 : antigoImposto.fevereiro,
             marco:
-              impostoDeRenda.marco !== undefined
+              impostoDeRenda.marco !== undefined &&
+              impostoDeRenda.marco !== null &&
+              impostoDeRenda.marco !== ""
                 ? impostoDeRenda.marco
                 : antigoImposto.marco,
             abril:
-              impostoDeRenda.abril !== undefined
+              impostoDeRenda.abril !== undefined &&
+              impostoDeRenda.abril !== null &&
+              impostoDeRenda.abril !== ""
                 ? impostoDeRenda.abril
                 : antigoImposto.abril,
             maio:
-              impostoDeRenda.maio !== undefined
+              impostoDeRenda.maio !== undefined &&
+              impostoDeRenda.maio !== null &&
+              impostoDeRenda.maio !== ""
                 ? impostoDeRenda.maio
                 : antigoImposto.maio,
             junho:
-              impostoDeRenda.junho !== undefined
+              impostoDeRenda.junho !== undefined &&
+              impostoDeRenda.junho !== null &&
+              impostoDeRenda.junho !== ""
                 ? impostoDeRenda.junho
                 : antigoImposto.junho,
             julho:
-              impostoDeRenda.julho !== undefined
+              impostoDeRenda.julho !== undefined &&
+              impostoDeRenda.julho !== null &&
+              impostoDeRenda.julho !== ""
                 ? impostoDeRenda.julho
                 : antigoImposto.julho,
             agosto:
-              impostoDeRenda.agosto !== undefined
+              impostoDeRenda.agosto !== undefined &&
+              impostoDeRenda.agosto !== null &&
+              impostoDeRenda.agosto !== ""
                 ? impostoDeRenda.agosto
                 : antigoImposto.agosto,
             setembro:
-              impostoDeRenda.setembro !== undefined
+              impostoDeRenda.setembro !== undefined &&
+              impostoDeRenda.setembro !== null &&
+              impostoDeRenda.setembro !== ""
                 ? impostoDeRenda.setembro
                 : antigoImposto.setembro,
             outubro:
-              impostoDeRenda.outubro !== undefined
+              impostoDeRenda.outubro !== undefined &&
+              impostoDeRenda.outubro !== null &&
+              impostoDeRenda.outubro !== ""
                 ? impostoDeRenda.outubro
                 : antigoImposto.outubro,
             novembro:
-              impostoDeRenda.novembro !== undefined
+              impostoDeRenda.novembro !== undefined &&
+              impostoDeRenda.novembro !== null &&
+              impostoDeRenda.novembro !== ""
                 ? impostoDeRenda.novembro
                 : antigoImposto.novembro,
             dezembro:
-              impostoDeRenda.dezembro !== undefined
+              impostoDeRenda.dezembro !== undefined &&
+              impostoDeRenda.dezembro !== null &&
+              impostoDeRenda.dezembro !== ""
                 ? impostoDeRenda.dezembro
                 : antigoImposto.dezembro,
           },
         }
       );
+
+      //updateImpostoUser(user.id,  indiceImpostoAtualizado, novoImposto);
+
 
       return res
         .status(HTTP_CODE_OK)
@@ -1111,5 +1130,12 @@ const UserController = {
     }
   },
 };
+/*
+async function updateImpostoUser(idUser, indiceImpostoAtualizado, novoImposto) {
+  const user = await User.findById(idUser);
+  console.log(user);
+  user.impostoDeRenda[indiceImpostoAtualizado] = novoImposto;
+  user.save();
+}*/
 
 module.exports = UserController;
