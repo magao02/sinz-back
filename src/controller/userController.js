@@ -900,7 +900,7 @@ const UserController = {
             janeiro:
               impostoDeRenda.janeiro !== undefined &&
               impostoDeRenda.janeiro !== null &&
-              impostoDeRenda.janeiro
+              impostoDeRenda.janeiro !== ""
                 ? impostoDeRenda.janeiro
                 : antigoImposto.janeiro,
             fevereiro:
@@ -972,10 +972,6 @@ const UserController = {
           },
         }
       );
-
-      //updateImpostoUser(user.id,  indiceImpostoAtualizado, novoImposto);
-
-
       return res
         .status(HTTP_CODE_OK)
         .json({ message: "Imposto de Renda atualizado." });
@@ -1025,7 +1021,7 @@ const UserController = {
             janeiro:
               impostoDeRenda.janeiro !== undefined &&
               impostoDeRenda.janeiro !== null &&
-              impostoDeRenda.janeiro
+              impostoDeRenda.janeiro !== ""
                 ? impostoDeRenda.janeiro
                 : antigoImposto.janeiro,
             fevereiro:
@@ -1144,13 +1140,28 @@ const UserController = {
       }
     }
   },
+
+  async getUserYears(req, res) {
+    const urlUser = req.params.urlUser;
+    let user = await User.findOne({ urlUser });
+
+    if (!user) {
+      return res
+        .status(HTTP_CODE_NOT_FOUND)
+        .json({ message: "Perfil não encontrado." });
+    }
+
+    let impostos = await user.impostoDeRenda;
+
+    let anos = [];
+
+    for (var i = 0; i < impostos.length; i++) {
+      anos.push(impostos[i].ano);
+    }
+    return res
+      .status(HTTP_CODE_OK)
+      .json({ anosUsuario: anos });
+  },
 };
-/*
-async function updateImpostoUser(idUser, indiceImpostoAtualizado, novoImposto) {
-  const user = await User.findById(idUser);
-  console.log(user);
-  user.impostoDeRenda[indiceImpostoAtualizado] = novoImposto;
-  user.save();
-}*/
 
 module.exports = UserController;
