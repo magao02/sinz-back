@@ -900,7 +900,6 @@ const UserController = {
           .status(HTTP_CODE_NOT_FOUND)
           .json({ message: "Perfil não encontrado." });
       }
-      console.log(req.params);
 
       let impostoDeRenda = req.body;
       let impostos = await user.impostoDeRenda;
@@ -908,10 +907,15 @@ const UserController = {
       //Seleciona o imposto do ano correto.
       for (var i = 0; i < impostos.length; i++) {
         if (impostos[i].ano === +req.params.ano) {
-          var antigoImposto = await Imposto.find({ idUser: user.id });
-          break;
+            var antigoImposto = await Imposto.find({ idUser: user.id, ano: +req.params.ano });
+            break;
         }
       }
+
+      if (antigoImposto === undefined || antigoImposto.length === 0) {
+        return res.status(HTTP_CODE_BAD_REQUEST).json({ message: "Imposto do ano inserido não existe "});
+      }
+
       antigoImposto = antigoImposto[0];
 
       const novoImposto = await Imposto.updateOne(
@@ -1028,11 +1032,15 @@ const UserController = {
       //Seleciona o imposto do ano correto.
       for (var i = 0; i < impostos.length; i++) {
         if (impostos[i].ano === +req.params.ano) {
-          var antigoImposto = await Imposto.find({ idUser: dep.id });
-          var indiceImpostoAtualizado = i;
+          var antigoImposto = await Imposto.find({ idUser: dep.id});
           break;
         }
       }
+
+      if (antigoImposto === undefined || antigoImposto.length === 0) {
+        return res.status(HTTP_CODE_BAD_REQUEST).json({ message: "Imposto do ano inserido não existe "});
+      }
+
       antigoImposto = antigoImposto[0];
 
       const novoImposto = await Imposto.updateOne(
@@ -1138,20 +1146,43 @@ const UserController = {
         let impRendaDeps = [];
         let dep;
         let depDTO;
+
+        let impostosDoUser = user.impostoDeRenda;
+        for(let i = 0; i < user.impostoDeRenda.length; i++) {
+          if (impostosDoUser[i].ano === +req.params.ano) {
+            var impostoAtualUser = await Imposto.find({ idUser: user.id, ano: req.params.ano});
+            break;
+          }
+        }
+
+        if (impostoAtualUser === undefined) {
+          return res.status(HTTP_CODE_BAD_REQUEST).json({ message: "Imposto do ano inserido não existe "});
+        }
+
         for (let i = 0; i < user.dependentes.length; i++) {
           dep = await Dependent.findById(user.dependentes[i]);
 
           if (!!dep) {
+            let impostosDoDependente = dep.impostoDeRenda;
+
+            for (let j = 0; j < impostosDoDependente.length; j++) {
+              if (impostosDoDependente[j].ano === +req.params.ano) {
+                var impostoAtualDependente = await Imposto.find({
+                  idUser: dep.id,
+                });
+                break;
+              }
+            }
             depDTO = {
               name: dep.name,
-              impostoDeRenda: dep.impostoDeRenda,
+              impostoDeRenda: impostoAtualDependente,
             };
             impRendaDeps.push(depDTO);
           }
         }
         return res.status(HTTP_CODE_OK).json({
           name: user.name,
-          impostoDeRenda: user.impostoDeRenda,
+          impostoDeRenda: impostoAtualUser.length !== 0 ? impostoAtualUser[0]: {},
           dependentes: impRendaDeps,
         });
       } else {

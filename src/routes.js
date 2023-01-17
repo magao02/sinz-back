@@ -33,7 +33,7 @@ router.put('/user/:urlUser/:ano/setImpostoDeRenda', auth.authorizeUser, UserCont
 
 router.put('/user/:urlUser/setImpostoDeRendaDep/:urlDep/:ano', auth.authorizeUser, UserController.setImpostoDeRendaDep);
 
-router.get('/getPDF/:urlUser', auth.authorizeUser, UserController.getPDF);
+router.get('/getPDF/:urlUser/:ano', auth.authorizeUser, UserController.getPDF);
 
 router.get('/getUserYears/:urlUser', auth.authorizeUser, UserController.getUserYears);
 
