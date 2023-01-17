@@ -900,15 +900,15 @@ const UserController = {
           .status(HTTP_CODE_NOT_FOUND)
           .json({ message: "Perfil não encontrado." });
       }
+      console.log(req.params);
 
       let impostoDeRenda = req.body;
       let impostos = await user.impostoDeRenda;
 
       //Seleciona o imposto do ano correto.
       for (var i = 0; i < impostos.length; i++) {
-        if (impostos[i].ano === +impostoDeRenda.ano) {
+        if (impostos[i].ano === +req.params.ano) {
           var antigoImposto = await Imposto.find({ idUser: user.id });
-          var indiceImpostoAtualizado = i;
           break;
         }
       }
@@ -1027,7 +1027,7 @@ const UserController = {
 
       //Seleciona o imposto do ano correto.
       for (var i = 0; i < impostos.length; i++) {
-        if (impostos[i].ano === +impostoDeRenda.ano) {
+        if (impostos[i].ano === +req.params.ano) {
           var antigoImposto = await Imposto.find({ idUser: dep.id });
           var indiceImpostoAtualizado = i;
           break;

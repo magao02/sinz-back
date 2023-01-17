@@ -29,9 +29,9 @@ router.get('/getUsers', auth.authorizeUser, UserController.getUsers);
 
 router.get('/getDependents/:urlUser', auth.authorizeUser, UserController.getDependents);
 
-router.put('/user/:urlUser/setImpostoDeRenda', auth.authorizeUser, UserController.setImpostoDeRenda);
+router.put('/user/:urlUser/:ano/setImpostoDeRenda', auth.authorizeUser, UserController.setImpostoDeRenda);
 
-router.put('/user/:urlUser/setImpostoDeRendaDep/:urlDep', auth.authorizeUser, UserController.setImpostoDeRendaDep);
+router.put('/user/:urlUser/setImpostoDeRendaDep/:urlDep/:ano', auth.authorizeUser, UserController.setImpostoDeRendaDep);
 
 router.get('/getPDF/:urlUser', auth.authorizeUser, UserController.getPDF);
 
