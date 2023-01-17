@@ -241,16 +241,8 @@ const UserController = {
     } else {
       dataPage = {
         name: user.name,
-        email:
-          user.email !== "" && user.email !== null && user.email !== undefined
-            ? user.email
-            : "",
-        telefone:
-          user.telefone !== "" &&
-          user.telefone !== null &&
-          user.telefone !== undefined
-            ? user.telefone
-            : "",
+        email: user.email,
+        telefone: user.telefone,
         nascimento:
           user.nascimento !== "" &&
           user.nascimento !== null &&
@@ -284,14 +276,43 @@ const UserController = {
               "/" +
               user.dataAfiliacao.getFullYear()
             : "",
+        regional:
+          user.regional !== null &&
+          user.regional !== "" &&
+          user.regional !== undefined
+            ? user.regional
+            : "",
         profissao: user.profissao,
         endereco: user.endereco,
         salario: user.salario,
         empresa: user.empresa,
         numInscricao: user.numInscricao,
-        urlUser: user.urlUser,
+        formacaoSuperior: user.formacaoSuperior,
+        instituicaoSuperior: user.instituicaoSuperior,
+        dataFormacao:
+          user.dataFormacao !== "" &&
+          user.dataFormacao !== null &&
+          user.dataFormacao !== undefined
+            ? user.dataFormacao.getDate() +
+              1 +
+              "/" +
+              (user.dataFormacao.getMonth() + 1) +
+              "/" +
+              user.dataFormacao.getFullYear()
+            : "",
+        numRegistroConselho: user.numRegistroConselho,
+        dataRegistroConselho:
+          user.dataRegistroConselho !== "" &&
+          user.dataRegistroConselho !== null &&
+          user.dataRegistroConselho !== undefined
+            ? user.dataRegistroConselho.getDate() +
+              1 +
+              "/" +
+              (user.dataRegistroConselho.getMonth() + 1) +
+              "/" +
+              user.dataRegistroConselho.getFullYear()
+            : "",
       };
-
       return res.status(HTTP_CODE_OK).json(dataPage);
     }
   },
@@ -1093,7 +1114,7 @@ const UserController = {
           },
         }
       );
-      
+
       return res
         .status(HTTP_CODE_OK)
         .json({ message: "Imposto de Renda atualizado." });
@@ -1158,9 +1179,7 @@ const UserController = {
     for (var i = 0; i < impostos.length; i++) {
       anos.push(impostos[i].ano);
     }
-    return res
-      .status(HTTP_CODE_OK)
-      .json({ anosUsuario: anos });
+    return res.status(HTTP_CODE_OK).json({ anosUsuario: anos });
   },
 };
 
