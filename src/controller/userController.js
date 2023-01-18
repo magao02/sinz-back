@@ -40,6 +40,7 @@ const UserController = {
     if (
       name === undefined ||
       email === undefined ||
+      password === undefined ||
       telefone === undefined ||
       nascimento === undefined ||
       cpf === undefined ||
@@ -50,6 +51,7 @@ const UserController = {
       endereco === undefined ||
       endereco.rua === undefined ||
       endereco.bairro === undefined ||
+      endereco.numero === undefined ||
       regional.municipio === undefined ||
       regional.estado === undefined ||
       regional.naturalidade === undefined ||
@@ -67,6 +69,10 @@ const UserController = {
       return res
         .status(HTTP_CODE_BAD_REQUEST)
         .json({ message: "Preencha todos os campos." });
+    }
+
+    if (endereco.complemento === "") {
+      endereco.complemento = "Nenhum";
     }
 
     let user = await User.findOne({ cpf });
