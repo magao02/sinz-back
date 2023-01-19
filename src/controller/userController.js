@@ -420,7 +420,7 @@ const UserController = {
       ) {
         dataRegistroConselho = dataRegistroConselho.split("/");
         dataRegistroConselho = new Date(
-          `${dataRegistroConselho[2]}-${dataFormacdataRegistroConselho[1]}-${dataRegistroConselho[0]}T01:00:00+01:00`
+          `${dataRegistroConselho[2]}-${dataRegistroConselho[1]}-${dataRegistroConselho[0]}T01:00:00+01:00`
         );
       }
 
@@ -476,37 +476,37 @@ const UserController = {
             : user.profissao,
         endereco: {
           rua:
-            endereco !== undefined && endereco.rua !== undefined
+            endereco !== undefined && endereco.rua !== undefined && endereco.rua !== ""
               ? endereco.rua
               : user.endereco.rua,
           bairro:
-            endereco !== undefined && endereco.bairro !== undefined
+            endereco !== undefined && endereco.bairro !== undefined && endereco.bairro !== ""
               ? endereco.bairro
               : user.endereco.bairro,
           complemento:
-            endereco !== undefined && endereco.complemento !== undefined
+            endereco !== undefined && endereco.complemento !== undefined && endereco.complemento !== ""
               ? endereco.complemento
               : user.endereco.complemento,
           numero:
-            endereco !== undefined && endereco.numero !== undefined
+            endereco !== undefined && endereco.numero !== undefined && endereco.numero !== ""
               ? endereco.numero
               : user.endereco.numero,
         },
         regional: {
           municipio:
-            regional !== undefined && regional.municipio !== undefined
+            regional !== undefined && regional.municipio !== undefined && regional.municipio !== ""
               ? regional.municipio
               : user.regional.municipio,
           estado:
-            regional !== undefined && regional.estado !== undefined
+            regional !== undefined && regional.estado !== undefined && regional.estado !== ""
               ? regional.estado
               : user.regional.estado,
           naturalidade:
-            regional !== undefined && regional.naturalidade !== undefined
+            regional !== undefined && regional.naturalidade !== undefined && regional.naturalidade !== ""
               ? regional.naturalidade
               : user.regional.naturalidade,
           nacionalidade:
-            regional !== undefined && regional.nacionalidade !== undefined
+            regional !== undefined && regional.nacionalidade !== undefined && regional.nacionalidade !== ""
               ? regional.nacionalidade
               : user.regional.nacionalidade,
         },
@@ -532,17 +532,31 @@ const UserController = {
           .json({ message: "Perfil não encontrado." });
       }
 
-      let { email, telefone, filiacao, rua, bairro, complemento, numero } =
+      let { email, telefone, filiacao, endereco} =
         req.body;
-
+      //Corrigir o problema de não estar modificando o valor de endereço.
       user = await User.findByIdAndUpdate(user._id, {
-        email: email !== undefined ? email : user.email,
-        telefone: telefone !== undefined ? telefone : user.telefone,
-        filiacao: filiacao !== undefined ? filiacao : user.filiacao,
-        rua: rua !== undefined ? rua : user.rua,
-        bairro: bairro !== undefined ? bairro : user.bairro,
-        complemento: complemento !== undefined ? complemento : user.complemento,
-        numero: numero !== undefined ? numero : user.numero,
+        email: email !== undefined && email !== "" ? email : user.email,
+        telefone: telefone !== undefined && telefone !== "" ? telefone : user.telefone,
+        filiacao: filiacao !== undefined && filiacao !== "" ? filiacao : user.filiacao,
+        endereco: {
+          rua:
+            endereco !== undefined && endereco.rua !== undefined && endereco.rua !== ""
+              ? endereco.rua
+              : user.endereco.rua,
+          bairro:
+            endereco !== undefined && endereco.bairro !== undefined && endereco.bairro !== ""
+              ? endereco.bairro
+              : user.endereco.bairro,
+          complemento:
+            endereco !== undefined && endereco.complemento !== undefined && endereco.complemento !== ""
+              ? endereco.complemento
+              : user.endereco.complemento,
+          numero:
+            endereco !== undefined && endereco.numero !== undefined && endereco.numero !== ""
+              ? endereco.numero
+              : user.endereco.numero,
+        },
       });
 
       return res
