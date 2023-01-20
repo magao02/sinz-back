@@ -1199,8 +1199,9 @@ const UserController = {
         let dep;
         let depDTO;
 
-        let impostosDoUser = user.impostoDeRenda;
-        for (let i = 0; i < user.impostoDeRenda.length; i++) {
+        let impostosDoUser = await Imposto.find({ idUser: user._id });
+        console.log(impostosDoUser);
+        for (let i = 0; i < impostosDoUser.length; i++) {
           if (impostosDoUser[i].ano === +req.params.ano) {
             var impostoAtualUser = await Imposto.find({
               idUser: user.id,
@@ -1220,12 +1221,12 @@ const UserController = {
           dep = await Dependent.findById(user.dependentes[i]);
 
           if (!!dep) {
-            let impostosDoDependente = dep.impostoDeRenda;
+            let impostosDoDependente = await Imposto.find({ idUser: dep._id });
 
             for (let j = 0; j < impostosDoDependente.length; j++) {
               if (impostosDoDependente[j].ano === +req.params.ano) {
                 var impostoAtualDependente = await Imposto.find({
-                  idUser: dep.id,
+                  idUser: dep.id, ano: +req.params.ano
                 });
                 break;
               }
@@ -1261,7 +1262,7 @@ const UserController = {
         .json({ message: "Perfil não encontrado." });
     }
 
-    let impostos = await user.impostoDeRenda;
+    let impostos = await Imposto.find({ idUser: user._id });
 
     let anos = [];
 
