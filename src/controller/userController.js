@@ -476,37 +476,53 @@ const UserController = {
             : user.profissao,
         endereco: {
           rua:
-            endereco !== undefined && endereco.rua !== undefined && endereco.rua !== ""
+            endereco !== undefined &&
+            endereco.rua !== undefined &&
+            endereco.rua !== ""
               ? endereco.rua
               : user.endereco.rua,
           bairro:
-            endereco !== undefined && endereco.bairro !== undefined && endereco.bairro !== ""
+            endereco !== undefined &&
+            endereco.bairro !== undefined &&
+            endereco.bairro !== ""
               ? endereco.bairro
               : user.endereco.bairro,
           complemento:
-            endereco !== undefined && endereco.complemento !== undefined && endereco.complemento !== ""
+            endereco !== undefined &&
+            endereco.complemento !== undefined &&
+            endereco.complemento !== ""
               ? endereco.complemento
               : user.endereco.complemento,
           numero:
-            endereco !== undefined && endereco.numero !== undefined && endereco.numero !== ""
+            endereco !== undefined &&
+            endereco.numero !== undefined &&
+            endereco.numero !== ""
               ? endereco.numero
               : user.endereco.numero,
         },
         regional: {
           municipio:
-            regional !== undefined && regional.municipio !== undefined && regional.municipio !== ""
+            regional !== undefined &&
+            regional.municipio !== undefined &&
+            regional.municipio !== ""
               ? regional.municipio
               : user.regional.municipio,
           estado:
-            regional !== undefined && regional.estado !== undefined && regional.estado !== ""
+            regional !== undefined &&
+            regional.estado !== undefined &&
+            regional.estado !== ""
               ? regional.estado
               : user.regional.estado,
           naturalidade:
-            regional !== undefined && regional.naturalidade !== undefined && regional.naturalidade !== ""
+            regional !== undefined &&
+            regional.naturalidade !== undefined &&
+            regional.naturalidade !== ""
               ? regional.naturalidade
               : user.regional.naturalidade,
           nacionalidade:
-            regional !== undefined && regional.nacionalidade !== undefined && regional.nacionalidade !== ""
+            regional !== undefined &&
+            regional.nacionalidade !== undefined &&
+            regional.nacionalidade !== ""
               ? regional.nacionalidade
               : user.regional.nacionalidade,
         },
@@ -532,28 +548,37 @@ const UserController = {
           .json({ message: "Perfil não encontrado." });
       }
 
-      let { email, telefone, filiacao, endereco} =
-        req.body;
+      let { email, telefone, filiacao, endereco } = req.body;
       //Corrigir o problema de não estar modificando o valor de endereço.
       user = await User.findByIdAndUpdate(user._id, {
         email: email !== undefined && email !== "" ? email : user.email,
-        telefone: telefone !== undefined && telefone !== "" ? telefone : user.telefone,
-        filiacao: filiacao !== undefined && filiacao !== "" ? filiacao : user.filiacao,
+        telefone:
+          telefone !== undefined && telefone !== "" ? telefone : user.telefone,
+        filiacao:
+          filiacao !== undefined && filiacao !== "" ? filiacao : user.filiacao,
         endereco: {
           rua:
-            endereco !== undefined && endereco.rua !== undefined && endereco.rua !== ""
+            endereco !== undefined &&
+            endereco.rua !== undefined &&
+            endereco.rua !== ""
               ? endereco.rua
               : user.endereco.rua,
           bairro:
-            endereco !== undefined && endereco.bairro !== undefined && endereco.bairro !== ""
+            endereco !== undefined &&
+            endereco.bairro !== undefined &&
+            endereco.bairro !== ""
               ? endereco.bairro
               : user.endereco.bairro,
           complemento:
-            endereco !== undefined && endereco.complemento !== undefined && endereco.complemento !== ""
+            endereco !== undefined &&
+            endereco.complemento !== undefined &&
+            endereco.complemento !== ""
               ? endereco.complemento
               : user.endereco.complemento,
           numero:
-            endereco !== undefined && endereco.numero !== undefined && endereco.numero !== ""
+            endereco !== undefined &&
+            endereco.numero !== undefined &&
+            endereco.numero !== ""
               ? endereco.numero
               : user.endereco.numero,
         },
@@ -922,24 +947,29 @@ const UserController = {
       }
 
       let impostoDeRenda = req.body;
-      let impostos = await user.impostoDeRenda;
+      let impostos = await Imposto.find({ idUser: user._id });
 
       //Seleciona o imposto do ano correto.
       for (var i = 0; i < impostos.length; i++) {
         if (impostos[i].ano === +req.params.ano) {
-            var antigoImposto = await Imposto.find({ idUser: user.id, ano: +req.params.ano });
-            break;
+          var antigoImposto = await Imposto.find({
+            idUser: user.id,
+            ano: +req.params.ano,
+          });
+          break;
         }
       }
 
       if (antigoImposto === undefined || antigoImposto.length === 0) {
-        return res.status(HTTP_CODE_BAD_REQUEST).json({ message: "Imposto do ano inserido não existe "});
+        return res
+          .status(HTTP_CODE_BAD_REQUEST)
+          .json({ message: "Imposto do ano inserido não existe " });
       }
 
       antigoImposto = antigoImposto[0];
 
       const novoImposto = await Imposto.updateOne(
-        { idUser: user.id },
+        { idUser: user.id, ano: +req.params.ano },
         {
           $set: {
             janeiro:
@@ -1047,24 +1077,26 @@ const UserController = {
       }
 
       let impostoDeRenda = req.body;
-      let impostos = await dep.impostoDeRenda;
+      let impostos = await Imposto.find({ idUser: dep._id });
 
       //Seleciona o imposto do ano correto.
       for (var i = 0; i < impostos.length; i++) {
         if (impostos[i].ano === +req.params.ano) {
-          var antigoImposto = await Imposto.find({ idUser: dep.id});
+          var antigoImposto = await Imposto.find({ idUser: dep.id });
           break;
         }
       }
 
       if (antigoImposto === undefined || antigoImposto.length === 0) {
-        return res.status(HTTP_CODE_BAD_REQUEST).json({ message: "Imposto do ano inserido não existe "});
+        return res
+          .status(HTTP_CODE_BAD_REQUEST)
+          .json({ message: "Imposto do ano inserido não existe " });
       }
 
       antigoImposto = antigoImposto[0];
 
       const novoImposto = await Imposto.updateOne(
-        { idUser: dep.id },
+        { idUser: dep.id, ano: +req.params.ano },
         {
           $set: {
             janeiro:
@@ -1168,15 +1200,20 @@ const UserController = {
         let depDTO;
 
         let impostosDoUser = user.impostoDeRenda;
-        for(let i = 0; i < user.impostoDeRenda.length; i++) {
+        for (let i = 0; i < user.impostoDeRenda.length; i++) {
           if (impostosDoUser[i].ano === +req.params.ano) {
-            var impostoAtualUser = await Imposto.find({ idUser: user.id, ano: req.params.ano});
+            var impostoAtualUser = await Imposto.find({
+              idUser: user.id,
+              ano: req.params.ano,
+            });
             break;
           }
         }
 
         if (impostoAtualUser === undefined) {
-          return res.status(HTTP_CODE_BAD_REQUEST).json({ message: "Imposto do ano inserido não existe "});
+          return res
+            .status(HTTP_CODE_BAD_REQUEST)
+            .json({ message: "Imposto do ano inserido não existe " });
         }
 
         for (let i = 0; i < user.dependentes.length; i++) {
@@ -1202,7 +1239,8 @@ const UserController = {
         }
         return res.status(HTTP_CODE_OK).json({
           name: user.name,
-          impostoDeRenda: impostoAtualUser.length !== 0 ? impostoAtualUser[0]: {},
+          impostoDeRenda:
+            impostoAtualUser.length !== 0 ? impostoAtualUser[0] : {},
           dependentes: impRendaDeps,
         });
       } else {
@@ -1231,6 +1269,84 @@ const UserController = {
       anos.push(impostos[i].ano);
     }
     return res.status(HTTP_CODE_OK).json({ anosUsuario: anos });
+  },
+
+  async createNewImpostoByYearUser(req, res) {
+    const urlUser = req.params.urlUser;
+    let user = await User.findOne({ urlUser });
+
+    if (!user) {
+      return res
+        .status(HTTP_CODE_NOT_FOUND)
+        .json({ message: "Perfil não encontrado " });
+    }
+
+    let impostos = await Imposto.find({ idUser: user._id });
+
+    for (let i = 0; i < impostos.length; i++) {
+      if (impostos[i].ano === +req.params.ano) {
+        return res
+          .status(HTTP_CODE_BAD_REQUEST)
+          .json({ message: "Imposto com o ano selecionado já existente" });
+      }
+    }
+
+    let imposto = await Imposto.create({
+      idUser: user._id,
+      ano: req.params.ano,
+    });
+
+    user = await User.findByIdAndUpdate(user._id, {
+      impostoDeRenda: imposto._id,
+    });
+
+    return res.status(HTTP_CODE_CREATED).json({ message: "Imposto criado" });
+  },
+
+  async createNewImpostoByYearDep(req, res) {
+    if (req.user.admin) {
+      const urlUser = req.params.urlUser;
+      let user = await User.findOne({ urlUser });
+      if (!user) {
+        return res
+          .status(HTTP_CODE_NOT_FOUND)
+          .json({ message: "Perfil não encontrado." });
+      }
+
+      const urlDep = req.params.urlDep;
+      let dep = await Dependent.findOne({ urlDep });
+
+      if (!dep) {
+        return res
+          .status(HTTP_CODE_NOT_FOUND)
+          .json({ message: "Dependente não encontrado." });
+      }
+
+    let impostos = await Imposto.find({ idUser: dep._id });
+
+    for (let i = 0; i < impostos.length; i++) {
+      if (impostos[i].ano === +req.params.ano) {
+        return res
+          .status(HTTP_CODE_BAD_REQUEST)
+          .json({ message: "Imposto com o ano selecionado já existente" });
+      }
+    }
+
+    let imposto = await Imposto.create({
+      idUser: dep._id,
+      ano: req.params.ano,
+    });
+
+    user = await User.findByIdAndUpdate(dep._id, {
+      impostoDeRenda: imposto._id,
+    });
+
+    return res.status(HTTP_CODE_CREATED).json({ message: "Imposto criado" });
+  } else {
+    return res.status(HTTP_CODE_UNAUTHORIZED).json({
+      message: "Usuário sem permissão para atualizar imposto de renda.",
+    });
+  }
   },
 };
 

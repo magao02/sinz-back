@@ -37,4 +37,9 @@ router.get('/getPDF/:urlUser/:ano', auth.authorizeUser, UserController.getPDF);
 
 router.get('/getUserYears/:urlUser', auth.authorizeUser, UserController.getUserYears);
 
+router.post('/user/:urlUser/createNewImpostoByYearUser/:ano', auth.authorizeUser, UserController.createNewImpostoByYearUser);
+
+router.post('/user/:urlUser/createNewImpostoByYearDep/:urlDep/:ano', auth.authorizeUser, UserController.createNewImpostoByYearDep);
+
+
 module.exports = router;
