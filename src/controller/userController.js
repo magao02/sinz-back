@@ -968,6 +968,8 @@ const UserController = {
 
       antigoImposto = antigoImposto[0];
 
+      console.log(antigoImposto, impostoDeRenda);
+
       const novoImposto = await Imposto.updateOne(
         { idUser: user.id, ano: +req.params.ano },
         {
@@ -981,7 +983,7 @@ const UserController = {
             fevereiro:
               impostoDeRenda.fevereiro !== undefined &&
               impostoDeRenda.fevereiro !== null &&
-              impostoDeRenda.feveiro !== ""
+              impostoDeRenda.fevereiro !== ''
                 ? impostoDeRenda.fevereiro
                 : antigoImposto.fevereiro,
             marco:
@@ -1075,9 +1077,9 @@ const UserController = {
           .status(HTTP_CODE_NOT_FOUND)
           .json({ message: "Dependente não encontrado." });
       }
-
       let impostoDeRenda = req.body;
       let impostos = await Imposto.find({ idUser: dep._id });
+
 
       //Seleciona o imposto do ano correto.
       for (var i = 0; i < impostos.length; i++) {
@@ -1108,7 +1110,7 @@ const UserController = {
             fevereiro:
               impostoDeRenda.fevereiro !== undefined &&
               impostoDeRenda.fevereiro !== null &&
-              impostoDeRenda.feveiro !== ""
+              impostoDeRenda.fevereiro !== ""
                 ? impostoDeRenda.fevereiro
                 : antigoImposto.fevereiro,
             marco:
@@ -1200,7 +1202,6 @@ const UserController = {
         let depDTO;
 
         let impostosDoUser = await Imposto.find({ idUser: user._id });
-        console.log(impostosDoUser);
         for (let i = 0; i < impostosDoUser.length; i++) {
           if (impostosDoUser[i].ano === +req.params.ano) {
             var impostoAtualUser = await Imposto.find({
