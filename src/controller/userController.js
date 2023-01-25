@@ -722,10 +722,18 @@ const UserController = {
           urlDep,
           idAssociado: req.userId,
         });
-        let impostoDependente = await Imposto.create({ idUser: dependent.id });
-        dependent = await Dependent.findByIdAndUpdate(dependent.id, {
-          impostoDeRenda: impostoDependente._id,
-        });
+
+        let impostosUser = await Imposto.find({ idUser: user._id });
+
+        for (let i = 0; i < impostosUser.length; i++) {
+          let impostoDependente = await Imposto.create({
+            idUser: dependent.id,
+            ano: impostosUser[i].ano,
+          });
+          dependent = await Dependent.findByIdAndUpdate(dependent.id, {
+            impostoDeRenda: impostoDependente._id,
+          });
+        }
       } catch (e) {
         if (e.hasOwnProperty("code") && e.code === 11000) {
           return res.status(HTTP_CODE_BAD_REQUEST).json({
@@ -968,8 +976,6 @@ const UserController = {
 
       antigoImposto = antigoImposto[0];
 
-      console.log(antigoImposto, impostoDeRenda);
-
       const novoImposto = await Imposto.updateOne(
         { idUser: user.id, ano: +req.params.ano },
         {
@@ -983,7 +989,7 @@ const UserController = {
             fevereiro:
               impostoDeRenda.fevereiro !== undefined &&
               impostoDeRenda.fevereiro !== null &&
-              impostoDeRenda.fevereiro !== ''
+              impostoDeRenda.fevereiro !== ""
                 ? impostoDeRenda.fevereiro
                 : antigoImposto.fevereiro,
             marco:
@@ -1079,7 +1085,6 @@ const UserController = {
       }
       let impostoDeRenda = req.body;
       let impostos = await Imposto.find({ idUser: dep._id });
-
 
       //Seleciona o imposto do ano correto.
       for (var i = 0; i < impostos.length; i++) {
@@ -1206,7 +1211,7 @@ const UserController = {
           if (impostosDoUser[i].ano === +req.params.ano) {
             var impostoAtualUser = await Imposto.find({
               idUser: user.id,
-              ano: req.params.ano,
+              ano: +req.params.ano,
             });
             break;
           }
@@ -1227,13 +1232,15 @@ const UserController = {
             for (let j = 0; j < impostosDoDependente.length; j++) {
               if (impostosDoDependente[j].ano === +req.params.ano) {
                 var impostoAtualDependente = await Imposto.find({
-                  idUser: dep.id, ano: +req.params.ano
+                  idUser: dep.id,
+                  ano: +req.params.ano,
                 });
                 break;
               }
             }
             depDTO = {
               name: dep.name,
+              cfp: dep.cpf,
               impostoDeRenda: impostoAtualDependente,
             };
             impRendaDeps.push(depDTO);
@@ -1241,6 +1248,7 @@ const UserController = {
         }
         return res.status(HTTP_CODE_OK).json({
           name: user.name,
+          cpf: user.cpf,
           impostoDeRenda:
             impostoAtualUser.length !== 0 ? impostoAtualUser[0] : {},
           dependentes: impRendaDeps,
@@ -1324,31 +1332,31 @@ const UserController = {
           .json({ message: "Dependente não encontrado." });
       }
 
-    let impostos = await Imposto.find({ idUser: dep._id });
+      let impostos = await Imposto.find({ idUser: dep._id });
 
-    for (let i = 0; i < impostos.length; i++) {
-      if (impostos[i].ano === +req.params.ano) {
-        return res
-          .status(HTTP_CODE_BAD_REQUEST)
-          .json({ message: "Imposto com o ano selecionado já existente" });
+      for (let i = 0; i < impostos.length; i++) {
+        if (impostos[i].ano === +req.params.ano) {
+          return res
+            .status(HTTP_CODE_BAD_REQUEST)
+            .json({ message: "Imposto com o ano selecionado já existente" });
+        }
       }
+
+      let imposto = await Imposto.create({
+        idUser: dep._id,
+        ano: req.params.ano,
+      });
+
+      user = await User.findByIdAndUpdate(dep._id, {
+        impostoDeRenda: imposto._id,
+      });
+
+      return res.status(HTTP_CODE_CREATED).json({ message: "Imposto criado" });
+    } else {
+      return res.status(HTTP_CODE_UNAUTHORIZED).json({
+        message: "Usuário sem permissão para atualizar imposto de renda.",
+      });
     }
-
-    let imposto = await Imposto.create({
-      idUser: dep._id,
-      ano: req.params.ano,
-    });
-
-    user = await User.findByIdAndUpdate(dep._id, {
-      impostoDeRenda: imposto._id,
-    });
-
-    return res.status(HTTP_CODE_CREATED).json({ message: "Imposto criado" });
-  } else {
-    return res.status(HTTP_CODE_UNAUTHORIZED).json({
-      message: "Usuário sem permissão para atualizar imposto de renda.",
-    });
-  }
   },
 };
 
