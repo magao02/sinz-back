@@ -1258,6 +1258,19 @@ const UserController = {
             impRendaDeps.push(depDTO);
           }
         }
+
+        function compare(a, b) {
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+        }
+
+        impRendaDeps.sort(compare);
+        
         return res.status(HTTP_CODE_OK).json({
           name: user.name,
           cpf: user.cpf,
