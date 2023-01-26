@@ -9,6 +9,9 @@ module.exports = () =>  {
     } else if (process.env.NODE_ENV === "dev") {
         console.log('Conectando com banco de desenvolvimento...')
         DB_URL = config.db.develop;
+    } else if (process.env.NODE_ENV === "teste") {
+        console.log('Conectando com banco de teste...')
+        DB_URL = config.db.teste;
     }
     
     mongoose.set('useFindAndModify', false);
