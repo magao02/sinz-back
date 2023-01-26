@@ -41,5 +41,7 @@ router.post('/user/:urlUser/createNewImpostoByYearUser/:ano', auth.authorizeUser
 
 router.post('/user/:urlUser/createNewImpostoByYearDep/:urlDep/:ano', auth.authorizeUser, UserController.createNewImpostoByYearDep);
 
+router.get('/addImpostos', auth.authorizeUser, UserController.addImpostos);
+
 
 module.exports = router;

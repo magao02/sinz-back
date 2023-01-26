@@ -3,7 +3,7 @@ const Dependent = require("../model/Dependent");
 const Imposto = require("../model/Imposto");
 const jwt = require("jsonwebtoken");
 const createURL = require("../utils/createURL.js");
-const { findById } = require("../model/Imposto");
+const { findById, db, collection } = require("../model/Imposto");
 
 const HTTP_CODE_OK = 200;
 const HTTP_CODE_CREATED = 201;
@@ -251,41 +251,41 @@ const UserController = {
         telefone: user.telefone,
         nascimento:
           user.nascimento !== "" &&
-          user.nascimento !== null &&
-          user.nascimento !== undefined
+            user.nascimento !== null &&
+            user.nascimento !== undefined
             ? user.nascimento.getDate() +
-              "/" +
-              (user.nascimento.getMonth() + 1) +
-              "/" +
-              user.nascimento.getFullYear()
+            "/" +
+            (user.nascimento.getMonth() + 1) +
+            "/" +
+            user.nascimento.getFullYear()
             : "",
         cpf: user.cpf,
         rg: user.rg,
         emissao:
           user.emissao !== "" &&
-          user.emissao !== null &&
-          user.emissao !== undefined
+            user.emissao !== null &&
+            user.emissao !== undefined
             ? user.emissao.getDate() +
-              "/" +
-              (user.emissao.getMonth() + 1) +
-              "/" +
-              user.emissao.getFullYear()
+            "/" +
+            (user.emissao.getMonth() + 1) +
+            "/" +
+            user.emissao.getFullYear()
             : "",
         filiacao: user.filiacao,
         dataAfiliacao:
           user.dataAfiliacao !== "" &&
-          user.dataAfiliacao !== null &&
-          user.dataAfiliacao !== undefined
+            user.dataAfiliacao !== null &&
+            user.dataAfiliacao !== undefined
             ? user.dataAfiliacao.getDate() +
-              "/" +
-              (user.dataAfiliacao.getMonth() + 1) +
-              "/" +
-              user.dataAfiliacao.getFullYear()
+            "/" +
+            (user.dataAfiliacao.getMonth() + 1) +
+            "/" +
+            user.dataAfiliacao.getFullYear()
             : "",
         regional:
           user.regional !== null &&
-          user.regional !== "" &&
-          user.regional !== undefined
+            user.regional !== "" &&
+            user.regional !== undefined
             ? user.regional
             : "",
         profissao: user.profissao,
@@ -297,26 +297,26 @@ const UserController = {
         instituicaoSuperior: user.instituicaoSuperior,
         dataFormacao:
           user.dataFormacao !== "" &&
-          user.dataFormacao !== null &&
-          user.dataFormacao !== undefined
+            user.dataFormacao !== null &&
+            user.dataFormacao !== undefined
             ? user.dataFormacao.getDate() +
-              1 +
-              "/" +
-              (user.dataFormacao.getMonth() + 1) +
-              "/" +
-              user.dataFormacao.getFullYear()
+            1 +
+            "/" +
+            (user.dataFormacao.getMonth() + 1) +
+            "/" +
+            user.dataFormacao.getFullYear()
             : "",
         numRegistroConselho: user.numRegistroConselho,
         dataRegistroConselho:
           user.dataRegistroConselho !== "" &&
-          user.dataRegistroConselho !== null &&
-          user.dataRegistroConselho !== undefined
+            user.dataRegistroConselho !== null &&
+            user.dataRegistroConselho !== undefined
             ? user.dataRegistroConselho.getDate() +
-              1 +
-              "/" +
-              (user.dataRegistroConselho.getMonth() + 1) +
-              "/" +
-              user.dataRegistroConselho.getFullYear()
+            1 +
+            "/" +
+            (user.dataRegistroConselho.getMonth() + 1) +
+            "/" +
+            user.dataRegistroConselho.getFullYear()
             : "",
       };
       return res.status(HTTP_CODE_OK).json(dataPage);
@@ -477,52 +477,52 @@ const UserController = {
         endereco: {
           rua:
             endereco !== undefined &&
-            endereco.rua !== undefined &&
-            endereco.rua !== ""
+              endereco.rua !== undefined &&
+              endereco.rua !== ""
               ? endereco.rua
               : user.endereco.rua,
           bairro:
             endereco !== undefined &&
-            endereco.bairro !== undefined &&
-            endereco.bairro !== ""
+              endereco.bairro !== undefined &&
+              endereco.bairro !== ""
               ? endereco.bairro
               : user.endereco.bairro,
           complemento:
             endereco !== undefined &&
-            endereco.complemento !== undefined &&
-            endereco.complemento !== ""
+              endereco.complemento !== undefined &&
+              endereco.complemento !== ""
               ? endereco.complemento
               : user.endereco.complemento,
           numero:
             endereco !== undefined &&
-            endereco.numero !== undefined &&
-            endereco.numero !== ""
+              endereco.numero !== undefined &&
+              endereco.numero !== ""
               ? endereco.numero
               : user.endereco.numero,
         },
         regional: {
           municipio:
             regional !== undefined &&
-            regional.municipio !== undefined &&
-            regional.municipio !== ""
+              regional.municipio !== undefined &&
+              regional.municipio !== ""
               ? regional.municipio
               : user.regional.municipio,
           estado:
             regional !== undefined &&
-            regional.estado !== undefined &&
-            regional.estado !== ""
+              regional.estado !== undefined &&
+              regional.estado !== ""
               ? regional.estado
               : user.regional.estado,
           naturalidade:
             regional !== undefined &&
-            regional.naturalidade !== undefined &&
-            regional.naturalidade !== ""
+              regional.naturalidade !== undefined &&
+              regional.naturalidade !== ""
               ? regional.naturalidade
               : user.regional.naturalidade,
           nacionalidade:
             regional !== undefined &&
-            regional.nacionalidade !== undefined &&
-            regional.nacionalidade !== ""
+              regional.nacionalidade !== undefined &&
+              regional.nacionalidade !== ""
               ? regional.nacionalidade
               : user.regional.nacionalidade,
         },
@@ -559,26 +559,26 @@ const UserController = {
         endereco: {
           rua:
             endereco !== undefined &&
-            endereco.rua !== undefined &&
-            endereco.rua !== ""
+              endereco.rua !== undefined &&
+              endereco.rua !== ""
               ? endereco.rua
               : user.endereco.rua,
           bairro:
             endereco !== undefined &&
-            endereco.bairro !== undefined &&
-            endereco.bairro !== ""
+              endereco.bairro !== undefined &&
+              endereco.bairro !== ""
               ? endereco.bairro
               : user.endereco.bairro,
           complemento:
             endereco !== undefined &&
-            endereco.complemento !== undefined &&
-            endereco.complemento !== ""
+              endereco.complemento !== undefined &&
+              endereco.complemento !== ""
               ? endereco.complemento
               : user.endereco.complemento,
           numero:
             endereco !== undefined &&
-            endereco.numero !== undefined &&
-            endereco.numero !== ""
+              endereco.numero !== undefined &&
+              endereco.numero !== ""
               ? endereco.numero
               : user.endereco.numero,
         },
@@ -821,14 +821,14 @@ const UserController = {
           name: user.name !== "" ? user.name : "",
           nascimento:
             user.nascimento !== "" &&
-            user.nascimento !== null &&
-            user.nascimento !== undefined
+              user.nascimento !== null &&
+              user.nascimento !== undefined
               ? user.nascimento.getDate() +
-                1 +
-                "/" +
-                (user.nascimento.getMonth() + 1) +
-                "/" +
-                user.nascimento.getFullYear()
+              1 +
+              "/" +
+              (user.nascimento.getMonth() + 1) +
+              "/" +
+              user.nascimento.getFullYear()
               : "",
           cpf: user.cpf !== "" ? user.cpf : "",
           rg:
@@ -838,14 +838,14 @@ const UserController = {
           urlUser: user.urlUser !== "" ? user.urlUser : "",
           emissao:
             user.emissao !== "" &&
-            user.emissao !== null &&
-            user.emissao !== undefined
+              user.emissao !== null &&
+              user.emissao !== undefined
               ? user.emissao.getDate() +
-                1 +
-                "/" +
-                (user.emissao.getMonth() + 1) +
-                "/" +
-                user.emissao.getFullYear()
+              1 +
+              "/" +
+              (user.emissao.getMonth() + 1) +
+              "/" +
+              user.emissao.getFullYear()
               : "",
         });
       });
@@ -898,25 +898,25 @@ const UserController = {
             cpf: dep.cpf,
             nascimento:
               dep.nascimento !== "" &&
-              dep.nascimento !== null &&
-              dep.nascimento !== undefined
+                dep.nascimento !== null &&
+                dep.nascimento !== undefined
                 ? dep.nascimento.getDate() +
-                  "/" +
-                  (dep.nascimento.getMonth() + 1) +
-                  "/" +
-                  dep.nascimento.getFullYear()
+                "/" +
+                (dep.nascimento.getMonth() + 1) +
+                "/" +
+                dep.nascimento.getFullYear()
                 : "",
             rg: dep.rg,
             urlDep: dep.urlDep,
             emissao:
               dep.emissao !== "" &&
-              dep.emissao !== null &&
-              dep.emissao !== undefined
+                dep.emissao !== null &&
+                dep.emissao !== undefined
                 ? dep.emissao.getDate() +
-                  "/" +
-                  (dep.emissao.getMonth() + 1) +
-                  "/" +
-                  dep.emissao.getFullYear()
+                "/" +
+                (dep.emissao.getMonth() + 1) +
+                "/" +
+                dep.emissao.getFullYear()
                 : "",
           });
         }
@@ -982,74 +982,86 @@ const UserController = {
           $set: {
             janeiro:
               impostoDeRenda.janeiro !== undefined &&
-              impostoDeRenda.janeiro !== null &&
-              impostoDeRenda.janeiro !== ""
+                impostoDeRenda.janeiro !== null &&
+                impostoDeRenda.janeiro !== "" &&
+                impostoDeRenda.janeiro !== 0
                 ? impostoDeRenda.janeiro
                 : antigoImposto.janeiro,
             fevereiro:
               impostoDeRenda.fevereiro !== undefined &&
-              impostoDeRenda.fevereiro !== null &&
-              impostoDeRenda.fevereiro !== ""
+                impostoDeRenda.fevereiro !== null &&
+                impostoDeRenda.fevereiro !== "" &&
+                impostoDeRenda.fevereiro !== 0
                 ? impostoDeRenda.fevereiro
                 : antigoImposto.fevereiro,
             marco:
               impostoDeRenda.marco !== undefined &&
-              impostoDeRenda.marco !== null &&
-              impostoDeRenda.marco !== "" 
-              ? impostoDeRenda.marco
+                impostoDeRenda.marco !== null &&
+                impostoDeRenda.marco !== "" &&
+                impostoDeRenda.marco !== 0
+                ? impostoDeRenda.marco
                 : antigoImposto.marco,
             abril:
               impostoDeRenda.abril !== undefined &&
-              impostoDeRenda.abril !== null &&
-              impostoDeRenda.abril !== "" 
-              ? impostoDeRenda.abril
+                impostoDeRenda.abril !== null &&
+                impostoDeRenda.abril !== "" &&
+                impostoDeRenda.abril !== 0
+                ? impostoDeRenda.abril
                 : antigoImposto.abril,
             maio:
               impostoDeRenda.maio !== undefined &&
-              impostoDeRenda.maio !== null &&
-              impostoDeRenda.maio !== "" 
-              ? impostoDeRenda.maio
+                impostoDeRenda.maio !== null &&
+                impostoDeRenda.maio !== "" &&
+                impostoDeRenda.maio !== 0
+                ? impostoDeRenda.maio
                 : antigoImposto.maio,
             junho:
               impostoDeRenda.junho !== undefined &&
-              impostoDeRenda.junho !== null &&
-              impostoDeRenda.junho !== "" 
-              ? impostoDeRenda.junho
+                impostoDeRenda.junho !== null &&
+                impostoDeRenda.junho !== "" &&
+                impostoDeRenda.junho !== 0
+                ? impostoDeRenda.junho
                 : antigoImposto.junho,
             julho:
               impostoDeRenda.julho !== undefined &&
-              impostoDeRenda.julho !== null &&
-              impostoDeRenda.julho !== "" 
-              ? impostoDeRenda.julho
+                impostoDeRenda.julho !== null &&
+                impostoDeRenda.julho !== "" &&
+                impostoDeRenda.julho !== 0
+                ? impostoDeRenda.julho
                 : antigoImposto.julho,
             agosto:
               impostoDeRenda.agosto !== undefined &&
-              impostoDeRenda.agosto !== null &&
-              impostoDeRenda.agosto !== "" 
-              ? impostoDeRenda.agosto
+                impostoDeRenda.agosto !== null &&
+                impostoDeRenda.agosto !== "" &&
+                impostoDeRenda.agosto !== 0
+                ? impostoDeRenda.agosto
                 : antigoImposto.agosto,
             setembro:
               impostoDeRenda.setembro !== undefined &&
-              impostoDeRenda.setembro !== null &&
-              impostoDeRenda.setembro !== "" 
-              ? impostoDeRenda.setembro
+                impostoDeRenda.setembro !== null &&
+                impostoDeRenda.setembro !== "" &&
+                impostoDeRenda.setembro !== 0
+                ? impostoDeRenda.setembro
                 : antigoImposto.setembro,
             outubro:
               impostoDeRenda.outubro !== undefined &&
-              impostoDeRenda.outubro !== null &&
-              impostoDeRenda.outubro !== "" 
-              ? impostoDeRenda.outubro
+                impostoDeRenda.outubro !== null &&
+                impostoDeRenda.outubro !== "" &&
+                impostoDeRenda.outubro !== 0
+                ? impostoDeRenda.outubro
                 : antigoImposto.outubro,
             novembro:
               impostoDeRenda.novembro !== undefined &&
-              impostoDeRenda.novembro !== null &&
-              impostoDeRenda.novembro !== "" 
-              ? impostoDeRenda.novembro
+                impostoDeRenda.novembro !== null &&
+                impostoDeRenda.novembro !== "" &&
+                impostoDeRenda.novembro !== 0
+                ? impostoDeRenda.novembro
                 : antigoImposto.novembro,
             dezembro:
               impostoDeRenda.dezembro !== undefined &&
-              impostoDeRenda.dezembro !== null &&
-              impostoDeRenda.dezembro !== "" 
+                impostoDeRenda.dezembro !== null &&
+                impostoDeRenda.dezembro !== "" &&
+                impostoDeRenda.dezembro !== 0
                 ? impostoDeRenda.dezembro
                 : antigoImposto.dezembro,
           },
@@ -1108,86 +1120,86 @@ const UserController = {
           $set: {
             janeiro:
               impostoDeRenda.janeiro !== undefined &&
-              impostoDeRenda.janeiro !== null &&
-              impostoDeRenda.janeiro !== "" &&
-              impostoDeRenda.janeiro !== 0 
+                impostoDeRenda.janeiro !== null &&
+                impostoDeRenda.janeiro !== "" &&
+                impostoDeRenda.janeiro !== 0
                 ? impostoDeRenda.janeiro
                 : antigoImposto.janeiro,
             fevereiro:
               impostoDeRenda.fevereiro !== undefined &&
-              impostoDeRenda.fevereiro !== null &&
-              impostoDeRenda.fevereiro !== "" &&
-              impostoDeRenda.fevereiro !== 0
+                impostoDeRenda.fevereiro !== null &&
+                impostoDeRenda.fevereiro !== "" &&
+                impostoDeRenda.fevereiro !== 0
                 ? impostoDeRenda.fevereiro
                 : antigoImposto.fevereiro,
             marco:
               impostoDeRenda.marco !== undefined &&
-              impostoDeRenda.marco !== null &&
-              impostoDeRenda.marco !== "" &&
-              impostoDeRenda.marco !== 0
+                impostoDeRenda.marco !== null &&
+                impostoDeRenda.marco !== "" &&
+                impostoDeRenda.marco !== 0
                 ? impostoDeRenda.marco
                 : antigoImposto.marco,
             abril:
               impostoDeRenda.abril !== undefined &&
-              impostoDeRenda.abril !== null &&
-              impostoDeRenda.abril !== "" &&
-              impostoDeRenda.abril !== 0
+                impostoDeRenda.abril !== null &&
+                impostoDeRenda.abril !== "" &&
+                impostoDeRenda.abril !== 0
                 ? impostoDeRenda.abril
                 : antigoImposto.abril,
             maio:
               impostoDeRenda.maio !== undefined &&
-              impostoDeRenda.maio !== null &&
-              impostoDeRenda.maio !== "" &&
-              impostoDeRenda.maio !== 0
+                impostoDeRenda.maio !== null &&
+                impostoDeRenda.maio !== "" &&
+                impostoDeRenda.maio !== 0
                 ? impostoDeRenda.maio
                 : antigoImposto.maio,
             junho:
               impostoDeRenda.junho !== undefined &&
-              impostoDeRenda.junho !== null &&
-              impostoDeRenda.junho !== "" &&
-              impostoDeRenda.junho !== 0
+                impostoDeRenda.junho !== null &&
+                impostoDeRenda.junho !== "" &&
+                impostoDeRenda.junho !== 0
                 ? impostoDeRenda.junho
                 : antigoImposto.junho,
             julho:
               impostoDeRenda.julho !== undefined &&
-              impostoDeRenda.julho !== null &&
-              impostoDeRenda.julho !== "" &&
-              impostoDeRenda.julho !== 0
+                impostoDeRenda.julho !== null &&
+                impostoDeRenda.julho !== "" &&
+                impostoDeRenda.julho !== 0
                 ? impostoDeRenda.julho
                 : antigoImposto.julho,
             agosto:
               impostoDeRenda.agosto !== undefined &&
-              impostoDeRenda.agosto !== null &&
-              impostoDeRenda.agosto !== "" &&
-              impostoDeRenda.agosto !== 0
+                impostoDeRenda.agosto !== null &&
+                impostoDeRenda.agosto !== "" &&
+                impostoDeRenda.agosto !== 0
                 ? impostoDeRenda.agosto
                 : antigoImposto.agosto,
             setembro:
               impostoDeRenda.setembro !== undefined &&
-              impostoDeRenda.setembro !== null &&
-              impostoDeRenda.setembro !== "" &&
-              impostoDeRenda.setembro !== 0
+                impostoDeRenda.setembro !== null &&
+                impostoDeRenda.setembro !== "" &&
+                impostoDeRenda.setembro !== 0
                 ? impostoDeRenda.setembro
                 : antigoImposto.setembro,
             outubro:
               impostoDeRenda.outubro !== undefined &&
-              impostoDeRenda.outubro !== null &&
-              impostoDeRenda.outubro !== "" &&
-              impostoDeRenda.outubro !== 0
+                impostoDeRenda.outubro !== null &&
+                impostoDeRenda.outubro !== "" &&
+                impostoDeRenda.outubro !== 0
                 ? impostoDeRenda.outubro
                 : antigoImposto.outubro,
             novembro:
               impostoDeRenda.novembro !== undefined &&
-              impostoDeRenda.novembro !== null &&
-              impostoDeRenda.novembro !== "" &&
-              impostoDeRenda.novembro !== 0
+                impostoDeRenda.novembro !== null &&
+                impostoDeRenda.novembro !== "" &&
+                impostoDeRenda.novembro !== 0
                 ? impostoDeRenda.novembro
                 : antigoImposto.novembro,
             dezembro:
               impostoDeRenda.dezembro !== undefined &&
-              impostoDeRenda.dezembro !== null &&
-              impostoDeRenda.dezembro !== "" &&
-              impostoDeRenda.dezembro !== 0
+                impostoDeRenda.dezembro !== null &&
+                impostoDeRenda.dezembro !== "" &&
+                impostoDeRenda.dezembro !== 0
                 ? impostoDeRenda.dezembro
                 : antigoImposto.dezembro,
           },
@@ -1270,7 +1282,7 @@ const UserController = {
         }
 
         impRendaDeps.sort(compare);
-        
+
         return res.status(HTTP_CODE_OK).json({
           name: user.name,
           cpf: user.cpf,
@@ -1336,6 +1348,70 @@ const UserController = {
     });
 
     return res.status(HTTP_CODE_CREATED).json({ message: "Imposto criado" });
+  },
+
+  async addImpostos() {
+    let users = await User.find()
+    let deps = await Dependent.find()
+
+    /* Add pros associados */
+    for (let i = 0; i < users.length; i++) {
+      let user = users[i];
+
+      let impostoFinal = user.impostoDeRenda[0];
+      impostoFinal.ano = 2022;
+
+      let idUser = user._id;
+
+      await Imposto.create(
+        {
+          ano: impostoFinal.ano,
+          idUser: idUser,
+          janeiro: impostoFinal.janeiro,
+          fevereiro: impostoFinal.fevereiro,
+          marco: impostoFinal.marco,
+          abril: impostoFinal.abril,
+          maio: impostoFinal.maio,
+          junho: impostoFinal.junho,
+          julho: impostoFinal.julho,
+          agosto: impostoFinal.agosto,
+          setembro: impostoFinal.setembro,
+          outubro: impostoFinal.outubro,
+          novembro: impostoFinal.novembro,
+          dezembro: impostoFinal.dezembro
+        }
+      );
+    }
+
+    /* Add pros dependentes */
+    for (let i = 0; i < deps.length; i++) {
+      let dep = deps[i];
+      
+      let impostoFinal = dep.impostoDeRenda[0];
+      impostoFinal.ano = 2022;
+
+      let idUser = dep._id;
+
+      let impostoTemp = await Imposto.create(
+        {
+          ano: impostoFinal.ano,
+          idUser: idUser,
+          janeiro: impostoFinal.janeiro,
+          fevereiro: impostoFinal.fevereiro,
+          marco: impostoFinal.marco,
+          abril: impostoFinal.abril,
+          maio: impostoFinal.maio,
+          junho: impostoFinal.junho,
+          julho: impostoFinal.julho,
+          agosto: impostoFinal.agosto,
+          setembro: impostoFinal.setembro,
+          outubro: impostoFinal.outubro,
+          novembro: impostoFinal.novembro,
+          dezembro: impostoFinal.dezembro
+        }
+      );
+    }
+    return;
   },
 
   async createNewImpostoByYearDep(req, res) {
