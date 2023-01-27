@@ -1362,7 +1362,6 @@ const UserController = {
       impostoFinal.ano = 2022;
 
       let idUser = user._id;
-
       await Imposto.create(
         {
           ano: impostoFinal.ano,
@@ -1391,7 +1390,6 @@ const UserController = {
       impostoFinal.ano = 2022;
 
       let idUser = dep._id;
-
       let impostoTemp = await Imposto.create(
         {
           ano: impostoFinal.ano,
