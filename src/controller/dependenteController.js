@@ -11,26 +11,12 @@ const HTTP_CODE_BAD_REQUEST = 400;
 const HTTP_CODE_UNAUTHORIZED = 401;
 const HTTP_CODE_NOT_FOUND = 404;
 
-const UserController = {
-  async store(req, res) {},
+const dependenteController = {
+  async signUpDep(req, res) {},
 
-  async login(req, res) {},
+  async deleteDep(req, res) {},
 
-  async logout(req, res) {},
-
-  async userPage(req, res) {},
-
-  async setPassword(req, res) {},
-
-  async setPerfil(req, res) {},
-
-  async setUser(req, res) {},
-
-  async setNewAdmin(req, res) {},
-
-  async deleteUser(req, res) {},
-
-  async getUserYears(req, res) {},
+  async getDependents(req, res) {},
 };
 
-module.exports = UserController;
+module.exports = dependenteController;

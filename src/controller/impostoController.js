@@ -11,26 +11,18 @@ const HTTP_CODE_BAD_REQUEST = 400;
 const HTTP_CODE_UNAUTHORIZED = 401;
 const HTTP_CODE_NOT_FOUND = 404;
 
-const UserController = {
-  async store(req, res) {},
+const impostoController = {
+  async createNewImpostoByYearUser(req, res) {},
 
-  async login(req, res) {},
+  async setImpostoDeRenda(req, res) {},
 
-  async logout(req, res) {},
+  async setImpostoDeRendaDep(req, res) {},
 
-  async userPage(req, res) {},
+  async getPDF(req, res) {},
 
-  async setPassword(req, res) {},
+  async addImpostos() {},
 
-  async setPerfil(req, res) {},
-
-  async setUser(req, res) {},
-
-  async setNewAdmin(req, res) {},
-
-  async deleteUser(req, res) {},
-
-  async getUserYears(req, res) {},
+  async createNewImpostoByYearDep(req, res) {},
 };
 
-module.exports = UserController;
+module.exports = impostoController;
