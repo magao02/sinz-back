@@ -1,6 +1,12 @@
 const User = require("../../model/User");
 const Dependent = require("../../model/Dependent");
 
+const HTTP_CODE_OK = 200;
+const HTTP_CODE_CREATED = 201;
+const HTTP_CODE_BAD_REQUEST = 400;
+const HTTP_CODE_UNAUTHORIZED = 401;
+const HTTP_CODE_NOT_FOUND = 404;
+
 async function getDependents(req, res) {
   const urlUser = req.params.urlUser;
 
