@@ -29,7 +29,7 @@ async function setImpostoDeRendaDep(req, res) {
         .status(HTTP_CODE_NOT_FOUND)
         .json({ message: "Dependente não encontrado." });
     }
-    let impostoDeRenda = req.body;
+    let impostoDeRenda = req.body.impostoDeRenda;
     let impostos = await Imposto.find({ idUser: dep._id });
 
     //Seleciona o imposto do ano correto.
