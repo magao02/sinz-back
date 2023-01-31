@@ -1,23 +1,22 @@
 const User = require("../../model/User");
-const jwt = require("jsonwebtoken");
+const Imposto = require("../../model/Imposto");
+const Dependent = require("../../model/Dependent");
 const createURL = require("../../utils/createURL.js");
+const jwt = require("jsonwebtoken");
+const { findById, db, collection } = require("@model/Imposto");
 
 const HTTP_CODE_OK = 200;
 const HTTP_CODE_CREATED = 201;
 const HTTP_CODE_BAD_REQUEST = 400;
 const HTTP_CODE_UNAUTHORIZED = 401;
 const HTTP_CODE_NOT_FOUND = 404;
-
 async function login(req, res) {
     const { cpf, password } = req.body;
-    console.log(cpf, password);
     if (cpf === undefined || password === undefined)
       return res
         .status(HTTP_CODE_BAD_REQUEST)
         .json({ message: "Preencha todos os campos." });
-
     let user = await User.findOne({ cpf });
-
     if (!user) {
       return res
         .status(HTTP_CODE_UNAUTHORIZED)

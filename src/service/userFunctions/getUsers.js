@@ -1,7 +1,9 @@
 const User = require("../../model/User");
 const Imposto = require("../../model/Imposto");
-const jwt = require("jsonwebtoken");
+const Dependent = require("../../model/Dependent");
 const createURL = require("../../utils/createURL.js");
+const jwt = require("jsonwebtoken");
+const { findById, db, collection } = require("@model/Imposto");
 
 const HTTP_CODE_OK = 200;
 const HTTP_CODE_CREATED = 201;
