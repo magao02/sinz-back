@@ -1,4 +1,5 @@
 const User = require("../../model/User");
+const Imposto = require("../../model/Imposto");
 const Dependent = require("../../model/Dependent");
 
 const HTTP_CODE_OK = 200;
