@@ -1,5 +1,6 @@
-const User = require("../model/User");
-const Imposto = require("../model/Imposto");
+const User = require("../../model/User");
+const Imposto = require("../../model/Imposto");
+const Dependent = require("../../model/Dependent");
 const jwt = require("jsonwebtoken");
 const { findById, db, collection } = require("@model/Imposto");
 

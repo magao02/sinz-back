@@ -1,5 +1,5 @@
-const User = require("../model/User");
-const Dependent = require("../model/Dependent");
+const User = require("../../model/User");
+const Dependent = require("../../model/Dependent");
 
 async function deleteDep(req, res) {
   if (req.user.admin) {

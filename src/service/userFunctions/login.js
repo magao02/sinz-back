@@ -10,7 +10,7 @@ const HTTP_CODE_NOT_FOUND = 404;
 
 async function login(req, res) {
     const { cpf, password } = req.body;
-
+    console.log(cpf, password);
     if (cpf === undefined || password === undefined)
       return res
         .status(HTTP_CODE_BAD_REQUEST)
