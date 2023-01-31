@@ -29,13 +29,13 @@ async function setImpostoDeRendaDep(req, res) {
         .status(HTTP_CODE_NOT_FOUND)
         .json({ message: "Dependente não encontrado." });
     }
-    let impostoDeRenda = req.body.impostoDeRenda;
+    let impostoDeRenda = req.body;
     let impostos = await Imposto.find({ idUser: dep._id });
 
     //Seleciona o imposto do ano correto.
     for (var i = 0; i < impostos.length; i++) {
       if (impostos[i].ano === +req.params.ano) {
-        var antigoImposto = await Imposto.find({ idUser: dep.id });
+        var antigoImposto = await Imposto.find({ idUser: dep.id, ano: +req.params.ano });
         break;
       }
     }
@@ -47,7 +47,7 @@ async function setImpostoDeRendaDep(req, res) {
     }
 
     antigoImposto = antigoImposto[0];
-
+    
     const novoImposto = await Imposto.updateOne(
       { idUser: dep.id, ano: +req.params.ano },
       {
