@@ -1,7 +1,10 @@
 const router = require('express').Router();
 const UserController = require('@controller/userController');
+const ImpostoController = require('@controller/impostoController');
+const dependenteController = require('@controller/dependenteController');
 const auth = require('./middlewares/Auth')
 
+//USER
 router.post('/signUp', UserController.store);
 
 router.post('/signIn', UserController.login);
@@ -10,7 +13,12 @@ router.get('/signOut', auth.authorizeUser, UserController.logout);
 
 router.get('/user/:urlUser', auth.authorizeUser, UserController.userPage);
 
-//recuperar a senha
+router.get('/getPDF/:urlUser/:ano', auth.authorizeUser, UserController.getPDF);
+
+router.get('/getUserYears/:urlUser', auth.authorizeUser, UserController.getUserYears);
+
+router.get('/getUsers', auth.authorizeUser, UserController.getUsers);
+
 router.put('/setPassword', auth.authorizeUser, UserController.setPassword);
 
 router.put('/user/:urlUser/setPerfil', auth.authorizeUser, UserController.setPerfil);
@@ -21,27 +29,27 @@ router.put('/user/:urlUser/setNewAdmin', auth.authorizeUser, UserController.setN
 
 router.delete('/user/:urlUser/deleteUser', auth.authorizeUser, UserController.deleteUser);
 
-router.post('/user/:urlUser/signUpDep', auth.authorizeUser, UserController.signUpDep);
+//Dependentes
 
-router.delete('/deleteDep/:urlDep', auth.authorizeUser, UserController.deleteDep);
+router.post('/user/:urlUser/signUpDep', auth.authorizeUser, dependenteController.signUpDep);
 
-router.get('/getUsers', auth.authorizeUser, UserController.getUsers);
+router.get('/getDependents/:urlUser', auth.authorizeUser, dependenteController.getDependents);
 
-router.get('/getDependents/:urlUser', auth.authorizeUser, UserController.getDependents);
+router.delete('/deleteDep/:urlDep', auth.authorizeUser, dependenteController.deleteDep);
 
-router.put('/user/:urlUser/:ano/setImpostoDeRenda', auth.authorizeUser, UserController.setImpostoDeRenda);
+//Impostos
 
-router.put('/user/:urlUser/setImpostoDeRendaDep/:urlDep/:ano', auth.authorizeUser, UserController.setImpostoDeRendaDep);
+router.put('/user/:urlUser/:ano/setImpostoDeRenda', auth.authorizeUser, ImpostoController.setImpostoDeRenda);
 
-router.get('/getPDF/:urlUser/:ano', auth.authorizeUser, UserController.getPDF);
+router.put('/user/:urlUser/setImpostoDeRendaDep/:urlDep/:ano', auth.authorizeUser, ImpostoController.setImpostoDeRendaDep);
 
-router.get('/getUserYears/:urlUser', auth.authorizeUser, UserController.getUserYears);
+router.post('/user/:urlUser/createNewImpostoByYearUser/:ano', auth.authorizeUser, ImpostoController.createNewImpostoByYearUser);
 
-router.post('/user/:urlUser/createNewImpostoByYearUser/:ano', auth.authorizeUser, UserController.createNewImpostoByYearUser);
+router.post('/user/:urlUser/createNewImpostoByYearDep/:urlDep/:ano', auth.authorizeUser, ImpostoController.createNewImpostoByYearDep);
 
-router.post('/user/:urlUser/createNewImpostoByYearDep/:urlDep/:ano', auth.authorizeUser, UserController.createNewImpostoByYearDep);
+//MISC
 
-router.post('/addImpostos', auth.authorizeUser, UserController.addImpostos);
+//router.post('/addImpostos', auth.authorizeUser, UserController.addImpostos);
 
 
 module.exports = router;

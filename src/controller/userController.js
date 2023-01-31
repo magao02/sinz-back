@@ -1,36 +1,69 @@
-const User = require("../model/User");
-const Dependent = require("../model/Dependent");
-const Imposto = require("../model/Imposto");
-const jwt = require("jsonwebtoken");
-const createURL = require("../utils/createURL.js");
-const { findById, db, collection } = require("../model/Imposto");
+const store = require("../service/userFunctions/store");
+const login = require("../service/userFunctions/login");
+const logout = require("../service/userFunctions/logout");
+const userPage = require("../service/userFunctions/userPage");
+const getPDF = require("../service/userFunctions/getPDF");
+const getUserYears = require("../service/userFunctions/getUserYears");
+const getUsers = require("../service/userFunctions/getUsers");
+const setPassword = require("../service/userFunctions/setPassword");
+const setPerfil = require("../service/userFunctions/setPerfil");
+const setUser = require("../service/userFunctions/setUser");
+const setNewAdmin = require("../service/userFunctions/setNewAdmin");
+const deleteUser = require("../service/userFunctions/deleteUser");
 
-const HTTP_CODE_OK = 200;
-const HTTP_CODE_CREATED = 201;
-const HTTP_CODE_BAD_REQUEST = 400;
-const HTTP_CODE_UNAUTHORIZED = 401;
-const HTTP_CODE_NOT_FOUND = 404;
+module.exports = {
+  //POST METHODS
 
-const UserController = {
-  async store(req, res) {},
+  async store(req, res) {
+    return store(req, res);
+  },
+  async login(req, res) {
+    return login(req, res);
+  },
 
-  async login(req, res) {},
+  //GET METHODS
 
-  async logout(req, res) {},
+  async logout(req, res) {
+    return logout(req, res);
+  },
 
-  async userPage(req, res) {},
+  async userPage(req, res) {
+    return userPage(req, res);
+  },
 
-  async setPassword(req, res) {},
+  async getPDF(req, res) {
+    return getPDF(req, res);
+  },
 
-  async setPerfil(req, res) {},
+  async getUserYears(req, res) {
+    return getUserYears(req, res);
+  },
 
-  async setUser(req, res) {},
+  async getUsers(req, res) {
+    return getUsers(req, res);
+  },
 
-  async setNewAdmin(req, res) {},
+  //PUT METHODS
 
-  async deleteUser(req, res) {},
+  async setPassword(req, res) {
+    return setPassword(req, res);
+  },
 
-  async getUserYears(req, res) {},
+  async setPerfil(req, res) {
+    return setPerfil(req, res);
+  },
+
+  async setUser(req, res) {
+    return setUser(req, res);
+  },
+
+  async setNewAdmin(req, res) {
+    return setNewAdmin(req, res);
+  },
+
+  //DELETE METHODS
+
+  async deleteUser(req, res) {
+    return deleteUser(req, res);
+  },
 };
-
-module.exports = UserController;
