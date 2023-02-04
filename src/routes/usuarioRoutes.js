@@ -3,7 +3,7 @@ const UserController = require('@controller/userController');
 const auth = require('../middlewares/Auth');
 
 //USER
-router.get('/:urlUser', auth.authorizeUser, UserController.userPage);
+router.get('/getUser/:urlUser', auth.authorizeUser, UserController.userPage);
 
 router.get('/getPDF/:urlUser/:ano', auth.authorizeUser, UserController.getPDF);
 

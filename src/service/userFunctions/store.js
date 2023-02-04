@@ -36,38 +36,12 @@ async function store(req, res) {
     salario,
   } = req.body;
 
-  if (
-    name === undefined ||
-    email === undefined ||
-    password === undefined ||
-    telefone === undefined ||
-    nascimento === undefined ||
-    cpf === undefined ||
-    rg === undefined ||
-    emissao === undefined ||
-    filiacao === undefined ||
-    profissao === undefined ||
-    endereco === undefined ||
-    endereco.rua === undefined ||
-    endereco.bairro === undefined ||
-    endereco.numero === undefined ||
-    regional.municipio === undefined ||
-    regional.estado === undefined ||
-    regional.naturalidade === undefined ||
-    regional.nacionalidade === undefined ||
-    numInscricao === undefined ||
-    dataAfiliacao === undefined ||
-    formacaoSuperior === undefined ||
-    instituicaoSuperior === undefined ||
-    dataFormacao === undefined ||
-    numRegistroConselho === undefined ||
-    dataRegistroConselho === undefined ||
-    empresa === undefined ||
-    salario === undefined
-  ) {
-    return res
+  for (const field in req.body) {
+    if (!req.body[field]) {
+      return res
       .status(HTTP_CODE_BAD_REQUEST)
       .json({ message: "Preencha todos os campos." });
+    }
   }
 
   if (endereco.complemento === "") {
