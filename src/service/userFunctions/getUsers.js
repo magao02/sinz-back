@@ -50,16 +50,6 @@ async function getUsers(req, res) {
       });
     });
 
-    function compare(a, b) {
-      if (a.name < b.name) {
-        return -1;
-      }
-      if (a.name > b.name) {
-        return 1;
-      }
-      return 0;
-    }
-
     usersDTO.sort(compare);
 
     return res.status(HTTP_CODE_OK).json(usersDTO);
@@ -68,6 +58,16 @@ async function getUsers(req, res) {
       message: "Usuário sem permissão de visualizar os assessores.",
     });
   }
+}
+
+function compare(a, b) {
+  if (a.name < b.name) {
+    return -1;
+  }
+  if (a.name > b.name) {
+    return 1;
+  }
+  return 0;
 }
 
 module.exports = getUsers;

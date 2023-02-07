@@ -66,16 +66,6 @@ async function getPDF(req, res) {
         }
       }
 
-      function compare(a, b) {
-        if (a.name < b.name) {
-          return -1;
-        }
-        if (a.name > b.name) {
-          return 1;
-        }
-        return 0;
-      }
-
       impRendaDeps.sort(compare);
 
       return res.status(HTTP_CODE_OK).json({
@@ -91,6 +81,16 @@ async function getPDF(req, res) {
       });
     }
   }
+}
+
+function compare(a, b) {
+  if (a.name < b.name) {
+    return -1;
+  }
+  if (a.name > b.name) {
+    return 1;
+  }
+  return 0;
 }
 
 module.exports = getPDF;
