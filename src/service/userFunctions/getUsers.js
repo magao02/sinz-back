@@ -2,7 +2,7 @@ const User = require("../../model/User");
 const Imposto = require("../../model/Imposto");
 const Dependent = require("../../model/Dependent");
 const createURL = require("../../utils/createURL.js");
-const compareFunctions = require("../../utils/compareFunctions.js");
+const compare = require("../../utils/compareFunctions.js");
 const jwt = require("jsonwebtoken");
 const { findById, db, collection } = require("@model/Imposto");
 
@@ -51,7 +51,7 @@ async function getUsers(req, res) {
       });
     });
 
-    usersDTO.sort(compareFunctions.compare);
+    usersDTO.sort(compare);
 
     return res.status(HTTP_CODE_OK).json(usersDTO);
   } else {
