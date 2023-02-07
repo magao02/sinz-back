@@ -2,6 +2,7 @@ const User = require("../../model/User");
 const Imposto = require("../../model/Imposto");
 const Dependent = require("../../model/Dependent");
 const createURL = require("../../utils/createURL.js");
+const compareFunctions = require("../../utils/compareFunctions.js");
 const jwt = require("jsonwebtoken");
 const { findById, db, collection } = require("@model/Imposto");
 
@@ -50,7 +51,7 @@ async function getUsers(req, res) {
       });
     });
 
-    usersDTO.sort(compare);
+    usersDTO.sort(compareFunctions.compare);
 
     return res.status(HTTP_CODE_OK).json(usersDTO);
   } else {
@@ -58,16 +59,6 @@ async function getUsers(req, res) {
       message: "Usuário sem permissão de visualizar os assessores.",
     });
   }
-}
-
-function compare(a, b) {
-  if (a.name < b.name) {
-    return -1;
-  }
-  if (a.name > b.name) {
-    return 1;
-  }
-  return 0;
 }
 
 module.exports = getUsers;

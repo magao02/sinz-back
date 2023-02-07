@@ -2,6 +2,7 @@ const User = require("../../model/User");
 const Imposto = require("../../model/Imposto");
 const Dependent = require("../../model/Dependent");
 const createURL = require("../../utils/createURL.js");
+const compareFunctions = require("../../utils/compareFunctions.js");
 const jwt = require("jsonwebtoken");
 const { findById, db, collection } = require("@model/Imposto");
 
@@ -66,7 +67,7 @@ async function getPDF(req, res) {
         }
       }
 
-      impRendaDeps.sort(compare);
+      impRendaDeps.sort(compareFunctions.compare);
 
       return res.status(HTTP_CODE_OK).json({
         name: user.name,
@@ -81,16 +82,6 @@ async function getPDF(req, res) {
       });
     }
   }
-}
-
-function compare(a, b) {
-  if (a.name < b.name) {
-    return -1;
-  }
-  if (a.name > b.name) {
-    return 1;
-  }
-  return 0;
 }
 
 module.exports = getPDF;
