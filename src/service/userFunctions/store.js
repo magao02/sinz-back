@@ -2,6 +2,7 @@ const User = require("../../model/User");
 const Imposto = require("../../model/Imposto");
 const Dependent = require("../../model/Dependent");
 const createURL = require("../../utils/createURL.js");
+const formataData = require("../../utils/dateFunctions");
 const jwt = require("jsonwebtoken");
 const { findById, db, collection } = require("@model/Imposto");
 
@@ -39,8 +40,8 @@ async function store(req, res) {
   for (const field in req.body) {
     if (!req.body[field]) {
       return res
-      .status(HTTP_CODE_BAD_REQUEST)
-      .json({ message: "Preencha todos os campos." });
+        .status(HTTP_CODE_BAD_REQUEST)
+        .json({ message: "Preencha todos os campos." });
     }
   }
 
@@ -53,49 +54,16 @@ async function store(req, res) {
   if (!user) {
     let urlUser = await createURL(name);
 
-    // Modificando formato das datas
-
-    if (nascimento !== undefined && nascimento !== "" && nascimento !== null) {
-      nascimento = nascimento.split("/");
-      nascimento = new Date(
-        `${nascimento[2]}-${nascimento[1]}-${nascimento[0]}T01:00:00+01:00`
-      );
-    }
-    if (emissao !== undefined && emissao !== "" && emissao !== null) {
-      emissao = emissao.split("/");
-      emissao = new Date(
-        `${emissao[2]}-${emissao[1]}-${emissao[0]}T01:00:00+01:00`
-      );
-    }
-    if (
-      dataAfiliacao !== undefined &&
-      dataAfiliacao !== "" &&
-      dataAfiliacao !== null
-    ) {
-      dataAfiliacao = dataAfiliacao.split("/");
-      dataAfiliacao = new Date(
-        `${dataAfiliacao[2]}-${dataAfiliacao[1]}-${dataAfiliacao[0]}T01:00:00+01:00`
-      );
-    }
-    if (
-      dataFormacao !== undefined &&
-      dataFormacao !== "" &&
-      dataFormacao !== null
-    ) {
-      dataFormacao = dataFormacao.split("/");
-      dataFormacao = new Date(
-        `${dataFormacao[2]}-${dataFormacao[1]}-${dataFormacao[0]}T01:00:00+01:00`
-      );
-    }
-    if (
-      dataRegistroConselho !== undefined &&
-      dataRegistroConselho !== "" &&
-      dataRegistroConselho !== null
-    ) {
-      dataRegistroConselho = dataRegistroConselho.split("/");
-      dataRegistroConselho = new Date(
-        `${dataRegistroConselho[2]}-${dataRegistroConselho[1]}-${dataRegistroConselho[0]}T01:00:00+01:00`
-      );
+    try {
+      nascimento = await formataData(nascimento);
+      emissao = await formataData(emissao);
+      dataAfiliacao = await formataData(dataAfiliacao);
+      dataFormacao = await formataData(dataFormacao);
+      dataRegistroConselho = await formataData(dataRegistroConselho);
+    } catch (err) {
+      return res
+        .status(HTTP_CODE_BAD_REQUEST)
+        .json("Data inserida incorretamente. Formato correto: dd/mm/aaaa");
     }
 
     try {

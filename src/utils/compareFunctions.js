@@ -1,4 +1,4 @@
-function compare(a, b) {
+async function compare(a, b) {
     if (a.name < b.name) {
       return -1;
     }
