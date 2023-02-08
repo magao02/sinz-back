@@ -12,37 +12,22 @@ const HTTP_CODE_UNAUTHORIZED = 401;
 const HTTP_CODE_NOT_FOUND = 404;
 
 async function deleteDep(req, res) {
-  if (req.user.admin) {
-    const urlUser = req.params.urlUser;
-    let user = await User.findOne({ urlUser });
+    const urlDep = req.params.urlDep;
+    let dep = await Dependent.findOne({ urlDep: urlDep });
 
-    if (!user) {
+    if (!dep) {
       return res
         .status(HTTP_CODE_NOT_FOUND)
-        .json({ message: "Perfil não encontrado." });
+        .json({ message: "Dependente não encontrado." });
     }
 
-    user = await User.deleteOne(user)
-      .then(async function (deletedUser) {
-        if (deletedUser) {
-          for (let i = 0; i < user.dependentes.length; i++) {
-            await Dependent.findByIdAndDelete(user.dependentes[i]);
-          }
-          return res.status(HTTP_CODE_OK).json({
-            message: `Usuário (${user.name}) deletado com sucesso.`,
-          });
-        } else {
-          return res.status(HTTP_CODE_UNAUTHORIZED).json({
-            message: "Usuário sem permissão para deletar outro usuário.",
-          });
-        }
-      })
-      .catch((err) => console.error(`Falha ao buscar e deletar: ${err}`));
-  } else {
-    return res
-      .status(HTTP_CODE_UNAUTHORIZED)
-      .json({ message: "Usuário sem permissão para deletar outro usuário." });
-  }
+    try {
+      dep = await Dependent.deleteOne(dep);
+      return res.status(HTTP_CODE_OK).json({ message: "Depedente deletado com sucesso"});
+
+    } catch(err) {
+      return res.status(HTTP_CODE_UNAUTHORIZED).json({ message: "Usuário sem permissão para deletar outro usuário." });
+    }
 }
 
 module.exports = deleteDep;
