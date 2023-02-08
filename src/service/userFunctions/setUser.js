@@ -23,7 +23,7 @@ async function setUser(req, res) {
     }
 
     let { email, telefone, filiacao, endereco } = req.body;
-    //Corrigir o problema de não estar modificando o valor de endereço.
+
     user = await User.findByIdAndUpdate(user._id, {
       email: email !== undefined && email !== "" ? email : user.email,
       telefone:
