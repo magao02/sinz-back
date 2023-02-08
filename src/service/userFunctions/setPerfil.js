@@ -47,10 +47,10 @@ async function setPerfil(req, res) {
     } = req.body;
 
     try {
-      nascimento = await formataData(nascimento);
-      dataAfiliacao = await formataData(dataAfiliacao);
-      dataFormacao = await formataData(dataFormacao);
-      dataRegistroConselho = await formataData(dataRegistroConselho);
+      if (nascimento !== undefined && nascimento !== "") { nascimento = await formataData(nascimento); }
+      if (dataAfiliacao !== undefined && dataAfiliacao !== "") { dataAfiliacao = await formataData(dataAfiliacao); }
+      if (dataFormacao !== undefined && dataFormacao !== "") { dataFormacao = await formataData(dataFormacao); }
+      if (dataRegistroConselho !== undefined && dataRegistroConselho !== "") { dataRegistroConselho = await formataData(dataRegistroConselho); }
     } catch (err) {
       return res
         .status(HTTP_CODE_BAD_REQUEST)

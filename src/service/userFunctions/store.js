@@ -63,7 +63,7 @@ async function store(req, res) {
     } catch (err) {
       return res
         .status(HTTP_CODE_BAD_REQUEST)
-        .json("Data inserida incorretamente. Formato correto: dd/mm/aaaa");
+        .json("Data inserida incorretamente ou dado não inserido. Formato correto: dd/mm/aaaa");
     }
 
     try {
