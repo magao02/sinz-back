@@ -22,7 +22,9 @@ async function deleteDep(req, res) {
     }
 
     try {
-      dep = await Dependent.deleteOne(dep);
+      Dependent.remove({ urlDep: urlDep }, function(err) {
+        if (err) return handleError(err);
+      });
       return res.status(HTTP_CODE_OK).json({ message: "Depedente deletado com sucesso"});
 
     } catch(err) {
