@@ -17,9 +17,9 @@ async function setNewPassword(req, res) {
     });
 
     if (!token) {
-      return res
-        .status(HTTP_CODE_BAD_REQUEST)
-        .send("Link inválido ou expirado");
+      return res.status(HTTP_CODE_BAD_REQUEST).json({
+        message: "Link inválido ou expirado",
+      });
     }
 
     user.password = req.body.password;
@@ -31,8 +31,10 @@ async function setNewPassword(req, res) {
       message: "Senha alterada com sucesso",
     });
   } catch (error) {
-    console.log(error);
-    res.send("Um erro inesperado aconteceu. Tente novamente mais tarde");
+    return res.status(HTTP_CODE_BAD_REQUEST).json({
+      message:
+        "Ocorreu algum durante a operação. Verifique o Token ou tente novamente mais tarde",
+    });
   }
 }
 

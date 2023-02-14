@@ -13,7 +13,6 @@ const HTTP_CODE_NOT_FOUND = 404;
 
 async function passwordToken(req, res) {
   try {
-
     const user = await User.findOne({ email: req.params.userEmail });
 
     let token = await Token.findOne({ userId: user._id });
@@ -24,12 +23,10 @@ async function passwordToken(req, res) {
         token: crypto.randomBytes(32).toString("hex"),
       }).save();
     }
-
     return res.status(HTTP_CODE_OK).json({
       token: token.token,
     });
   } catch (error) {
-    console.log(error);
     return res.status(HTTP_CODE_BAD_REQUEST).json({
       message: "Ocorreu algum erro durante o envio. Tente novamente mais tarde",
     });

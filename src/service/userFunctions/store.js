@@ -99,6 +99,10 @@ async function store(req, res) {
       user = await User.findByIdAndUpdate(user._id, {
         impostoDeRenda: imposto._id,
       });
+
+      return res.status(HTTP_CODE_CREATED).json({
+        message: "Usuário cadastrado com sucesso",
+      });
     } catch (e) {
       if (e.hasOwnProperty("code") && e.code === 11000) {
         return res.status(HTTP_CODE_BAD_REQUEST).json({
