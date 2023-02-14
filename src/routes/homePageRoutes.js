@@ -7,9 +7,9 @@ router.post('/signUp', UserController.store);
 
 router.post('/signIn', UserController.login);
 
-router.put('/setNewPassword/:urlUser/:token', auth.authorizeUser, UserController.setNewPassword);
+router.put('/setNewPassword/:userEmail/:token', UserController.setNewPassword);
 
-router.get('/passwordResetLink', auth.authorizeUser, UserController.passwordResetLink);
+router.get('/passwordToken/:userEmail', UserController.passwordToken);
 
 router.get('/signOut', auth.authorizeUser, UserController.logout);
 

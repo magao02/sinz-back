@@ -11,9 +11,10 @@ const HTTP_CODE_BAD_REQUEST = 400;
 const HTTP_CODE_UNAUTHORIZED = 401;
 const HTTP_CODE_NOT_FOUND = 404;
 
-async function passwordResetLink(req, res) {
+async function passwordToken(req, res) {
   try {
-    const user = await User.findOne({ email: req.body.email });
+
+    const user = await User.findOne({ email: req.params.userEmail });
 
     let token = await Token.findOne({ userId: user._id });
 
@@ -23,8 +24,6 @@ async function passwordResetLink(req, res) {
         token: crypto.randomBytes(32).toString("hex"),
       }).save();
     }
-
-    //const link = `${process.env.CLIENT_URL}/passwordReset/${user._id}/${token.token}`;
 
     return res.status(HTTP_CODE_OK).json({
       token: token.token,
@@ -37,4 +36,4 @@ async function passwordResetLink(req, res) {
   }
 }
 
-module.exports = passwordResetLink;
+module.exports = passwordToken;

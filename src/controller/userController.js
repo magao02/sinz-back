@@ -10,7 +10,7 @@ const setPerfil = require("../service/userFunctions/setPerfil");
 const setUser = require("../service/userFunctions/setUser");
 const setNewAdmin = require("../service/userFunctions/setNewAdmin");
 const deleteUser = require("../service/userFunctions/deleteUser");
-const passwordResetLink = require("../service/userFunctions/passwordResetLink");
+const passwordToken = require("../service/userFunctions/passwordToken");
 const setNewPassword = require("../service/userFunctions/setNewPassword");
 
 module.exports = {
@@ -23,8 +23,8 @@ module.exports = {
     return login(req, res);
   },
 
-  async passwordResetLink(req, res) {
-    return passwordResetLink(req, res);
+  async passwordToken(req, res) {
+    return passwordToken(req, res);
   },
 
   async setNewPassword(req, res) {

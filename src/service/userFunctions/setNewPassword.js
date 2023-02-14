@@ -9,8 +9,7 @@ const HTTP_CODE_NOT_FOUND = 404;
 
 async function setNewPassword(req, res) {
   try {
-    const urlUser = req.params.urlUser;
-    const user = await User.findOne({ urlUser: urlUser });
+    const user = await User.findOne({ email: req.params.userEmail });
 
     const token = await Token.findOne({
       userId: user._id,
@@ -25,12 +24,8 @@ async function setNewPassword(req, res) {
 
     user.password = req.body.password;
 
-
     await User.updateOne(user);
     await Token.deleteOne(token);
-
-    //await user.save();
-    //await token.delete();
 
     res.status(HTTP_CODE_OK).json({
       message: "Senha alterada com sucesso",
