@@ -1,0 +1,40 @@
+const User = require("../../model/User");
+const crypto = require("crypto");
+const createURL = require("../../utils/createURL.js");
+const jwt = require("jsonwebtoken");
+const { findById, db, collection } = require("@model/Imposto");
+const Token = require("../../model/Token.");
+
+const HTTP_CODE_OK = 200;
+const HTTP_CODE_CREATED = 201;
+const HTTP_CODE_BAD_REQUEST = 400;
+const HTTP_CODE_UNAUTHORIZED = 401;
+const HTTP_CODE_NOT_FOUND = 404;
+
+async function passwordResetLink(req, res) {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+
+    let token = await Token.findOne({ userId: user._id });
+
+    if (!token) {
+      token = await new Token({
+        userId: user._id,
+        token: crypto.randomBytes(32).toString("hex"),
+      }).save();
+    }
+
+    //const link = `${process.env.CLIENT_URL}/passwordReset/${user._id}/${token.token}`;
+
+    return res.status(HTTP_CODE_OK).json({
+      token: token.token,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(HTTP_CODE_BAD_REQUEST).json({
+      message: "Ocorreu algum erro durante o envio. Tente novamente mais tarde",
+    });
+  }
+}
+
+module.exports = passwordResetLink;

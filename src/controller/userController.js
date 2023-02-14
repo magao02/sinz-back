@@ -10,6 +10,8 @@ const setPerfil = require("../service/userFunctions/setPerfil");
 const setUser = require("../service/userFunctions/setUser");
 const setNewAdmin = require("../service/userFunctions/setNewAdmin");
 const deleteUser = require("../service/userFunctions/deleteUser");
+const passwordResetLink = require("../service/userFunctions/passwordResetLink");
+const setNewPassword = require("../service/userFunctions/setNewPassword");
 
 module.exports = {
   //POST METHODS
@@ -19,6 +21,14 @@ module.exports = {
   },
   async login(req, res) {
     return login(req, res);
+  },
+
+  async passwordResetLink(req, res) {
+    return passwordResetLink(req, res);
+  },
+
+  async setNewPassword(req, res) {
+    return setNewPassword(req, res);
   },
 
   //GET METHODS
