@@ -22,15 +22,18 @@ async function setNewPassword(req, res) {
       });
     }
 
-    user.password = req.body.password;
-
-    await User.updateOne(user);
+    const usuarioAtualizado = await User.findOneAndUpdate({
+      _id: user._id,
+      password: req.body.password
+    });
+    
     await Token.deleteOne(token);
 
     res.status(HTTP_CODE_OK).json({
       message: "Senha alterada com sucesso",
     });
   } catch (error) {
+    console.log(error);
     return res.status(HTTP_CODE_BAD_REQUEST).json({
       message:
         "Ocorreu algum durante a operação. Verifique o Token ou tente novamente mais tarde",
