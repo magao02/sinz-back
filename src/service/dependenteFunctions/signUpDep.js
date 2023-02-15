@@ -52,8 +52,12 @@ async function signUpDep(req, res) {
     }
 
     try {
-      nascimento = await formataData(nascimento);
-      emissao = await formataData(emissao);
+      if (nascimento !== "") {
+        nascimento = await formataData(nascimento);
+      }
+      if (emissao !== "") {
+        emissao = await formataData(emissao);
+      }
     } catch (err) {
       return res
         .status(HTTP_CODE_BAD_REQUEST)

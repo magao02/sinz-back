@@ -14,15 +14,9 @@ const DependentSchema = new Schema(
     cpf: {
       type: String,
       required: false,
-      unique: [true, "CPF já cadastrado."],
-      validate: [
-        /^\d{3}\d{3}\d{3}\d{2}$/,
-        "O campo de CPF deve possuir apenas 11 digitos.",
-      ],
     },
     rg: {
       type: String,
-      unique: [true, "RG já cadastrado."],
       required: false,
     },
     emissao: {
