@@ -11,7 +11,6 @@ const HTTP_CODE_UNAUTHORIZED = 401;
 const HTTP_CODE_NOT_FOUND = 404;
 
 async function store(req, res) {
-
   let {
     name,
     email,
@@ -36,37 +35,61 @@ async function store(req, res) {
     salario,
   } = req.body;
 
+  if (name === "") {
+    return res
+      .status(HTTP_CODE_BAD_REQUEST)
+      .json({ message: "Preencha o campo nome " });
+  }
 
-  for (const field in req.body) {
-    if (!req.body[field]) {
-      return res
-        .status(HTTP_CODE_BAD_REQUEST)
-        .json({ message: "Preencha todos os campos." });
-    }
+  if (cpf === "") {
+    return res
+      .status(HTTP_CODE_BAD_REQUEST)
+      .json({ message: "Preencha o campo cpf " });
   }
 
   if (endereco.complemento === "") {
     endereco.complemento = "Nenhum";
   }
 
+  if (password === "") {
+    password = cpf;
+  }
+
+  /*for (const field in req.body) {
+    if (!req.body[field]) {
+      return res
+        .status(HTTP_CODE_BAD_REQUEST)
+        .json({ message: "Preencha todos os campos." });
+    }
+  }*/
 
   let user = await User.findOne({ cpf });
-
-  console.log(user);
 
   if (!user) {
     let urlUser = await createURL(name);
 
     try {
-      nascimento = await formataData(nascimento);
-      emissao = await formataData(emissao);
-      dataAfiliacao = await formataData(dataAfiliacao);
-      dataFormacao = await formataData(dataFormacao);
-      dataRegistroConselho = await formataData(dataRegistroConselho);
+      if (nascimento !== "") {
+        nascimento = await formataData(nascimento);
+      }
+      if (emissao !== "") {
+        emissao = await formataData(emissao);
+      }
+      if (dataAfiliacao !== "") {
+        dataAfiliacao = await formataData(dataAfiliacao);
+      }
+      if (dataFormacao !== "") {
+        dataFormacao = await formataData(dataFormacao);
+      }
+      if (dataRegistroConselho !== "") {
+        dataRegistroConselho = await formataData(dataRegistroConselho);
+      }
     } catch (err) {
-      return res
+      /*return res
         .status(HTTP_CODE_BAD_REQUEST)
-        .json("Data inserida incorretamente ou dado não inserido. Formato correto: dd/mm/aaaa");
+        .json(
+          "Data inserida incorretamente ou dado não inserido. Formato correto: dd/mm/aaaa"
+        );*/
     }
 
     try {
@@ -103,6 +126,7 @@ async function store(req, res) {
         message: "Usuário cadastrado com sucesso",
       });
     } catch (e) {
+      console.log(e);
       if (e.hasOwnProperty("code") && e.code === 11000) {
         return res.status(HTTP_CODE_BAD_REQUEST).json({
           message: "Valor de " + Object.keys(e.keyValue)[0] + " já cadastrado.",
@@ -111,9 +135,6 @@ async function store(req, res) {
         return res.status(HTTP_CODE_BAD_REQUEST).json({ message: e.message });
       }
     }
-    return res
-      .status(HTTP_CODE_CREATED)
-      .json({ message: "Usuário cadastrado com sucesso." });
   } else {
     return res
       .status(HTTP_CODE_BAD_REQUEST)
