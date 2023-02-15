@@ -3,8 +3,6 @@ const Imposto = require("../../model/Imposto");
 const Dependent = require("../../model/Dependent");
 const formataData = require("../../utils/dateFunctions");
 const createURL = require("../../utils/createURL.js");
-const jwt = require("jsonwebtoken");
-const { findById, db, collection } = require("@model/Imposto");
 
 const HTTP_CODE_OK = 200;
 const HTTP_CODE_CREATED = 201;
@@ -54,8 +52,12 @@ async function signUpDep(req, res) {
     }
 
     try {
-      nascimento = await formataData(nascimento);
-      emissao = await formataData(emissao);
+      if (nascimento !== "") {
+        nascimento = await formataData(nascimento);
+      }
+      if (emissao !== "") {
+        emissao = await formataData(emissao);
+      }
     } catch (err) {
       return res
         .status(HTTP_CODE_BAD_REQUEST)

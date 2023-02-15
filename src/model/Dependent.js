@@ -1,51 +1,48 @@
-const { Schema, model } = require('mongoose');
-var Imposto = require('./Imposto.js');
+const { Schema, model } = require("mongoose");
+var Imposto = require("./Imposto.js");
 
-
-const DependentSchema = new Schema({
+const DependentSchema = new Schema(
+  {
     name: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     nascimento: {
-        type: Date,
-        // required: true
+      type: Date,
+      required: false
     },
     cpf: {
-        type: String,
-        // required: true,
-        // unique: [true, "CPF já cadastrado."],
-        // validate: [/^\d{3}\d{3}\d{3}\d{2}$/, "O campo de CPF deve possuir apenas 11 digitos."]
+      type: String,
+      required: false,
     },
     rg: {
-        type: String,
-        // unique: [true, "RG já cadastrado."],
-        // required: true
+      type: String,
+      required: false,
     },
     emissao: {
-        type: Date,
-        // required: true
+      type: Date,
+      required: false,
     },
     idAssociado: {
-        type: String,
-        required: true
+      type: String,
+      required: false,
     },
 
     impostoDeRenda: {
-        type: [Imposto.schema],
-        required: false,
-        deafult: []
+      type: [Imposto.schema],
+      required: false,
+      deafult: [],
     },
     urlDep: {
-        type: String,
-        required: false,
-        unique: true
-    }
-},
+      type: String,
+      required: false,
+      unique: true,
+    },
+  },
 
+  {
+    timestamps: true,
+  }
+);
 
-    {
-        timestamps: true,
-    });
-
-module.exports = model('Dependent', DependentSchema);
+module.exports = model("Dependent", DependentSchema);

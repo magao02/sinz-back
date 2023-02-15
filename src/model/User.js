@@ -1,154 +1,152 @@
-const { Schema, model } = require('mongoose');
-var Imposto = require('./Imposto.js');
+const { Schema, model } = require("mongoose");
+var Imposto = require("./Imposto.js");
 
-const UserSchema = new Schema({
+const UserSchema = new Schema(
+  {
     name: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        required: true,
-        unique: [true, "E-mail já cadastrado."],
+      type: String,
+      required: false,
     },
     password: {
-        type: String,
-        required: true
+      type: String,
+      required: false,
     },
     admin: {
-        type: Boolean,
-        required: false,
-        default: false
+      type: Boolean,
+      required: false,
+      default: false,
     },
     telefone: {
-        type: String,
-        required: true,
-        unique: [true, "Telefone já cadastrado."],
-        validate: [/^[0-9]{2}([0-9]{8}|[0-9]{9})$/, "O campo de Telefone deve possuir apenas 10 ou 11 dígitos."]
+      type: String,
+      required: false,
     },
     nascimento: {
-        type: Date,
-        required: true
+      type: Date,
+      required: false,
     },
     cpf: {
-        type: String,
-        required: true,
-        unique: [true, "CPF já cadastrado."],
-        validate: [/^\d{3}\d{3}\d{3}\d{2}$/, "O campo de CPF deve possuir apenas 11 digitos."]
+      type: String,
+      required: true,
+      unique: [true, "CPF já cadastrado."],
     },
     rg: {
-        type: String,
-        unique: [true, "RG já cadastrado."],
-        required: true
+      type: String,
+      unique: [true, "RG já cadastrado."],
+      required: false,
     },
     emissao: {
-        type: Date,
-        required: true
+      type: Date,
+      required: false,
     },
     filiacao: {
-        type: String,
-        required: true
+      type: String,
+      required: false,
     },
     dataAfiliacao: {
-        type: Date,
-        required: true
+      type: Date,
+      required: false,
     },
     profissao: {
-        type: String,
-        required: true
+      type: String,
+      required: false,
     },
     numInscricao: {
-        type: String,
-        required: true
+      type: String,
+      required: false,
     },
     formacaoSuperior: {
-        type: String,
-        required: true
+      type: String,
+      required: false,
     },
     instituicaoSuperior: {
-        type: String,
-        required: true
+      type: String,
+      required: false,
     },
     dataFormacao: {
-        type: Date,
-        required: true
+      type: Date,
+      required: false,
     },
     numRegistroConselho: {
-        type: String,
-        required: true
+      type: String,
+      required: false,
     },
     dataRegistroConselho: {
-        type: Date,
-        required: true
+      type: Date,
+      required: false,
     },
     empresa: {
-        type: String,
-        required: true
+      type: String,
+      required: false,
     },
     salario: {
-        type: Number,
-        required: true
+      type: Number,
+      required: false,
     },
-    
+
     endereco: {
-        rua: {
-            type: String,
-            required: true
-        },
-        bairro: {
-            type: String,
-            required: true
-        },
-        complemento: {
-            type: String,
-            required: true
-        },
-        numero: {
-            type: String,
-            required: true
-        },
+      rua: {
+        type: String,
+        required: false,
+      },
+      bairro: {
+        type: String,
+        required: false,
+      },
+      complemento: {
+        type: String,
+        required: false,
+      },
+      numero: {
+        type: String,
+        required: false,
+      },
     },
     regional: {
-        municipio: {
-            type: String,
-            required: true
-        },
-        estado: {
-            type: String,
-            required: true
-        },
-        naturalidade: {
-            type: String,
-            required: true
-        },
-        nacionalidade: {
-            type: String,
-            required: true
-        }
+      municipio: {
+        type: String,
+        required: false,
+      },
+      estado: {
+        type: String,
+        required: false,
+      },
+      naturalidade: {
+        type: String,
+        required: false,
+      },
+      nacionalidade: {
+        type: String,
+        required: false,
+      },
     },
     urlUser: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
     dependentes: {
-        type: [String],
-        required: false,
-        default: []
+      type: [String],
+      required: false,
+      default: [],
     },
     token_list: {
-        type: [String],
-        required: false,
-        default: []
+      type: [String],
+      required: false,
+      default: [],
     },
     impostoDeRenda: {
-        type: [Imposto.schema],
-        required: false,
-        deafult: []
+      type: [Imposto.schema],
+      required: false,
+      deafult: [],
     },
-},
-    {
-        timestamps: true,
-    });
+  },
+  {
+    timestamps: true,
+  }
+);
 
-module.exports = model('User', UserSchema);
+module.exports = model("User", UserSchema);

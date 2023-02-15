@@ -1,11 +1,15 @@
 const router = require('express').Router();
-const UserController = require('@controller/userController');
+const UserController = require('../controller/userController');
 const auth = require('../middlewares/Auth');
 
 //USER
 router.post('/signUp', UserController.store);
 
 router.post('/signIn', UserController.login);
+
+router.put('/setNewPassword/:userEmail/:token', UserController.setNewPassword);
+
+router.get('/passwordToken/:userEmail', UserController.passwordToken);
 
 router.get('/signOut', auth.authorizeUser, UserController.logout);
 
