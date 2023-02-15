@@ -5,7 +5,6 @@ const userPage = require("../service/userFunctions/userPage");
 const getPDF = require("../service/userFunctions/getPDF");
 const getUserYears = require("../service/userFunctions/getUserYears");
 const getUsers = require("../service/userFunctions/getUsers");
-const setPassword = require("../service/userFunctions/setPassword");
 const setPerfil = require("../service/userFunctions/setPerfil");
 const setUser = require("../service/userFunctions/setUser");
 const setNewAdmin = require("../service/userFunctions/setNewAdmin");
@@ -23,15 +22,11 @@ module.exports = {
     return login(req, res);
   },
 
+  //GET METHODS
+
   async passwordToken(req, res) {
     return passwordToken(req, res);
   },
-
-  async setNewPassword(req, res) {
-    return setNewPassword(req, res);
-  },
-
-  //GET METHODS
 
   async logout(req, res) {
     return logout(req, res);
@@ -55,8 +50,8 @@ module.exports = {
 
   //PUT METHODS
 
-  async setPassword(req, res) {
-    return setPassword(req, res);
+  async setNewPassword(req, res) {
+    return setNewPassword(req, res);
   },
 
   async setPerfil(req, res) {

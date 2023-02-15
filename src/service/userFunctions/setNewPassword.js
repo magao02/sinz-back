@@ -23,7 +23,7 @@ async function setNewPassword(req, res) {
     }
 
     const usuarioAtualizado = await User.findOneAndUpdate({
-      _id: user._id,
+      id: user.id,
       password: req.body.password
     });
     

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const ImpostoController = require('@controller/impostoController');
+const ImpostoController = require('../controller/impostoController');
 const auth = require('../middlewares/Auth');
 //Impostos
 

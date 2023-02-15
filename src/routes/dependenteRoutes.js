@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const dependenteController = require('@controller/dependenteController');
+const dependenteController = require('../controller/dependenteController');
 const auth = require('../middlewares/Auth');
 
 //Dependentes

@@ -1,8 +1,6 @@
 const User = require("../../model/User");
 const crypto = require("crypto");
 const createURL = require("../../utils/createURL.js");
-const jwt = require("jsonwebtoken");
-const { findById, db, collection } = require("@model/Imposto");
 const Token = require("../../model/Token.");
 
 const HTTP_CODE_OK = 200;

@@ -3,7 +3,6 @@ const Imposto = require("../../model/Imposto");
 const Dependent = require("../../model/Dependent");
 const createURL = require("../../utils/createURL.js");
 const formataData = require("../../utils/dateFunctions");
-const jwt = require("jsonwebtoken");
 
 const HTTP_CODE_OK = 200;
 const HTTP_CODE_CREATED = 201;

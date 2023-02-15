@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const UserController = require('@controller/userController');
+const UserController = require('../controller/userController');
 const auth = require('../middlewares/Auth');
 
 //USER
@@ -10,8 +10,6 @@ router.get('/getPDF/:urlUser/:ano', auth.authorizeUser, UserController.getPDF);
 router.get('/getUserYears/:urlUser', auth.authorizeUser, UserController.getUserYears);
 
 router.get('/getUsers', auth.authorizeUser, UserController.getUsers);
-
-router.put('/setPassword', auth.authorizeUser, UserController.setPassword);
 
 router.put('/setPerfil/:urlUser', auth.authorizeUser, UserController.setPerfil);
 
