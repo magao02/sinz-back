@@ -3,6 +3,12 @@ const Imposto = require("../../model/Imposto");
 const Dependent = require("../../model/Dependent");
 const createURL = require("../../utils/createURL.js");
 const formataData = require("../../utils/dateFunctions");
+const {
+  validacaoPassword,
+  validacaoRG,
+  validacaoTelefone,
+  validacaoCPF,
+} = require("../../utils/validationFunctions");
 
 const HTTP_CODE_OK = 200;
 const HTTP_CODE_CREATED = 201;
@@ -45,23 +51,18 @@ async function store(req, res) {
     return res
       .status(HTTP_CODE_BAD_REQUEST)
       .json({ message: "Preencha o campo cpf " });
+  } else {
+    if (!validacaoCPF(cpf)) {
+      return res.status(HTTP_CODE_BAD_REQUEST).json({
+        message:
+          "CPF inserido com formato incorreto. O CPF deve ser inserido sem pontuação e deve ter 11 dígitos.",
+      });
+    }
   }
 
   if (endereco.complemento === "") {
     endereco.complemento = "Nenhum";
   }
-
-  if (password === "") {
-    password = cpf;
-  }
-
-  /*for (const field in req.body) {
-    if (!req.body[field]) {
-      return res
-        .status(HTTP_CODE_BAD_REQUEST)
-        .json({ message: "Preencha todos os campos." });
-    }
-  }*/
 
   let user = await User.findOne({ cpf });
 
@@ -85,11 +86,40 @@ async function store(req, res) {
         dataRegistroConselho = await formataData(dataRegistroConselho);
       }
     } catch (err) {
-      /*return res
+      return res
         .status(HTTP_CODE_BAD_REQUEST)
         .json(
           "Data inserida incorretamente ou dado não inserido. Formato correto: dd/mm/aaaa"
-        );*/
+        );
+    }
+
+    if (rg !== "") {
+      if (!validacaoRG(rg)) {
+        return res.status(HTTP_CODE_BAD_REQUEST).json({
+          message:
+            "RG inserido com formato incorreto. O RG deve ser inserido sem pontuação e possui 9 dígitos.",
+        });
+      }
+    }
+
+    if (telefone !== "") {
+      if (!validacaoTelefone(telefone)) {
+        return res.status(HTTP_CODE_BAD_REQUEST).json({
+          message:
+            "Telefone inserido com formato incorreto. Formato correto: xx xxxx-xxxx sem pontuação.",
+        });
+      }
+    }
+
+    if (password !== "") {
+      if (!validacaoPassword(password)) {
+        return res.status(HTTP_CODE_BAD_REQUEST).json({
+          message:
+            "Senha inserida com formato incorreto. Insira uma senha apenas com números e sem caracteres especiais com um tamanho de pelo menos 8 dígitos",
+        });
+      }
+    } else {
+      password = cpf;
     }
 
     try {
