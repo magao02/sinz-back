@@ -3,6 +3,7 @@ const Imposto = require("../../model/Imposto");
 const Dependent = require("../../model/Dependent");
 const formataData = require("../../utils/dateFunctions");
 const createURL = require("../../utils/createURL.js");
+const { validacaoCPF } = require("../../utils/validationFunctions");
 
 const HTTP_CODE_OK = 200;
 const HTTP_CODE_CREATED = 201;
@@ -27,6 +28,15 @@ async function signUpDep(req, res) {
     return res
       .status(HTTP_CODE_BAD_REQUEST)
       .json({ message: "Preencha o campo de nome do Dependente." });
+  }
+
+  if (cpf !== "") {
+    if (!validacaoCPF(cpf)) {
+      return res.status(HTTP_CODE_BAD_REQUEST).json({
+        message:
+          "CPF inserido com formato incorreto. O CPF deve ser inserido sem pontuação e deve ter 11 dígitos.",
+      });
+    }
   }
 
   if (req.user.admin || user._id.equals(req.userId)) {
