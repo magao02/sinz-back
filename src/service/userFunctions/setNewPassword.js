@@ -1,5 +1,6 @@
 const User = require("../../model/User");
 const Token = require("../../model/Token.");
+const { validacaoPassword } = require("../../utils/validationFunctions");
 
 const HTTP_CODE_OK = 200;
 const HTTP_CODE_CREATED = 201;
@@ -22,11 +23,18 @@ async function setNewPassword(req, res) {
       });
     }
 
+    if (!validacaoPassword(req.body.password)) {
+      return res.status(HTTP_CODE_BAD_REQUEST).json({
+        message:
+          "Senha inserida com formato incorreto. Insira uma senha apenas com números e sem caracteres especiais com um tamanho de pelo menos 8 dígitos",
+      });
+    }
+
     const usuarioAtualizado = await User.findOneAndUpdate({
       id: user.id,
-      password: req.body.password
+      password: req.body.password,
     });
-    
+
     await Token.deleteOne(token);
 
     res.status(HTTP_CODE_OK).json({
