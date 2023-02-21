@@ -3,10 +3,8 @@ const Token = require("../../model/Token.");
 const { validacaoPassword } = require("../../utils/validationFunctions");
 
 const HTTP_CODE_OK = 200;
-const HTTP_CODE_CREATED = 201;
 const HTTP_CODE_BAD_REQUEST = 400;
 const HTTP_CODE_UNAUTHORIZED = 401;
-const HTTP_CODE_NOT_FOUND = 404;
 
 async function setNewPassword(req, res) {
   try {
@@ -18,7 +16,7 @@ async function setNewPassword(req, res) {
     });
 
     if (!token) {
-      return res.status(HTTP_CODE_BAD_REQUEST).json({
+      return res.status(HTTP_CODE_UNAUTHORIZED).json({
         message: "Link inválido ou expirado",
       });
     }
