@@ -20,7 +20,7 @@ async function deleteDep(req, res) {
     }
 
     try {
-      Dependent.remove({ urlDep: urlDep }, function(err) {
+      Dependent.deleteOne({ urlDep: urlDep }, function(err) {
         if (err) return handleError(err);
       });
       return res.status(HTTP_CODE_OK).json({ message: "Depedente deletado com sucesso"});
