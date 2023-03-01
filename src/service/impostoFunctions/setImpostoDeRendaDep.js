@@ -42,12 +42,14 @@ async function setImpostoDeRendaDep(req, res) {
     }
 
     if (antigoImposto === undefined || antigoImposto.length === 0) {
-      return res
-        .status(HTTP_CODE_BAD_REQUEST)
-        .json({ message: "Imposto do ano inserido não existe " });
+      antigoImposto = await Imposto.create({
+        idUser: dep._id,
+        ano: req.params.ano,
+      });
     }
 
-    antigoImposto = antigoImposto[0];
+    //antigoImposto = antigoImposto[0];
+
     try {
       const novoImposto = await Imposto.updateOne(
         { idUser: dep.id, ano: +req.params.ano },
