@@ -46,9 +46,9 @@ async function setImpostoDeRendaDep(req, res) {
         idUser: dep._id,
         ano: req.params.ano,
       });
+    } else {
+      antigoImposto = antigoImposto[0];
     }
-
-    //antigoImposto = antigoImposto[0];
 
     try {
       const novoImposto = await Imposto.updateOne(
