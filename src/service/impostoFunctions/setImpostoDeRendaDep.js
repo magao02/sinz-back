@@ -27,7 +27,7 @@ async function setImpostoDeRendaDep(req, res) {
         .status(HTTP_CODE_NOT_FOUND)
         .json({ message: "Dependente não encontrado." });
     }
-    let impostoDeRenda = req.body;
+    let impostoDeRenda = req.body.impostoDeRenda;
     let impostos = await Imposto.find({ idUser: dep._id });
 
     //Seleciona o imposto do ano correto.
@@ -42,12 +42,14 @@ async function setImpostoDeRendaDep(req, res) {
     }
 
     if (antigoImposto === undefined || antigoImposto.length === 0) {
-      return res
-        .status(HTTP_CODE_BAD_REQUEST)
-        .json({ message: "Imposto do ano inserido não existe " });
+      antigoImposto = await Imposto.create({
+        idUser: dep._id,
+        ano: req.params.ano,
+      });
+    } else {
+      antigoImposto = antigoImposto[0];
     }
 
-    antigoImposto = antigoImposto[0];
     try {
       const novoImposto = await Imposto.updateOne(
         { idUser: dep.id, ano: +req.params.ano },
@@ -139,8 +141,8 @@ async function setImpostoDeRendaDep(req, res) {
                 : antigoImposto.dezembro,
           },
         }
-      );
-      return res
+        );
+        return res
         .status(HTTP_CODE_OK)
         .json({ message: "Imposto de Renda atualizado." });
     } catch (err) {
