@@ -20,11 +20,14 @@ async function deleteUser(req, res) {
         .json({ message: "Perfil não encontrado." });
     }
 
+    await Imposto.deleteMany({ idUser: user._id });
+
     user = await User.deleteOne(user)
       .then(async function (deletedUser) {
         if (deletedUser) {
           for (let i = 0; i < user.dependentes.length; i++) {
             await Dependent.findByIdAndDelete(user.dependentes[i]);
+            await Imposto.deleteMany({ idUser: user.dependentes[i]._id });
           }
           return res.status(HTTP_CODE_OK).json({
             message: `Usuário (${user.name}) deletado com sucesso.`,
