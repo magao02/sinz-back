@@ -19,6 +19,8 @@ async function deleteDep(req, res) {
         .json({ message: "Dependente não encontrado." });
     }
 
+    await Imposto.deleteMany({ idUser: dep._id });
+
     try {
       Dependent.deleteOne({ urlDep: urlDep }, function(err) {
         if (err) return handleError(err);
