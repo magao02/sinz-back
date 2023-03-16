@@ -39,10 +39,9 @@ async function createNewImpostoByYearDep(req, res) {
         +req.params.ano - 1
       );
 
-      console.log(impostoAnoAnterior);
 
       let novoImposto = await Imposto.create({
-        idUser: user._id,
+        idUser: dep._id,
         ano: req.params.ano,
         janeiro: impostoAnoAnterior.janeiro,
         fevereiro: impostoAnoAnterior.fevereiro,
