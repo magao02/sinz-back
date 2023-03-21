@@ -31,31 +31,37 @@ async function createNewImpostoByYearDep(req, res) {
 
     let impostos = await Imposto.find({ idUser: dep._id });
 
-    let novoImposto = await getImpostoByYear(impostos, +req.params.ano);
+    let novoImposto = await getImpostoByYear(impostos, ano);
 
     if (novoImposto === undefined) {
       let impostoAnoAnterior = await getImpostoByYear(
         impostos,
-        +req.params.ano - 1
+        ano - 1
       );
 
-
-      let novoImposto = await Imposto.create({
-        idUser: dep._id,
-        ano: req.params.ano,
-        janeiro: impostoAnoAnterior.janeiro,
-        fevereiro: impostoAnoAnterior.fevereiro,
-        marco: impostoAnoAnterior.marco,
-        abril: impostoAnoAnterior.abril,
-        maio: impostoAnoAnterior.maio,
-        junho: impostoAnoAnterior.junho,
-        julho: impostoAnoAnterior.julho,
-        agosto: impostoAnoAnterior.agosto,
-        setembro: impostoAnoAnterior.setembro,
-        outubro: impostoAnoAnterior.outubro,
-        novembro: impostoAnoAnterior.novembro,
-        dezembro: impostoAnoAnterior.dezembro,
-      });
+      if (impostoAnoAnterior === undefined) {
+        novoImposto = await Imposto.create({
+          idUser: user._id,
+          ano: ano,
+        });
+      } else {
+        novoImposto = await Imposto.create({
+          idUser: user._id,
+          ano: ano,
+          janeiro: impostoAnoAnterior.janeiro,
+          fevereiro: impostoAnoAnterior.fevereiro,
+          marco: impostoAnoAnterior.marco,
+          abril: impostoAnoAnterior.abril,
+          maio: impostoAnoAnterior.maio,
+          junho: impostoAnoAnterior.junho,
+          julho: impostoAnoAnterior.julho,
+          agosto: impostoAnoAnterior.agosto,
+          setembro: impostoAnoAnterior.setembro,
+          outubro: impostoAnoAnterior.outubro,
+          novembro: impostoAnoAnterior.novembro,
+          dezembro: impostoAnoAnterior.dezembro,
+        });
+      }
 
       user = await User.findByIdAndUpdate(dep._id, {
         impostoDeRenda: novoImposto._id,
