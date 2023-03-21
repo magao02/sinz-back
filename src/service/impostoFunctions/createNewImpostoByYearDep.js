@@ -31,23 +31,23 @@ async function createNewImpostoByYearDep(req, res) {
 
     let impostos = await Imposto.find({ idUser: dep._id });
 
-    let novoImposto = await getImpostoByYear(impostos, +req.params.ano);
+    let novoImposto = await getImpostoByYear(impostos, ano);
 
     if (novoImposto === undefined) {
       let impostoAnoAnterior = await getImpostoByYear(
         impostos,
-        +req.params.ano - 1
+        ano - 1
       );
 
       if (impostoAnoAnterior === undefined) {
         novoImposto = await Imposto.create({
           idUser: user._id,
-          ano: req.params.ano,
+          ano: ano,
         });
       } else {
         novoImposto = await Imposto.create({
           idUser: user._id,
-          ano: req.params.ano,
+          ano: ano,
           janeiro: impostoAnoAnterior.janeiro,
           fevereiro: impostoAnoAnterior.fevereiro,
           marco: impostoAnoAnterior.marco,
