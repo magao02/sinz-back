@@ -30,6 +30,7 @@ async function createNewImpostoByYearDep(req, res) {
     }
 
     let impostos = await Imposto.find({ idUser: dep._id });
+    let ano = +req.params.ano;
 
     let novoImposto = await getImpostoByYear(impostos, ano);
 
