@@ -12,8 +12,8 @@ const HTTP_CODE_NOT_FOUND = 404;
 
 async function createNewImpostoByYearUser(req, res) {
   const urlUser = req.params.urlUser;
-  let user = await User.findOne({ urlUser });
-  let ano = +req.params.ano;
+  const user = await User.findOne({ urlUser });
+  const anoDoNovoImposto = +req.params.ano;
 
   if (!user) {
     return res
@@ -21,25 +21,28 @@ async function createNewImpostoByYearUser(req, res) {
       .json({ message: "Perfil não encontrado " });
   }
 
-  let impostos = await Imposto.find({ idUser: user._id });
+  let impostosDoUsuario = await Imposto.find({ idUser: user._id });
 
-  let novoImposto = await getImpostoByYear(impostos, ano);
+  let impostoDoAnoPassadoComoParametro = await getImpostoByYear(
+    impostosDoUsuario,
+    anoDoNovoImposto
+  );
 
-  if (novoImposto === undefined) {
+  if (impostoDoAnoPassadoComoParametro === undefined) {
     let impostoAnoAnterior = await getImpostoByYear(
-      impostos,
-      ano - 1
+      impostosDoUsuario,
+      anoDoNovoImposto - 1
     );
 
     if (impostoAnoAnterior === undefined) {
-      novoImposto = await Imposto.create({
+      let novoImposto = await Imposto.create({
         idUser: user._id,
-        ano: ano,
+        ano: anoDoNovoImposto,
       });
     } else {
-      novoImposto = await Imposto.create({
+      let novoImposto = await Imposto.create({
         idUser: user._id,
-        ano: ano,
+        ano: anoDoNovoImposto,
         janeiro: impostoAnoAnterior.janeiro,
         fevereiro: impostoAnoAnterior.fevereiro,
         marco: impostoAnoAnterior.marco,
