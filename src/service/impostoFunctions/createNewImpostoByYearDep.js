@@ -35,7 +35,7 @@ async function createNewImpostoByYearDep(req, res) {
 
     let impostoDoAnoPassadoComoParametro = await getImpostoByYear(
       impostosDoUsuario,
-      ano
+      anoDoNovoImposto
     );
 
     if (impostoDoAnoPassadoComoParametro === undefined) {
