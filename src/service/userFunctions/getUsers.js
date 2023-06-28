@@ -46,6 +46,11 @@ async function getUsers(req, res) {
               "/" +
               user.emissao.getFullYear()
             : "",
+        profissao:
+          user.profissao !== "" &&
+          user.profissao !== null &&
+          user.profissao !== undefined 
+            ? user.profissao : "", 
       });
     });
 
