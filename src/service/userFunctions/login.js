@@ -37,11 +37,18 @@ async function login(req, res) {
         auth: true,
         token: `Bearer ` + token,
         admin: user.admin,
+        primeiroAcesso: user.primeiroAcesso,
 
         name: user.name,
         urlUser: user.urlUser,
       };
 
+      if(user.primeiroAcesso) {
+        await User.findByIdAndUpdate(user.id, {
+          primeiroAcesso: false
+        })
+      }
+      
       return res.status(HTTP_CODE_OK).json(response);
     } else {
       return res
