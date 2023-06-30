@@ -97,7 +97,7 @@ async function store(req, res) {
       if (!validacaoRG(rg)) {
         return res.status(HTTP_CODE_BAD_REQUEST).json({
           message:
-            "RG inserido com formato incorreto. O RG deve ser inserido sem pontuação e possui 9 dígitos.",
+            "RG inserido com formato incorreto. O RG deve ser inserido sem pontuação e possui 7 dígitos.",
         });
       }
     }
