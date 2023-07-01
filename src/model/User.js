@@ -143,6 +143,11 @@ const UserSchema = new Schema(
       required: false,
       deafult: [],
     },
+    primeiroAcesso: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
   },
   {
     timestamps: true,
