@@ -4,7 +4,7 @@ function validacaoPassword(password) {
 }
 
 function validacaoRG(rg) {
-  var padraoRG = /^\d{7}$/;
+  var padraoRG = /^\d{0,9}$/;
   return padraoRG.test(rg);
 }
 
