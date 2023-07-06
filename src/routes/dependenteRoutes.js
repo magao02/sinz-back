@@ -10,4 +10,6 @@ router.get('/getDependents/:urlUser', auth.authorizeUser, dependenteController.g
 
 router.delete('/deleteDep/:urlDep', auth.authorizeUser, dependenteController.deleteDep);
 
+router.put('/updateDep/:urlDep', auth.authorizeUser, dependenteController.updateDep)
+
 module.exports = router;
