@@ -1,18 +1,13 @@
 const User = require("../../model/User");
-const Imposto = require("../../model/Imposto");
-const Dependent = require("../../model/Dependent");
-const createURL = require("../../utils/createURL.js");
-const dependenteController = require("../../controller/dependenteController");
-
-const HTTP_CODE_OK = 200;
-const HTTP_CODE_CREATED = 201;
-const HTTP_CODE_BAD_REQUEST = 400;
-const HTTP_CODE_UNAUTHORIZED = 401;
-const HTTP_CODE_NOT_FOUND = 404;
+const {
+  HTTP_CODE_OK,
+  HTTP_CODE_UNAUTHORIZED,
+  HTTP_CODE_NOT_FOUND,
+} = require("../../utils/httpStatus");
 
 const isBlank = (string) => {
   return string !== undefined && string !== "";
-}
+};
 
 async function setUser(req, res) {
   if (req.user.admin) {
@@ -32,10 +27,22 @@ async function setUser(req, res) {
       telefone: isBlank(telefone) ? telefone : user.telefone,
       filiacao: isBlank(filiacao) ? filiacao : user.filiacao,
       endereco: {
-        rua: endereco !== undefined && isBlank(endereco.rua) ? endereco.rua : user.endereco.rua,
-        bairro: endereco !== undefined && isBlank(endereco.bairro) ? endereco.bairro : user.endereco.bairro,
-        complemento: endereco !== undefined && isBlank(endereco.complemento) ? endereco.complemento : user.endereco.complemento,
-        numero: endereco !== undefined && isBlank(endereco.numero) ? endereco.numero : user.endereco.numero,
+        rua:
+          endereco !== undefined && isBlank(endereco.rua)
+            ? endereco.rua
+            : user.endereco.rua,
+        bairro:
+          endereco !== undefined && isBlank(endereco.bairro)
+            ? endereco.bairro
+            : user.endereco.bairro,
+        complemento:
+          endereco !== undefined && isBlank(endereco.complemento)
+            ? endereco.complemento
+            : user.endereco.complemento,
+        numero:
+          endereco !== undefined && isBlank(endereco.numero)
+            ? endereco.numero
+            : user.endereco.numero,
       },
     });
 

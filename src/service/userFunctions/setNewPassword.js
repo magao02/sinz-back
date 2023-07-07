@@ -1,10 +1,11 @@
 const User = require("../../model/User");
 const Token = require("../../model/Token.");
 const { validacaoPassword } = require("../../utils/validationFunctions");
-
-const HTTP_CODE_OK = 200;
-const HTTP_CODE_BAD_REQUEST = 400;
-const HTTP_CODE_UNAUTHORIZED = 401;
+const {
+  HTTP_CODE_OK,
+  HTTP_CODE_BAD_REQUEST,
+  HTTP_CODE_UNAUTHORIZED,
+} = require("../../utils/httpStatus");
 
 async function setNewPassword(req, res) {
   try {
