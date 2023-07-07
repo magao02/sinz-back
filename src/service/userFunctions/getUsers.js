@@ -25,6 +25,7 @@ async function getUsers(req, res) {
         rg: isBlank(user.rg) ? user.rg : "",
         urlUser: user.urlUser !== "" ? user.urlUser : "",
         emissao: isBlank(user.emissao) ? formatDate(user.emissao) : "",
+        profissao: isBlank(user.profissao) ? user.profissao : "", 
       });
     });
 
