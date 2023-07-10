@@ -1,14 +1,16 @@
 const User = require("../../model/User");
-const Imposto = require("../../model/Imposto");
-const Dependent = require("../../model/Dependent");
-const createURL = require("../../utils/createURL.js");
 const compare = require("../../utils/compareFunctions.js");
+const isBlank = require("../../utils/isBlank");
+const {
+  HTTP_CODE_OK,
+  HTTP_CODE_UNAUTHORIZED,
+} = require("../../utils/httpStatus.js");
 
-const HTTP_CODE_OK = 200;
-const HTTP_CODE_CREATED = 201;
-const HTTP_CODE_BAD_REQUEST = 400;
-const HTTP_CODE_UNAUTHORIZED = 401;
-const HTTP_CODE_NOT_FOUND = 404;
+function formatDate(date) {
+  return (
+    date.getDate() + 1 + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+  );
+}
 
 async function getUsers(req, res) {
   if (req.user.admin) {
@@ -18,39 +20,12 @@ async function getUsers(req, res) {
     users.forEach((user) => {
       usersDTO.push({
         name: user.name !== "" ? user.name : "",
-        nascimento:
-          user.nascimento !== "" &&
-          user.nascimento !== null &&
-          user.nascimento !== undefined
-            ? user.nascimento.getDate() +
-              1 +
-              "/" +
-              (user.nascimento.getMonth() + 1) +
-              "/" +
-              user.nascimento.getFullYear()
-            : "",
+        nascimento: isBlank(user.nascimento) ? formatDate(user.nascimento) : "",
         cpf: user.cpf !== "" ? user.cpf : "",
-        rg:
-          user.rg !== "" && user.rg !== null && user.rg !== undefined
-            ? user.rg
-            : "",
+        rg: isBlank(user.rg) ? user.rg : "",
         urlUser: user.urlUser !== "" ? user.urlUser : "",
-        emissao:
-          user.emissao !== "" &&
-          user.emissao !== null &&
-          user.emissao !== undefined
-            ? user.emissao.getDate() +
-              1 +
-              "/" +
-              (user.emissao.getMonth() + 1) +
-              "/" +
-              user.emissao.getFullYear()
-            : "",
-        profissao:
-          user.profissao !== "" &&
-          user.profissao !== null &&
-          user.profissao !== undefined 
-            ? user.profissao : "", 
+        emissao: isBlank(user.emissao) ? formatDate(user.emissao) : "",
+        profissao: isBlank(user.profissao) ? user.profissao : "", 
       });
     });
 

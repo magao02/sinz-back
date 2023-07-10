@@ -1,14 +1,11 @@
 const User = require("../../model/User");
-const Imposto = require("../../model/Imposto");
-const Dependent = require("../../model/Dependent");
-const createURL = require("../../utils/createURL.js");
 const formataData = require("../../utils/dateFunctions");
-
-const HTTP_CODE_OK = 200;
-const HTTP_CODE_CREATED = 201;
-const HTTP_CODE_BAD_REQUEST = 400;
-const HTTP_CODE_UNAUTHORIZED = 401;
-const HTTP_CODE_NOT_FOUND = 404;
+const isBlank = require("../../utils/isBlank");
+const {
+  HTTP_CODE_NOT_FOUND,
+  HTTP_CODE_BAD_REQUEST,
+  HTTP_CODE_UNAUTHORIZED,
+} = require("../../utils/httpStatus");
 
 async function setPerfil(req, res) {
   const urlUser = req.params.urlUser;
@@ -45,10 +42,18 @@ async function setPerfil(req, res) {
     } = req.body;
 
     try {
-      if (nascimento !== undefined && nascimento !== "") { nascimento = await formataData(nascimento); }
-      if (dataAfiliacao !== undefined && dataAfiliacao !== "") { dataAfiliacao = await formataData(dataAfiliacao); }
-      if (dataFormacao !== undefined && dataFormacao !== "") { dataFormacao = await formataData(dataFormacao); }
-      if (dataRegistroConselho !== undefined && dataRegistroConselho !== "") { dataRegistroConselho = await formataData(dataRegistroConselho); }
+      if (nascimento !== undefined && nascimento !== "") {
+        nascimento = await formataData(nascimento);
+      }
+      if (dataAfiliacao !== undefined && dataAfiliacao !== "") {
+        dataAfiliacao = await formataData(dataAfiliacao);
+      }
+      if (dataFormacao !== undefined && dataFormacao !== "") {
+        dataFormacao = await formataData(dataFormacao);
+      }
+      if (dataRegistroConselho !== undefined && dataRegistroConselho !== "") {
+        dataRegistroConselho = await formataData(dataRegistroConselho);
+      }
     } catch (err) {
       return res
         .status(HTTP_CODE_BAD_REQUEST)
@@ -57,104 +62,66 @@ async function setPerfil(req, res) {
 
     try {
       user = await User.findByIdAndUpdate(user._id, {
-        name: name !== undefined && name !== "" ? name : user.name,
-        email: email !== undefined && email !== "" ? email : user.email,
-        telefone:
-          telefone !== undefined && telefone !== "" ? telefone : user.telefone,
-        nascimento:
-          nascimento !== undefined && nascimento !== ""
-            ? nascimento
-            : user.nascimento,
-        rg: rg !== undefined && rg !== "" ? rg : user.rg,
-        filiacao:
-          filiacao !== undefined && filiacao !== "" ? filiacao : user.filiacao,
-        numInscricao:
-          numInscricao !== undefined && numInscricao !== ""
-            ? numInscricao
-            : user.numInscricao,
-        dataAfiliacao:
-          dataAfiliacao !== undefined && dataAfiliacao !== ""
-            ? dataAfiliacao
-            : user.dataAfiliacao,
-        formacaoSuperior:
-          formacaoSuperior !== undefined && formacaoSuperior !== ""
-            ? formacaoSuperior
-            : user.formacaoSuperior,
-        instituicaoSuperior:
-          instituicaoSuperior !== undefined && instituicaoSuperior !== ""
-            ? instituicaoSuperior
-            : user.instituicaoSuperior,
-        dataFormacao:
-          dataFormacao !== undefined && dataFormacao !== ""
-            ? dataFormacao
-            : user.dataFormacao,
-        numRegistroConselho:
-          numRegistroConselho !== undefined && numRegistroConselho !== ""
-            ? numRegistroConselho
-            : user.numRegistroConselho,
-        dataRegistroConselho:
-          dataRegistroConselho !== undefined && dataRegistroConselho !== ""
-            ? dataRegistroConselho
-            : user.dataRegistroConselho,
-        empresa:
-          empresa !== undefined && empresa !== "" ? empresa : user.empresa,
-        salario:
-          salario !== undefined && salario !== "" ? salario : user.salario,
-        password:
-          password !== undefined && password !== "" ? password : user.password,
-        profissao:
-          profissao !== undefined && profissao !== ""
-            ? profissao
-            : user.profissao,
+        name: isBlank(name) ? name : user.name,
+        email: isBlank(email) ? email : user.email,
+        telefone: isBlank(telefone) ? telefone : user.telefone,
+        nascimento: isBlank(nascimento) ? nascimento : user.nascimento,
+        rg: isBlank(rg) ? rg : user.rg,
+        filiacao: isBlank(filiacao) ? filiacao : user.filiacao,
+        numInscricao: isBlank(numInscricao) ? numInscricao : user.numInscricao,
+        dataAfiliacao: isBlank(dataAfiliacao)
+          ? dataAfiliacao
+          : user.dataAfiliacao,
+        formacaoSuperior: isBlank(formacaoSuperior)
+          ? formacaoSuperior
+          : user.formacaoSuperior,
+        instituicaoSuperior: isBlank(instituicaoSuperior)
+          ? instituicaoSuperior
+          : user.instituicaoSuperior,
+        dataFormacao: isBlank(dataFormacao) ? dataFormacao : user.dataFormacao,
+        numRegistroConselho: isBlank(numRegistroConselho)
+          ? numRegistroConselho
+          : user.numRegistroConselho,
+        dataRegistroConselho: isBlank(dataRegistroConselho)
+          ? dataRegistroConselho
+          : user.dataRegistroConselho,
+        empresa: isBlank(empresa) ? empresa : user.empresa,
+        salario: isBlank(salario) ? salario : user.salario,
+        password: isBlank(password) ? password : user.password,
+        profissao: isBlank(profissao) ? profissao : user.profissao,
         endereco: {
           rua:
-            endereco !== undefined &&
-            endereco.rua !== undefined &&
-            endereco.rua !== ""
+            endereco !== undefined && isBlank(endereco.rua)
               ? endereco.rua
               : user.endereco.rua,
           bairro:
-            endereco !== undefined &&
-            endereco.bairro !== undefined &&
-            endereco.bairro !== ""
+            endereco !== undefined && isBlank(endereco.bairro)
               ? endereco.bairro
               : user.endereco.bairro,
           complemento:
-            endereco !== undefined &&
-            endereco.complemento !== undefined &&
-            endereco.complemento !== ""
+            endereco !== undefined && isBlank(endereco.complemento)
               ? endereco.complemento
               : user.endereco.complemento,
           numero:
-            endereco !== undefined &&
-            endereco.numero !== undefined &&
-            endereco.numero !== ""
+            endereco !== undefined && isBlank(endereco.numero)
               ? endereco.numero
               : user.endereco.numero,
         },
         regional: {
           municipio:
-            regional !== undefined &&
-            regional.municipio !== undefined &&
-            regional.municipio !== ""
+            regional !== undefined && isBlank(regional.municipio)
               ? regional.municipio
               : user.regional.municipio,
           estado:
-            regional !== undefined &&
-            regional.estado !== undefined &&
-            regional.estado !== ""
+            regional !== undefined && isBlank(regional.estado)
               ? regional.estado
               : user.regional.estado,
           naturalidade:
-            regional !== undefined &&
-            regional.naturalidade !== undefined &&
-            regional.naturalidade !== ""
+            regional !== undefined && isBlank(regional.naturalidade)
               ? regional.naturalidade
               : user.regional.naturalidade,
           nacionalidade:
-            regional !== undefined &&
-            regional.nacionalidade !== undefined &&
-            regional.nacionalidade !== ""
+            regional !== undefined && isBlank(regional.nacionalidade)
               ? regional.nacionalidade
               : user.regional.nacionalidade,
         },
@@ -166,7 +133,8 @@ async function setPerfil(req, res) {
     } catch (err) {
       if (err.hasOwnProperty("code") && err.code === 11000) {
         return res.status(HTTP_CODE_BAD_REQUEST).json({
-          message: "Valor de " + Object.keys(err.keyValue)[0] + " já cadastrado.",
+          message:
+            "Valor de " + Object.keys(err.keyValue)[0] + " já cadastrado.",
         });
       } else {
         return res.status(HTTP_CODE_BAD_REQUEST).json({ message: err.message });

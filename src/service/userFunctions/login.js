@@ -1,14 +1,11 @@
 const User = require("../../model/User");
-const Imposto = require("../../model/Imposto");
-const Dependent = require("../../model/Dependent");
-const createURL = require("../../utils/createURL.js");
 const jwt = require("jsonwebtoken");
+const {
+  HTTP_CODE_OK,
+  HTTP_CODE_BAD_REQUEST,
+  HTTP_CODE_UNAUTHORIZED,
+} = require("../../utils/httpStatus");
 
-const HTTP_CODE_OK = 200;
-const HTTP_CODE_CREATED = 201;
-const HTTP_CODE_BAD_REQUEST = 400;
-const HTTP_CODE_UNAUTHORIZED = 401;
-const HTTP_CODE_NOT_FOUND = 404;
 async function login(req, res) {
   const { cpf, password } = req.body;
   if (cpf === undefined || password === undefined)
@@ -43,12 +40,12 @@ async function login(req, res) {
         urlUser: user.urlUser,
       };
 
-      if(user.primeiroAcesso) {
+      if (user.primeiroAcesso) {
         await User.findByIdAndUpdate(user.id, {
-          primeiroAcesso: false
-        })
+          primeiroAcesso: false,
+        });
       }
-      
+
       return res.status(HTTP_CODE_OK).json(response);
     } else {
       return res
