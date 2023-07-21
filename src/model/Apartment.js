@@ -69,11 +69,26 @@ const ApartmentSchema = new Schema({
     required: false,
     default: [],
   },
-  reservas: {
-    type: [String],
-    required: false,
-    default: [],
-  },
+  reservas: [
+    {
+      dataInicial : {
+        type: String,
+        required: false,
+      },
+      dataFinal : {
+        type: String,
+        required: false,
+      },
+      preco : {
+        type: Float,
+        required: false,
+      },
+      quantidadePessoas : {
+        type: Number,
+        required: false,
+      }
+    },
+  ],
   areasComuns: {
     type: [String],
     required: false,
