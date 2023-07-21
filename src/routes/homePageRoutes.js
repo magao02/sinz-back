@@ -3,11 +3,11 @@ const UserController = require('../controller/userController');
 const auth = require('../middlewares/Auth');
 
 //USER
-router.post('/signUp', UserController.store);
+router.post('/signUp', UserController.createUser);
 
 router.post('/signIn', UserController.login);
 
-router.put('/setNewPassword/:userEmail/:token', UserController.setNewPassword);
+router.put('/setNewPassword/:userEmail/:token', UserController.updatePassword);
 
 router.get('/passwordToken/:userEmail', UserController.passwordToken);
 
