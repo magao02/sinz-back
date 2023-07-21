@@ -94,6 +94,11 @@ const ApartmentSchema = new Schema({
     required: false,
     default: [],
   },
+  imageUrl: {
+    type: [String],
+    required: false,
+    default: [],
+  },
   regrasConvivencia: {
     type: [String],
     required: false,

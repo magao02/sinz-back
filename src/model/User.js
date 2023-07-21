@@ -11,6 +11,10 @@ const UserSchema = new Schema(
       type: String,
       required: false,
     },
+    profilePicUrl : {
+      type: String,
+      required: false,
+    },
     password: {
       type: String,
       required: false,
