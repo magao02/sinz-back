@@ -21,16 +21,8 @@ const editDep = async (req, res) => {
         .json({ message: "Dependente não encontrado." });
     }
 
-    const { name, nascimento, cpf, rg, emissao, parentesco } = req.body;
-
-    dep = await Dependent.findByIdAndUpdate(dep._id, {
-      name: isBlank(name) ? name : dep.name,
-      nascimento: isBlank(nascimento) ? nascimento : dep.nascimento,
-      cpf: isBlank(cpf) ? cpf : dep.cpf,
-      rg: isBlank(rg) ? rg : dep.rg,
-      emissao: isBlank(emissao) ? emissao : dep.emissao,
-      parentesco: isBlank(parentesco) ? parentesco : dep.parentesco,
-    });
+    const data = req.body;
+    dep = await Dependant.findByIdAndUpdate(dep._id, data);
 
     return res
       .status(HTTP_CODE_OK)
