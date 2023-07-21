@@ -83,6 +83,10 @@ const ApartmentSchema = new Schema({
         type: Float,
         required: false,
       },
+      dias : {
+        type: Number,
+        required: false,
+      },
       quantidadePessoas : {
         type: Number,
         required: false,
