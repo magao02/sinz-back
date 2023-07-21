@@ -13,7 +13,7 @@ const {
   HTTP_CODE_CREATED,
 } = require("../../utils/httpStatus");
 
-async function store(req, res) {
+async function createUser(req, res) {
   let {
     name,
     email,
@@ -169,4 +169,4 @@ async function store(req, res) {
   }
 }
 
-module.exports = store;
+module.exports = createUser;

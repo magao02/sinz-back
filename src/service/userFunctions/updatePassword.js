@@ -7,7 +7,7 @@ const {
   HTTP_CODE_UNAUTHORIZED,
 } = require("../../utils/httpStatus");
 
-async function setNewPassword(req, res) {
+async function updatePassword(req, res) {
   try {
     const user = await User.findOne({ email: req.params.userEmail });
 
@@ -48,4 +48,4 @@ async function setNewPassword(req, res) {
   }
 }
 
-module.exports = setNewPassword;
+module.exports = updatePassword;
