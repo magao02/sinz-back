@@ -1,22 +1,22 @@
-const store = require("../service/userFunctions/store");
+const createUser = require("../service/userFunctions/createUser");
 const login = require("../service/userFunctions/login");
 const logout = require("../service/userFunctions/logout");
 const userPage = require("../service/userFunctions/userPage");
 const getPDF = require("../service/userFunctions/getPDF");
 const getUserYears = require("../service/userFunctions/getUserYears");
 const getUsers = require("../service/userFunctions/getUsers");
-const setPerfil = require("../service/userFunctions/setPerfil");
-const setUser = require("../service/userFunctions/setUser");
+const updatePerfil = require("../service/userFunctions/updatePerfil");
+const updateUser = require("../service/userFunctions/updateUser");
 const setNewAdmin = require("../service/userFunctions/setNewAdmin");
 const deleteUser = require("../service/userFunctions/deleteUser");
 const passwordToken = require("../service/userFunctions/passwordToken");
-const setNewPassword = require("../service/userFunctions/setNewPassword");
+const updatePassword = require("../service/userFunctions/updatePassword");
 
 module.exports = {
   //POST METHODS
 
-  async store(req, res) {
-    return store(req, res);
+  async createUser(req, res) {
+    return createUser(req, res);
   },
   async login(req, res) {
     return login(req, res);
@@ -50,16 +50,16 @@ module.exports = {
 
   //PUT METHODS
 
-  async setNewPassword(req, res) {
-    return setNewPassword(req, res);
+  async updatePassword(req, res) {
+    return updatePassword(req, res);
   },
 
-  async setPerfil(req, res) {
-    return setPerfil(req, res);
+  async updatePerfil(req, res) {
+    return updatePerfil(req, res);
   },
 
-  async setUser(req, res) {
-    return setUser(req, res);
+  async updateUser(req, res) {
+    return updateUser(req, res);
   },
 
   async setNewAdmin(req, res) {
