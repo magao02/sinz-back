@@ -63,7 +63,7 @@ const recreationAreaSchema = new Schema({
         required: false,
       },
       preco : {
-        type: Float,
+        type: Number,
         required: false,
       },
       dias : {
