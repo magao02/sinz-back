@@ -151,6 +151,7 @@ async function createUser(req, res) {
 
       return res.status(HTTP_CODE_CREATED).json({
         message: "Usuário cadastrado com sucesso",
+        user: user,
       });
     } catch (e) {
       console.log(e);
