@@ -1,4 +1,4 @@
-const { findOne, findByIdAndUpdate } = require("../../model/User");
+const User = require("../../model/User");
 const {
   HTTP_CODE_OK,
   HTTP_CODE_UNAUTHORIZED,
@@ -8,7 +8,7 @@ const {
 async function updateUser(req, res) {
   if (req.user.admin) {
     const urlUser = req.params.urlUser;
-    let user = await findOne({ urlUser });
+    let user = await User.findOne({ urlUser });
 
     if (!user) {
       return res
@@ -17,7 +17,7 @@ async function updateUser(req, res) {
     }
 
     let data = req.body;
-    user = await findByIdAndUpdate(user._id, data);
+    user = await User.findByIdAndUpdate(user._id, data);
 
     return res
       .status(HTTP_CODE_OK)
