@@ -21,7 +21,10 @@ async function updateUser(req, res) {
 
     return res
       .status(HTTP_CODE_OK)
-      .json({ message: "Dados do usuário " + user.name + " atualizados." });
+      .json({ 
+        message: "Dados do usuário " + user.name + " atualizados.",
+        user: user,
+       });
   } else {
     return res.status(HTTP_CODE_UNAUTHORIZED).json({
       message: "Usuário sem permissão para atualizar dados de outro usuário.",
