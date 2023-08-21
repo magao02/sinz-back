@@ -13,7 +13,7 @@ const {
   HTTP_CODE_CREATED,
 } = require("../../utils/httpStatus");
 
-async function store(req, res) {
+async function createUser(req, res) {
   let {
     name,
     email,
@@ -151,6 +151,7 @@ async function store(req, res) {
 
       return res.status(HTTP_CODE_CREATED).json({
         message: "Usuário cadastrado com sucesso",
+        user: user,
       });
     } catch (e) {
       console.log(e);
@@ -169,4 +170,4 @@ async function store(req, res) {
   }
 }
 
-module.exports = store;
+module.exports = createUser;

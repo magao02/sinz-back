@@ -11,9 +11,9 @@ router.get('/getUserYears/:urlUser', auth.authorizeUser, UserController.getUserY
 
 router.get('/getUsers', auth.authorizeUser, UserController.getUsers);
 
-router.put('/setPerfil/:urlUser', auth.authorizeUser, UserController.setPerfil);
+router.put('/setPerfil/:urlUser', auth.authorizeUser, UserController.updatePerfil);
 
-router.put('/setUser/:urlUser', auth.authorizeUser, UserController.setUser);
+router.put('/setUser/:urlUser', auth.authorizeUser, UserController.updateUser);
 
 router.put('/setNewAdmin/:urlUser', auth.authorizeUser, UserController.setNewAdmin);
 

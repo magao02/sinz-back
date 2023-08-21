@@ -7,7 +7,7 @@ const {
   HTTP_CODE_UNAUTHORIZED,
 } = require("../../utils/httpStatus");
 
-async function setPerfil(req, res) {
+async function updatePerfil(req, res) {
   const urlUser = req.params.urlUser;
 
   let user = await User.findOne({ urlUser });
@@ -146,4 +146,4 @@ async function setPerfil(req, res) {
     .json({ message: "Usuário não tem permissão." });
 }
 
-module.exports = setPerfil;
+module.exports = updatePerfil;
