@@ -1,29 +1,33 @@
-## Setup base para uma API em NodeJS
+# Sinavez backend
 
-* Dependências básicas necessárias
-* Dependências para testes de integração e unidade
+Aqui está o codigo para o backend do sinavez v2.0
 
-### Como utilizar
-> git clone https://github.com/lucasanthony/api-setup-nodejs.git
+É recomendado essas versões ou mais novas
+- Node.js >= v18.14.0
+- Npm >= 9
 
-> npm install
+## Setup
+Para instalar todas as dependencias, só é necessario executar o npm.
+```bash
+npm install
+```
+Você precisara criar um arquivo `.env` na pasta do repositório, com esses valores presentes:
+```env
+# será utilizado por `npm run dev`
+DB_URL_DEV=...
+# será utilizado por `npm run start`
+DB_URL_PROD=...
 
-> Setar a DB_URL_PROD e DB_URL_DEV do .env
+PORT=...
+JWT_SECRET=...
+```
+***Os urls devem ser URIs de conexão para banco de dados MongoDB.***
 
-> npm start ou npm run dev
+Feito isso, você poderá rodar o comando `npm run dev` para rodar o servidor em modo dev, usando o banco de dados DEV.
 
-Versions:
-- Node.js = 12.20.1
-- Npm = 6.14.10
+## Setup Docker
 
-# Setup NodeJS
-
-> `npm install`
-
-> `npm start` //for run server in development mode (automatic refresh mode)
-
-
-# Setup Docker
+Não é necessario usar o docker para rodar o servidor, porem:
 
 > `sudo apt-get update`
 
