@@ -4,7 +4,7 @@ const isBlank = require("../../utils/isBlank");
 
 function formatDate(date) {
   return (
-    date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+    date.getUTCDate() + "/" + (date.getUTCMonth() + 1) + "/" + date.getUTCFullYear()
   );
 }
 
