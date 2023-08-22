@@ -5,6 +5,7 @@ const {
   HTTP_CODE_NOT_FOUND,
   HTTP_CODE_BAD_REQUEST,
   HTTP_CODE_UNAUTHORIZED,
+  HTTP_CODE_OK,
 } = require("../../utils/httpStatus");
 
 async function updatePerfil(req, res) {
