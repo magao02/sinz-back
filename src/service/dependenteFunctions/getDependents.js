@@ -1,7 +1,7 @@
 const User = require("../../model/User");
 const Dependent = require("../../model/Dependent");
 const compare = require("../../utils/compareFunctions");
-const { isStringBlank } = require("../../utils/isStringBlank");
+const isStringBlank = require("../../utils/isStringBlank");
 const {
   HTTP_CODE_OK,
   HTTP_CODE_UNAUTHORIZED,
@@ -36,7 +36,7 @@ async function getDependents(req, res) {
           name: dep.name,
           cpf: dep.cpf,
           nascimento:
-            !isStringBlank(nascimento)
+            !isStringBlank(dep.nascimento)
               ? dep.nascimento.getDate() +
                 "/" +
                 (dep.nascimento.getMonth() + 1) +
@@ -46,7 +46,7 @@ async function getDependents(req, res) {
           rg: dep.rg,
           urlDep: dep.urlDep,
           emissao:
-            !isStringBlank(emissao)
+            !isStringBlank(dep.emissao)
               ? dep.emissao.getDate() +
                 "/" +
                 (dep.emissao.getMonth() + 1) +
