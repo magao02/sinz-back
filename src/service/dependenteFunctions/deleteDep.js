@@ -8,7 +8,7 @@ const {
 
 async function deleteDep(req, res) {
   const urlDep = req.params.urlDep;
-  let dep = await Dependent.findOne({ urlDep: urlDep });
+  let dep = await Dependent.findOne({ urlDep });
 
   if (!dep) {
     return res
@@ -16,20 +16,20 @@ async function deleteDep(req, res) {
       .json({ message: "Dependente não encontrado." });
   }
 
-  await Imposto.deleteMany({ idUser: dep._id });
-
-  try {
-    Dependent.deleteOne({ urlDep: urlDep }, function (err) {
-      if (err) return handleError(err);
-    });
-    return res
-      .status(HTTP_CODE_OK)
-      .json({ message: "Depedente deletado com sucesso" });
-  } catch (err) {
-    return res
-      .status(HTTP_CODE_UNAUTHORIZED)
-      .json({ message: "Usuário sem permissão para deletar outro usuário." });
+  if (req.user.admin || req.user._id.equals(dep.idAssociado)) {
+    await Imposto.deleteMany({ idUser: dep._id });
+  
+    try {
+      await Dependent.deleteOne({ urlDep });
+      return res
+        .status(HTTP_CODE_OK)
+        .json({ message: "Depedente deletado com sucesso" });
+    } catch (err) {}
   }
+  return res
+    .status(HTTP_CODE_UNAUTHORIZED)
+    .json({ message: "Usuário sem permissão para deletar outro usuário." });
+
 }
 
 module.exports = deleteDep;
