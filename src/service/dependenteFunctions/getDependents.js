@@ -1,11 +1,13 @@
 const User = require("../../model/User");
 const Dependent = require("../../model/Dependent");
 const compare = require("../../utils/compareFunctions");
+const { isStringBlank } = require("../../utils/isStringBlank");
 const {
   HTTP_CODE_OK,
   HTTP_CODE_UNAUTHORIZED,
   HTTP_CODE_NOT_FOUND,
 } = require("../../utils/httpStatus");
+
 
 async function getDependents(req, res) {
   const urlUser = req.params.urlUser;
@@ -34,9 +36,7 @@ async function getDependents(req, res) {
           name: dep.name,
           cpf: dep.cpf,
           nascimento:
-            dep.nascimento !== "" &&
-            dep.nascimento !== null &&
-            dep.nascimento !== undefined
+            !isStringBlank(nascimento)
               ? dep.nascimento.getDate() +
                 "/" +
                 (dep.nascimento.getMonth() + 1) +
@@ -46,15 +46,14 @@ async function getDependents(req, res) {
           rg: dep.rg,
           urlDep: dep.urlDep,
           emissao:
-            dep.emissao !== "" &&
-            dep.emissao !== null &&
-            dep.emissao !== undefined
+            !isStringBlank(emissao)
               ? dep.emissao.getDate() +
                 "/" +
                 (dep.emissao.getMonth() + 1) +
                 "/" +
                 dep.emissao.getFullYear()
               : "",
+          parentesco: dep.parentesco,
         });
       }
     }

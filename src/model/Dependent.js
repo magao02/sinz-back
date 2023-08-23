@@ -27,6 +27,10 @@ const DependentSchema = new Schema(
       type: String,
       required: false,
     },
+    parentesco: {
+      type: String,
+      required: false,
+    },
 
     impostoDeRenda: {
       type: [Imposto.schema],
