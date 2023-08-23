@@ -133,7 +133,7 @@ async function signUpDep(req, res) {
 
     return res
       .status(HTTP_CODE_OK)
-      .json({ message: "Dependente cadastrado com sucesso." });
+      .json({ message: "Dependente cadastrado com sucesso.", urlDep });
   }
   return res
     .status(HTTP_CODE_UNAUTHORIZED)
