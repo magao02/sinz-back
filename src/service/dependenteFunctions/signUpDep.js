@@ -3,6 +3,7 @@ const Imposto = require("../../model/Imposto");
 const Dependent = require("../../model/Dependent");
 const formataData = require("../../utils/dateFunctions");
 const { validacaoCPF } = require("../../utils/validationFunctions");
+const { isStringBlank } = require("../../utils/isStringBlank");
 const {
   HTTP_CODE_OK,
   HTTP_CODE_UNAUTHORIZED,
@@ -21,21 +22,27 @@ async function signUpDep(req, res) {
       .json({ message: "Perfil não encontrado." });
   }
 
-  let { name, nascimento, cpf, rg, emissao } = req.body;
+  let { name, nascimento, cpf, rg, emissao, parentesco } = req.body;
 
-  if (name === undefined) {
+  if (isStringBlank(nome)) {
     return res
       .status(HTTP_CODE_BAD_REQUEST)
       .json({ message: "Preencha o campo de nome do Dependente." });
   }
 
-  if (cpf !== "") {
+  if (!isStringBlank(cpf)) {
     if (!validacaoCPF(cpf)) {
       return res.status(HTTP_CODE_BAD_REQUEST).json({
         message:
           "CPF inserido com formato incorreto. O CPF deve ser inserido sem pontuação e deve ter 11 dígitos.",
       });
     }
+  }
+
+  if (isStringBlank(parentesco)) {
+    return res
+      .status(HTTP_CODE_BAD_REQUEST)
+      .json({ message: "Preencha o campo de parentesco do Dependente." });
   }
 
   if (req.user.admin || user._id.equals(req.userId)) {
@@ -61,10 +68,10 @@ async function signUpDep(req, res) {
     }
 
     try {
-      if (nascimento !== "") {
+      if (!isStringBlank(nascimento)) {
         nascimento = await formataData(nascimento);
       }
-      if (emissao !== "") {
+      if (!isStringBlank(emissao)) {
         emissao = await formataData(emissao);
       }
     } catch (err) {
@@ -83,6 +90,7 @@ async function signUpDep(req, res) {
         cpf,
         rg,
         emissao,
+        parentesco,
         urlDep,
         idAssociado: req.userId,
       });
