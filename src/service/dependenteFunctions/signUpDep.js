@@ -3,7 +3,7 @@ const Imposto = require("../../model/Imposto");
 const Dependent = require("../../model/Dependent");
 const formataData = require("../../utils/dateFunctions");
 const { validacaoCPF } = require("../../utils/validationFunctions");
-const { isStringBlank } = require("../../utils/isStringBlank");
+const isStringBlank = require("../../utils/isStringBlank");
 const {
   HTTP_CODE_OK,
   HTTP_CODE_UNAUTHORIZED,
@@ -24,7 +24,7 @@ async function signUpDep(req, res) {
 
   let { name, nascimento, cpf, rg, emissao, parentesco } = req.body;
 
-  if (isStringBlank(nome)) {
+  if (isStringBlank(name)) {
     return res
       .status(HTTP_CODE_BAD_REQUEST)
       .json({ message: "Preencha o campo de nome do Dependente." });
