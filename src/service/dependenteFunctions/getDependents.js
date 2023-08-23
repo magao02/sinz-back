@@ -21,41 +21,32 @@ async function getDependents(req, res) {
   }
 
   if (user._id.equals(req.userId) || req.user.admin) {
-    let dependentes = user.dependentes;
     let dependetesDTO = [];
 
-    let dep;
-    let _id;
-
-    for (var i = 0; i < dependentes.length; i++) {
-      _id = dependentes[i];
-      dep = await Dependent.findById({ _id });
-
-      if (!!dep) {
-        dependetesDTO.push({
-          name: dep.name,
-          cpf: dep.cpf,
-          nascimento:
-            !isStringBlank(dep.nascimento)
-              ? dep.nascimento.getDate() +
-                "/" +
-                (dep.nascimento.getMonth() + 1) +
-                "/" +
-                dep.nascimento.getFullYear()
-              : "",
-          rg: dep.rg,
-          urlDep: dep.urlDep,
-          emissao:
-            !isStringBlank(dep.emissao)
-              ? dep.emissao.getDate() +
-                "/" +
-                (dep.emissao.getMonth() + 1) +
-                "/" +
-                dep.emissao.getFullYear()
-              : "",
-          parentesco: dep.parentesco,
-        });
-      }
+    for await (let dep of Dependent.find({ idAssociado: user._id })) {
+      dependetesDTO.push({
+        name: dep.name,
+        cpf: dep.cpf,
+        nascimento:
+          !isStringBlank(dep.nascimento)
+            ? dep.nascimento.getDate() +
+              "/" +
+              (dep.nascimento.getMonth() + 1) +
+              "/" +
+              dep.nascimento.getFullYear()
+            : "",
+        rg: dep.rg,
+        urlDep: dep.urlDep,
+        emissao:
+          !isStringBlank(dep.emissao)
+            ? dep.emissao.getDate() +
+              "/" +
+              (dep.emissao.getMonth() + 1) +
+              "/" +
+              dep.emissao.getFullYear()
+            : "",
+        parentesco: dep.parentesco,
+      });
     }
 
     dependetesDTO.sort(compare);
