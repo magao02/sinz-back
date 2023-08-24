@@ -32,6 +32,13 @@ async function setPhoto(req, res) {
       .status(HTTP_CODE_BAD_REQUEST)
       .json({ message: "Houve um erro ao salvar a imagem." });
   }
+
+  await User.findByIdAndUpdate(user._id, {
+    profilePic: {
+      key: obj.key,
+      url: obj.url
+    }
+  });
   
   return res
     .status(HTTP_CODE_OK)

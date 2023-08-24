@@ -11,10 +11,6 @@ const UserSchema = new Schema(
       type: String,
       required: false,
     },
-    profilePicUrl : {
-      type: String,
-      required: false,
-    },
     password: {
       type: String,
       required: false,
@@ -152,6 +148,17 @@ const UserSchema = new Schema(
       required: false,
       default: true
     },
+
+    profilePic: {
+      key: {
+        type: String,
+        required: false
+      },
+      url: {
+        type: String,
+        required: false
+      }
+    }
   },
   {
     timestamps: true,

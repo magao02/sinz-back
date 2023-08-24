@@ -50,6 +50,7 @@ async function userPage(req, res) {
           "/" +
           user.dataRegistroConselho.getFullYear()
         : "",
+      profilePic: user.profilePic?.url,
     };
     return res.status(HTTP_CODE_OK).json(dataPage);
   }
