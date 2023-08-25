@@ -157,6 +157,10 @@ const UserSchema = new Schema(
       url: {
         type: String,
         required: false
+      },
+      seed: {
+        type: Number,
+        required: false
       }
     }
   },

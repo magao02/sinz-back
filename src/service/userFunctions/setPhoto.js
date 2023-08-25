@@ -1,4 +1,5 @@
 const User = require("../../model/User");
+const getImageUrl = require("../../utils/getImageUrl");
 const {
   HTTP_CODE_NOT_FOUND,
   HTTP_CODE_BAD_REQUEST,
@@ -26,25 +27,28 @@ async function setPhoto(req, res) {
 
   let obj;
   try {
-    obj = await S3Storage.saveFile(req.file.buffer, `uploads/user/${user._id.toString()}`, req.file.mimetype);
+    obj = await S3Storage.saveProfilePicture(req.file.buffer, `uploads/user/${user._id.toString()}`, req.file.mimetype);
   } catch (err) {
     return res
       .status(HTTP_CODE_BAD_REQUEST)
       .json({ message: "Houve um erro ao salvar a imagem." });
   }
 
+  const profilePic = {
+    key: obj.key,
+    url: obj.url,
+    seed: Math.floor(Math.random() * 1001),
+  };
+
   await User.findByIdAndUpdate(user._id, {
-    profilePic: {
-      key: obj.key,
-      url: obj.url
-    }
+    profilePic
   });
   
   return res
     .status(HTTP_CODE_OK)
     .json({
       message: "Imagem definida com sucesso.",
-      url: obj.url
+      url: getImageUrl(profilePic),
     });
 }
 

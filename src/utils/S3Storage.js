@@ -4,29 +4,19 @@ const sharp = require('sharp');
 const client = new aws.S3();
 
 module.exports = {
-    async saveFile(buffer, path, contentType) {
-        if (!contentType) {
-            throw new Error('content type was not set');
-        }
-
-        let key = path;
-        let fileContent;
-        const type = contentType.split('/')[0];
-        if (type === 'image') {
-            fileContent = await sharp(buffer)
-                .jpeg({ mozjpeg: true })
-                .toBuffer();
-            key = key + '.jpg';
-        } else {
-            throw new Error('Only images are supported');
-        }
-
+    /**
+     * Saves a file directly to S3
+     * @param {Buffer} buffer 
+     * @param {string} key 
+     * @param {string?} contentType 
+     */
+    async saveFile(buffer, key, contentType) {
         await client.putObject({
             Bucket: process.env.AWS_BUCKET_NAME,
             Key: key,
             ACL: 'public-read',
-            Body: fileContent,
-            // ContentType,
+            Body: buffer,
+            ContentType: contentType ? contentType : undefined,
         }).promise();
 
         return {
@@ -34,6 +24,20 @@ module.exports = {
             key,
         };
     },
+
+    async saveProfilePicture(buffer, key, mimeType) {
+        const type = mimeType.split('/')[0];
+        if (type === 'image') {
+            const fileContent = await sharp(buffer)
+                .resize(256, 256)
+                .jpeg({ mozjpeg: true })
+                .toBuffer();
+            return await this.saveFile(fileContent, key + '.jpg', 'image/jpg');
+        } else {
+            throw new Error('Only images are supported');
+        }
+    },
+
     async deleteFile(key) {
         await client.deleteObject({
             Bucket: process.env.AWS_BUCKET_NAME,

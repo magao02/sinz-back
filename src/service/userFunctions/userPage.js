@@ -1,4 +1,5 @@
 const User = require("../../model/User");
+const getImageUrl = require("../../utils/getImageUrl");
 const { HTTP_CODE_OK, HTTP_CODE_NOT_FOUND } = require("../../utils/httpStatus");
 const isBlank = require("../../utils/isBlank");
 
@@ -50,7 +51,7 @@ async function userPage(req, res) {
           "/" +
           user.dataRegistroConselho.getFullYear()
         : "",
-      profilePic: user.profilePic?.url,
+      profilePic: getImageUrl(user.profilePic),
     };
     return res.status(HTTP_CODE_OK).json(dataPage);
   }
