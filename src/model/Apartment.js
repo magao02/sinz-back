@@ -71,25 +71,74 @@ const ApartmentSchema = new Schema({
   },
   reservas: [
     {
-      dataInicial : {
+      dataChegada: {
         type: String,
         required: false,
       },
-      dataFinal : {
+      dataSaida: {
         type: String,
         required: false,
       },
-      preco : {
+      horarioChegada: {
+        type: String,
+        required: false,
+      },
+      horarioSaida: {
+        type: String,
+        required: false,
+      },
+      diaria: {
         type: Number,
         required: false,
       },
-      dias : {
+      dias: {
         type: Number,
         required: false,
       },
-      quantidadePessoas : {
-        type: Number,
-        required: false,
+      hospedes: {
+        adultos: {
+          type: Number,
+          required: false,
+          default: 0,
+        },
+        bebes: {
+          type: Number,
+          required: false,
+          default: 0,
+        },
+        criancas: {
+          type: Number,
+          required: false,
+          default: 0,
+        },
+        animais: {
+          type: Number,
+          required: false,
+          default: 0,
+        },
+      },
+      pagamento: {
+        foiPago: {
+          type: Boolean,
+          required: false,
+          default: false,
+        },
+        arquivos: [
+          {
+            key: {
+              type: String,
+              required: false
+            },
+            url: {
+              type: String,
+              required: false
+            },
+            name: {
+              type: String,
+              required: false,
+            }
+          }
+        ]
       }
     },
   ],
