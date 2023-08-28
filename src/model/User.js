@@ -28,6 +28,10 @@ const UserSchema = new Schema(
       type: String,
       required: false,
     },
+    telefoneFixo: {
+      type: String,
+      required: false,
+    },
     nascimento: {
       type: Date,
       required: false,
