@@ -22,6 +22,7 @@ async function userPage(req, res) {
       name: user.name,
       email: user.email,
       telefone: user.telefone,
+      telefoneFixo: user.telefoneFixo,
       nascimento: isBlank(user.nascimento) ? formatDate(user.nascimento) : "",
       cpf: user.cpf,
       rg: user.rg,

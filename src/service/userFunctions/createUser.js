@@ -19,6 +19,7 @@ async function createUser(req, res) {
     email,
     password,
     telefone,
+    telefoneFixo,
     nascimento,
     cpf,
     rg,
@@ -108,6 +109,15 @@ async function createUser(req, res) {
       }
     }
 
+    if (telefoneFixo !== "" && telefoneFixo !== undefined) {
+      if (!validacaoTelefone(telefoneFixo)) {
+        return res.status(HTTP_CODE_BAD_REQUEST).json({
+          message:
+            "Telefone fixo inserido com formato incorreto. Formato correto: xx xxxx-xxxx sem pontuação.",
+        });
+      }
+    }
+
     if (password !== "") {
       if (!validacaoPassword(password)) {
         return res.status(HTTP_CODE_BAD_REQUEST).json({
@@ -125,6 +135,7 @@ async function createUser(req, res) {
         email,
         password,
         telefone,
+        telefoneFixo,
         nascimento,
         cpf,
         rg,
