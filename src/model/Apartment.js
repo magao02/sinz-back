@@ -95,6 +95,10 @@ const ApartmentSchema = new Schema({
         type: Number,
         required: false,
       },
+      idAssociado: {
+        type: String,
+        required: false,
+      },
       hospedes: {
         adultos: {
           type: Number,
