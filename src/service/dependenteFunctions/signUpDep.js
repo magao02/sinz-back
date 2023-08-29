@@ -92,7 +92,7 @@ async function signUpDep(req, res) {
         emissao,
         parentesco,
         urlDep,
-        idAssociado: req.userId,
+        idAssociado: user._id,
       });
 
       let impostosUser = await Imposto.find({ idUser: user._id });

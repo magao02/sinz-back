@@ -1,4 +1,5 @@
 const Imposto = require("../../model/Imposto");
+const User = require("../../model/User");
 const Dependent = require("../../model/Dependent");
 const {
   HTTP_CODE_OK,
@@ -18,6 +19,13 @@ async function deleteDep(req, res) {
 
   if (req.user.admin || req.user._id.equals(dep.idAssociado)) {
     await Imposto.deleteMany({ idUser: dep._id });
+
+    try {
+      const user = await User.findById(dep.idAssociado);
+      await User.findByIdAndUpdate(dep.idAssociado, {
+        dependentes: user.dependentes.filter(x => x != dep._id.toString())
+      });
+    } catch (err) {}
   
     try {
       await Dependent.deleteOne({ urlDep });
