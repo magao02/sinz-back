@@ -72,11 +72,11 @@ const ApartmentSchema = new Schema({
   reservas: [
     {
       dataChegada: {
-        type: String,
+        type: Date,
         required: false,
       },
       dataSaida: {
-        type: String,
+        type: Date,
         required: false,
       },
       horarioChegada: {
