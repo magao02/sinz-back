@@ -8,7 +8,7 @@ const {
 } = require("../../utils/httpStatus");
 const S3Storage = require("../../utils/S3Storage");
 
-async function setPhotoApartament(req, res) {
+async function setApartmentPhotos(req, res) {
   const urlApt = req.params.urlApt;
 
   let apt = await Apartment.findOne({ urlApt });
@@ -61,4 +61,4 @@ async function setPhotoApartament(req, res) {
     });
 }
 
-module.exports = setPhotoApartament;
+module.exports = setApartmentPhotos;

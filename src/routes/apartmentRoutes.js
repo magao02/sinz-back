@@ -5,7 +5,7 @@ const {
   getAllApartments,
   getApartment,
   updateApartment,
-  setPhotoApartament,
+  setApartmentPhotos,
 } = require("../controller/apartmentController");
 const { authorizeUser } = require("../middlewares/Auth");
 
@@ -14,6 +14,6 @@ router
   .get("/getAllApartments", authorizeUser, getAllApartments)
   .get("/getApartment/:urlApt", authorizeUser, getApartment)
   .put("/updateApartment/:urlApt", authorizeUser, updateApartment)
-  .put("/setPhotoApartament/:urlApt", authorizeUser, upload.array('photo', 7), setPhotoApartament);
+  .put("/setApartmentPhotos/:urlApt", authorizeUser, upload.array("photos", 7), setApartmentPhotos);
 
 module.exports = router;
