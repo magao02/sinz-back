@@ -11,6 +11,7 @@ const setNewAdmin = require("../service/userFunctions/setNewAdmin");
 const deleteUser = require("../service/userFunctions/deleteUser");
 const passwordToken = require("../service/userFunctions/passwordToken");
 const updatePassword = require("../service/userFunctions/updatePassword");
+const setPhoto = require("../service/userFunctions/setPhoto");
 
 module.exports = {
   //POST METHODS
@@ -64,6 +65,10 @@ module.exports = {
 
   async setNewAdmin(req, res) {
     return setNewAdmin(req, res);
+  },
+
+  async setPhoto(req, res) {
+    return setPhoto(req, res);
   },
 
   //DELETE METHODS

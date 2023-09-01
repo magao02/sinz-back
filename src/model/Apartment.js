@@ -98,16 +98,23 @@ const ApartmentSchema = new Schema({
     required: false,
     default: [],
   },
-  imageUrl: {
-    type: [String],
-    required: false,
-    default: [],
-  },
   regrasConvivencia: {
     type: [String],
     required: false,
     default: [],
   },
+  apartmentPictures: [
+    {
+      key: {
+        type: String,
+        required: false
+      },
+      url: {
+        type: String,
+        required: false
+      }
+    },
+  ],
 });
 
 module.exports = model("Apartment", ApartmentSchema);
