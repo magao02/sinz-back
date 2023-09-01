@@ -42,11 +42,6 @@ const ApartmentSchema = new Schema({
     type: Number,
     required: true,
   },
-  images: {
-    type: [String],
-    required: false,
-    default: [],
-  },
   camas: [
     {
       tipo: {

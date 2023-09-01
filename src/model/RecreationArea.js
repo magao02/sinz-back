@@ -52,6 +52,10 @@ const recreationAreaSchema = new Schema({
     required: false,
     default: [],
   },
+  diaria: {
+    type: Number,
+    required: true,
+  },
   reservas: [
     {
       dataInicial : {
@@ -81,16 +85,23 @@ const recreationAreaSchema = new Schema({
     required: false,
     default: [],
   },
-  imageUrl: {
-    type: [String],
-    required: false,
-    default: [],
-  },
   regrasConvivencia: {
     type: [String],
     required: false,
     default: [],
   },
+  pictures: [
+    {
+      key: {
+        type: String,
+        required: false
+      },
+      url: {
+        type: String,
+        required: false
+      }
+    },
+  ],
 });
 
 module.exports = model("RecreationArea", recreationAreaSchema);
