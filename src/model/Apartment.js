@@ -127,7 +127,7 @@ const ApartmentSchema = new Schema({
           required: false,
           default: false,
         },
-        arquivos: [
+        files: [
           {
             key: {
               type: String,

@@ -3,6 +3,7 @@ const getApartment = require("../service/apartmentFunctions/getApartment");
 const updateApartment = require("../service/apartmentFunctions/updateApartment");
 const createApartment = require("../service/apartmentFunctions/createApartment");
 const reserveApartment = require("../service/apartmentFunctions/reserveApartment");
+const getReservations = require("../service/apartmentFunctions/getReservations");
 
 module.exports = {
   async createApartment(req, res) {
@@ -20,4 +21,7 @@ module.exports = {
   async reserveApartment(req, res) {
     return reserveApartment(req, res);
   },
+  async getReservations(req, res) {
+    return getReservations(req, res);
+  }
 };
