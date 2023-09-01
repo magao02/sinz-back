@@ -1,5 +1,6 @@
 const User = require("../../model/User");
 const Apartment = require("../../model/Apartment");
+const getImageUrl = require("../../utils/getImageUrl");
 const {
   HTTP_CODE_BAD_REQUEST,
   HTTP_CODE_UNAUTHORIZED,
@@ -26,6 +27,7 @@ const getReservations = async (req, res) => {
     return {
       nome: user.name,
       profissao: user.profissao,
+      profilePic: getImageUrl(user.profilePic),
     };
   };
 

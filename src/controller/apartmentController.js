@@ -24,7 +24,7 @@ module.exports = {
   },
   async getReservations(req, res) {
     return getReservations(req, res);
-  }
+  },
   async setApartmentPhotos(req, res) {
     return setApartmentPhotos(req, res);
   },
