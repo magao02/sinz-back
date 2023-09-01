@@ -108,14 +108,13 @@ const ApartmentSchema = new Schema({
       key: {
         type: String,
         required: false
-        },
+      },
       url: {
         type: String,
         required: false
-        }
-      },
-   ],
-  }
-);
+      }
+    },
+  ],
+});
 
 module.exports = model("Apartment", ApartmentSchema);
