@@ -52,6 +52,10 @@ const recreationAreaSchema = new Schema({
     required: false,
     default: [],
   },
+  diaria: {
+    type: Number,
+    required: true,
+  },
   reservas: [
     {
       dataInicial : {
