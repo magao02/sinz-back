@@ -20,6 +20,8 @@ async function deleteUser(req, res) {
 
     await Imposto.deleteMany({ idUser: user._id });
 
+    // FIXME: delete profile picture from S3?
+
     user = await User.deleteOne(user)
       .then(async function (deletedUser) {
         if (deletedUser) {

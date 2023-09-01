@@ -28,10 +28,10 @@ async function setApartmentPhotos(req, res) {
   const apartmentPictures = [];
 
   try {
-    index = 0;
+    let index = 0;
 
     for (const file of req.files) {
-      const obj = await S3Storage.saveProfilePicture(
+      const obj = await S3Storage.savePicture(
         file.buffer,
         `uploads/apartment/${apt._id.toString()}_${index}`,
         file.mimetype
@@ -43,7 +43,6 @@ async function setApartmentPhotos(req, res) {
       });
     }
   } catch (err) {
-    console.log(err)
     return res
       .status(HTTP_CODE_BAD_REQUEST)
       .json({ message: "Houve um erro ao salvar a imagem." });
@@ -57,7 +56,7 @@ async function setApartmentPhotos(req, res) {
     .status(HTTP_CODE_OK)
     .json({
       message: "Imagens definidas com sucesso.",
-      urls: apartmentPictures.map((pic) => getImageUrl(pic)),
+      urls: apartmentPictures.map(pic => getImageUrl(pic)),
     });
 }
 

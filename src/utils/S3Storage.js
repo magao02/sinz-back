@@ -25,11 +25,39 @@ module.exports = {
         };
     },
 
+    /**
+     * Saves a profile picture, resizing it to 256x256
+     * @param {Buffer} buffer image data
+     * @param {string} key should not include file extension
+     * @param {string} mimeType 
+     */
     async saveProfilePicture(buffer, key, mimeType) {
         const type = mimeType.split('/')[0];
         if (type === 'image') {
             const fileContent = await sharp(buffer)
                 .resize(256, 256)
+                .jpeg({ mozjpeg: true })
+                .toBuffer();
+            return await this.saveFile(fileContent, key + '.jpg', 'image/jpg');
+        } else {
+            throw new Error('Only images are supported');
+        }
+    },
+
+    /**
+     * Saves a regular picture, with a max width or height of 2000px.
+     * @param {Buffer} buffer image data
+     * @param {string} key should not include file extension
+     * @param {string} mimeType 
+     */
+    async savePicture(buffer, key, mimeType) {
+        const type = mimeType.split('/')[0];
+        if (type === 'image') {
+            const fileContent = await sharp(buffer)
+                .resize(2000, 2000, {
+                    fit: "inside",
+                    withoutEnlargement: true,
+                })
                 .jpeg({ mozjpeg: true })
                 .toBuffer();
             return await this.saveFile(fileContent, key + '.jpg', 'image/jpg');
