@@ -1,9 +1,11 @@
 const router = require("express").Router();
+const upload = require('../middlewares/Multer');
 const {
   createRecreationArea,
   getAllRecreationAreas,
   getRecreationArea,
   updateRecreationArea,
+  setRecreationAreaPhotos,
 } = require("../controller/recreationAreaController");
 const { authorizeUser } = require("../middlewares/Auth");
 
@@ -19,6 +21,8 @@ router
     "/updateRecreationArea/:urlRecreationArea",
     authorizeUser,
     updateRecreationArea
-  );
+  )
+  .put("/setRecreationAreaPhotos/:urlRec", authorizeUser, upload.array("photos", 7), setRecreationAreaPhotos)
+;
 
 module.exports = router;

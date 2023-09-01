@@ -2,6 +2,7 @@ const getAllRecreationAreas = require("../service/recreationAreaFunctions/getAll
 const getRecreationArea = require("../service/recreationAreaFunctions/getRecreationArea");
 const updateRecreationArea = require("../service/recreationAreaFunctions/updateRecreationArea");
 const createRecreationArea = require("../service/recreationAreaFunctions/createRecreationArea");
+const setRecreationAreaPhotos = require("../service/recreationAreaFunctions/setRecreationAreaPhotos");
 
 module.exports = {
   async createRecreationArea(req, res) {
@@ -15,5 +16,8 @@ module.exports = {
   },
   async updateRecreationArea(req, res) {
     return updateRecreationArea(req, res);
+  },
+  async setRecreationAreaPhotos(req, res) {
+    return setRecreationAreaPhotos(req, res);
   },
 };
