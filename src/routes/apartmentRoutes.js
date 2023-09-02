@@ -9,6 +9,7 @@ const {
   getReservations,
   setApartmentPhotos,
   uploadPayment,
+  deletePayment,
 } = require("../controller/apartmentController");
 const { authorizeUser } = require("../middlewares/Auth");
 
@@ -21,6 +22,7 @@ router
   .post("/reserveApartment/:urlApt/:urlUser", authorizeUser, reserveApartment)
   .get("/getReservations/:urlApt", authorizeUser, getReservations)
   .put("/uploadPayment/:urlApt/:reservaId", authorizeUser, upload.single('file'), uploadPayment)
+  .delete("/deletePayment/:urlApt/:reservaId", authorizeUser, deletePayment)
 ;
 
 module.exports = router;
