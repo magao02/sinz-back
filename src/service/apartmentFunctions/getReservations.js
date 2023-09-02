@@ -35,10 +35,10 @@ const getReservations = async (req, res) => {
 
   const reservas = apt.reservas ?? [];
 
-  const year = (new Date()).getUTCYear();
+  const year = (new Date()).getUTCFullYear();
 
   const filtReservas = month !== null ? reservas.filter(reserva => {
-    return reserva.dataChegada.getUTCMonth() === month && reserva.dataChegada.getUTCYear() === year;
+    return reserva.dataChegada.getUTCMonth() === month && reserva.dataChegada.getUTCFullYear() === year;
   }) : reservas;
 
   const data = await Promise.all(filtReservas.map(async reserva => ({
