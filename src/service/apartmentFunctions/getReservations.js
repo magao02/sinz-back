@@ -22,6 +22,8 @@ const getReservations = async (req, res) => {
       .json({ message: "Apartamento não encontrado." });
   }
 
+  const month = req.query.month ? parseInt(req.query.month) : null;
+
   const fetchAssociadoData = async id => {
     const user = await User.findById(id);
     return {
@@ -31,7 +33,15 @@ const getReservations = async (req, res) => {
     };
   };
 
-  const data = apt.reservas ? await Promise.all(apt.reservas.map(async reserva => ({
+  const reservas = apt.reservas ?? [];
+
+  const year = (new Date()).getUTCYear();
+
+  const filtReservas = month !== null ? reservas.filter(reserva => {
+    return reserva.dataChegada.getUTCMonth() === month && reserva.dataChegada.getUTCYear() === year;
+  }) : reservas;
+
+  const data = await Promise.all(filtReservas.map(async reserva => ({
     id: reserva._id.toString(),
     dataChegada: reserva.dataChegada,
     dataSaida: reserva.dataSaida,
@@ -48,7 +58,7 @@ const getReservations = async (req, res) => {
       })) : []
     },
     associado: await fetchAssociadoData(reserva.idAssociado)
-  }))) : [];
+  })));
 
   return res
     .status(HTTP_CODE_OK)
