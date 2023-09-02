@@ -31,5 +31,23 @@ module.exports = {
     }
 
     return true;
-  }
+  },
+  validaData(data) {
+    data = data.split("-");
+    return new Date(
+      `${data[0]}-${data[1].padStart(2, '0')}-${data[2].padStart(2, '0')}T01:00:00+01:00`
+    );
+  },
+  validaHorario(horario) {
+    function assert(cond) {
+      if (!cond) {
+        throw new Error("Assertion failed");
+      }
+    }
+    assert(horario.split(':').length === 2);
+    const [hour, minute] = horario.split(':').map(x => parseInt(x));
+    assert(hour >= 0 && hour < 24);
+    assert(minute >= 0 && minute < 60);
+    return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+  },
 };
