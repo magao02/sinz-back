@@ -56,4 +56,50 @@ module.exports = {
     assert(minute >= 0 && minute < 60);
     return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
   },
+  calculaProximaReserva(reserva, reservas) {
+    function findMinIndex(arr, pred) {
+      let min = null;
+      let ind = -1;
+      for (let i = 0; i < arr.length; ++i) {
+        let value = pred(arr[i]);
+        if (value === undefined) continue;
+        if (ind === -1 || value < min) {
+          min = value;
+          ind = i;
+        }
+      }
+      return ind;
+    }
+
+    // calculando qual a reserva mais proxima
+    let closestReserva = findMinIndex(reservas, otherReserva => {
+      const otherChegada = createDateTime(otherReserva.dataChegada, otherReserva.horarioChegada);
+      const otherSaida = createDateTime(otherReserva.dataSaida, otherReserva.horarioSaida);
+      let diff = Math.min(Math.abs(otherChegada - reserva.saida), Math.abs(reserva.chegada - otherSaida));
+      return diff;
+    });
+    
+    closestReserva = reservas[closestReserva];
+    const chegada = createDateTime(closestReserva.dataChegada, closestReserva.horarioChegada);
+
+    // encontra o menor maior que closestReserva
+    let nextClosestReserva = closestReserva ? findMinIndex(reservas, otherReserva => {
+      if (otherReserva == closestReserva) return;
+      const otherChegada = createDateTime(otherReserva.dataChegada, otherReserva.horarioChegada);
+      if (otherChegada < chegada) return;
+      return otherChegada - chegada;
+    }) : null;
+    nextClosestReserva = reservas[nextClosestReserva];
+
+    return [closestReserva, nextClosestReserva];
+  },
+  formatReserva(reserva) {
+    function formatDate(date) {
+      return date.getUTCDate().toString().padStart(2, '0') + "/" + (date.getUTCMonth() + 1).toString().padStart(2, '0') + "/" + date.getUTCFullYear();
+    };
+    return {
+      chegada: formatDate(reserva.dataChegada),
+      saida: formatDate(reserva.dataSaida),
+    };
+  }
 };
