@@ -1,5 +1,10 @@
 const { DateTime } = require("luxon");
 
+/**
+* @param {DateTime | Date} date 
+* @param {string} horario 
+* @returns DateTime
+*/
 function createDateTime(date, horario) {
   const [hours, minutes] = horario.split(':').map(x => parseInt(x));
   if (date instanceof Date)
@@ -8,6 +13,7 @@ function createDateTime(date, horario) {
 }
 
 module.exports = {
+  createDateTime,
   isReservationValid(reserva, reservas) {
     const chegada = reserva.chegada ?? createDateTime(reserva.dataChegada, reserva.horarioChegada);
     const saida = reserva.saida ?? createDateTime(reserva.dataSaida, reserva.horarioSaida);
