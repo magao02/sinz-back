@@ -9,8 +9,8 @@ function createDateTime(date, horario) {
 
 module.exports = {
   isReservationValid(reserva, reservas) {
-    const chegada = createDateTime(reserva.dataChegada, reserva.horarioChegada);
-    const saida = createDateTime(reserva.dataSaida, reserva.horarioSaida);
+    const chegada = reserva.chegada ?? createDateTime(reserva.dataChegada, reserva.horarioChegada);
+    const saida = reserva.saida ?? createDateTime(reserva.dataSaida, reserva.horarioSaida);
 
     for (let otherReserva of reservas) {
       const otherChegada = createDateTime(otherReserva.dataChegada, otherReserva.horarioChegada);
