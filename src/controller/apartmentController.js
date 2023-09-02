@@ -7,6 +7,7 @@ const getReservations = require("../service/apartmentFunctions/getReservations")
 const setApartmentPhotos = require("../service/apartmentFunctions/setApartmentPhotos");
 const uploadPayment = require("../service/apartmentFunctions/uploadPayment");
 const deletePayment = require("../service/apartmentFunctions/deletePayment");
+const updatePayment = require("../service/apartmentFunctions/updatePayment");
 
 
 
@@ -37,5 +38,8 @@ module.exports = {
   },
   async deletePayment(req, res) {
     return deletePayment(req, res);
+  },
+  async updatePayment(req, res) {
+    return updatePayment(req, res);
   },
 };
