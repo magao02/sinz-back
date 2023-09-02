@@ -32,6 +32,7 @@ const getReservations = async (req, res) => {
   };
 
   const data = apt.reservas ? await Promise.all(apt.reservas.map(async reserva => ({
+    id: reserva._id.toString(),
     dataChegada: reserva.dataChegada,
     dataSaida: reserva.dataSaida,
     horarioChegada: reserva.horarioChegada,
@@ -40,8 +41,8 @@ const getReservations = async (req, res) => {
     dias: reserva.dias,
     hospedes: reserva.hospedes,
     pagamento: {
-      pago: !!reserva.foiPago,
-      files: reserva.files ? reserva.files.map(file => ({
+      pago: !!reserva.pagamento.foiPago,
+      files: reserva.pagamento.files ? reserva.pagamento.files.map(file => ({
         name: file.name,
         url: file.url
       })) : []
