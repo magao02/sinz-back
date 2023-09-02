@@ -58,25 +58,63 @@ const recreationAreaSchema = new Schema({
   },
   reservas: [
     {
-      dataInicial : {
+      dataChegada: {
+        type: Date,
+        required: false,
+      },
+      dataSaida: {
+        type: Date,
+        required: false,
+      },
+      horarioChegada: {
         type: String,
         required: false,
       },
-      dataFinal : {
+      horarioSaida: {
         type: String,
         required: false,
       },
-      preco : {
+      diaria: {
         type: Number,
         required: false,
       },
-      dias : {
+      dias: {
         type: Number,
         required: false,
       },
-      quantidadePessoas : {
-        type: Number,
+      idAssociado: {
+        type: String,
         required: false,
+      },
+      hospedes: {
+        pessoas: {
+          type: Number,
+          required: false,
+          default: 1,
+        },
+      },
+      pagamento: {
+        foiPago: {
+          type: Boolean,
+          required: false,
+          default: false,
+        },
+        files: [
+          {
+            key: {
+              type: String,
+              required: false
+            },
+            url: {
+              type: String,
+              required: false
+            },
+            name: {
+              type: String,
+              required: false,
+            }
+          }
+        ]
       }
     },
   ],
