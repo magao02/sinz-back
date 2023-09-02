@@ -1,14 +1,13 @@
 const Apartment = require("../../model/Apartment");
 const User = require("../../model/User");
-const formataData = require("../../utils/dateFunctions");
 const {
   HTTP_CODE_UNAUTHORIZED,
   HTTP_CODE_NOT_FOUND,
   HTTP_CODE_OK,
   HTTP_CODE_BAD_REQUEST,
 } = require("../../utils/httpStatus");
-
 const { DateTime } = require("luxon");
+const { isReservationValid } = require("../../utils/reservation");
 
 function dayDifference(date1, date2) {
   const oneDay = 24 * 60 * 60 * 1000;
@@ -117,28 +116,11 @@ const reserveApartment = async (req, res) => {
       .json({ message: "Reserva tem horarios invalidos." });
   }
 
-  const invalidReservation = () => {
+  if (!isReservationValid(reserva, apt.reservas)) {
     return res
       .status(HTTP_CODE_BAD_REQUEST)
       .json({ message: "Reserva bate com horario de outra reserva." });
   };
-
-  for (let otherReserva of apt.reservas) {
-    const otherChegada = createDateTime(otherReserva.dataChegada, otherReserva.horarioChegada);
-    const otherSaida = createDateTime(otherReserva.dataSaida, otherReserva.horarioSaida);
-    if (chegada > otherChegada) {
-      // essa reserva inicia apos a outra, então a saida da outra tem que ser antes da chegada dessa
-      if (chegada < otherSaida) {
-        return invalidReservation();
-      }
-    } else {
-      // essa reserva inicia antes da outra, então a saida dessa tem que ser antes da chegada da outra
-      if (saida > otherChegada) {
-        return invalidReservation();
-      }
-    }
-  }
-  // a esse ponto a reserva é considerada valida
 
   apt.reservas.push(reserva);
   await apt.save();
