@@ -5,7 +5,7 @@ const { isReservationValid, validaData, validaHorario, createDateTime, calculaPr
 const { DateTime } = require("luxon");
 
 async function getAllRecreationAreas(req, res) {
-  const areas = await RecreationArea.find({});
+  let areas = await RecreationArea.find({});
   
   let reserva;
   if (req.query.dataChegada) {
