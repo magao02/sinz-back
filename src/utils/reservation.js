@@ -106,5 +106,9 @@ module.exports = {
       chegada: formatDate(reserva.dataChegada),
       saida: formatDate(reserva.dataSaida),
     };
-  }
+  },
+  dayDifference(date1, date2) {
+    const oneDay = 24 * 60 * 60 * 1000;
+    return Math.round(Math.abs((date2 - date1) / oneDay));
+  },
 };

@@ -6,12 +6,7 @@ const {
   HTTP_CODE_OK,
   HTTP_CODE_BAD_REQUEST,
 } = require("../../utils/httpStatus");
-const { isReservationValid, validaData, validaHorario, createDateTime } = require("../../utils/reservation");
-
-function dayDifference(date1, date2) {
-  const oneDay = 24 * 60 * 60 * 1000;
-  return Math.round(Math.abs((date2 - date1) / oneDay));
-}
+const { isReservationValid, validaData, validaHorario, createDateTime, dayDifference } = require("../../utils/reservation");
 
 const reserveRecreationArea = async (req, res) => {
   if (!req.user.admin && req.user.urlUser !== req.params.urlUser) {
@@ -50,7 +45,7 @@ const reserveRecreationArea = async (req, res) => {
       .status(HTTP_CODE_BAD_REQUEST)
       .json({ message: "Data inserida incorretamente. Formato correto: aaaa-mm-dd" });
   }
-  const dias = Math.max(1, dayDifference(dataChegada, dataSaida));
+  const dias = Math.max(1, dayDifference(dataChegada, dataSaida) + 1);
   try {
     horarioChegada = validaHorario(horarioChegada);
     horarioSaida = validaHorario(horarioSaida);
