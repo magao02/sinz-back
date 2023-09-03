@@ -80,16 +80,19 @@ module.exports = {
     });
     
     closestReserva = reservas[closestReserva];
-    const chegada = createDateTime(closestReserva.dataChegada, closestReserva.horarioChegada);
-
-    // encontra o menor maior que closestReserva
-    let nextClosestReserva = closestReserva ? findMinIndex(reservas, otherReserva => {
-      if (otherReserva == closestReserva) return;
-      const otherChegada = createDateTime(otherReserva.dataChegada, otherReserva.horarioChegada);
-      if (otherChegada < chegada) return;
-      return otherChegada - chegada;
-    }) : null;
-    nextClosestReserva = reservas[nextClosestReserva];
+    let nextClosestReserva;
+    if (closestReserva) {
+      const chegada = createDateTime(closestReserva.dataChegada, closestReserva.horarioChegada);
+  
+      // encontra o menor maior que closestReserva
+      nextClosestReserva = closestReserva ? findMinIndex(reservas, otherReserva => {
+        if (otherReserva == closestReserva) return;
+        const otherChegada = createDateTime(otherReserva.dataChegada, otherReserva.horarioChegada);
+        if (otherChegada < chegada) return;
+        return otherChegada - chegada;
+      }) : -1;
+      nextClosestReserva = reservas[nextClosestReserva];
+    }
 
     return [closestReserva, nextClosestReserva];
   },
