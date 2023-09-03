@@ -2,6 +2,7 @@ const Apartment = require("../../model/Apartment");
 const {
   HTTP_CODE_BAD_REQUEST,
   HTTP_CODE_OK,
+  HTTP_CODE_UNAUTHORIZED,
 } = require("../../utils/httpStatus");
 
 const createApartment = async (req, res) => {

@@ -6,6 +6,11 @@ const {
   getRecreationArea,
   updateRecreationArea,
   setRecreationAreaPhotos,
+  reserveRecreationArea,
+  getReservations,
+  uploadPayment,
+  deletePayment,
+  updatePayment,
 } = require("../controller/recreationAreaController");
 const { authorizeUser } = require("../middlewares/Auth");
 
@@ -23,6 +28,11 @@ router
     updateRecreationArea
   )
   .put("/setRecreationAreaPhotos/:urlRec", authorizeUser, upload.array("photos", 7), setRecreationAreaPhotos)
+  .post("/reserveRecreationArea/:urlRec/:urlUser", authorizeUser, reserveRecreationArea)
+  .get("/getReservations/:urlRec", authorizeUser, getReservations)
+  .put("/uploadPayment/:urlRec/:reservaId", authorizeUser, upload.single('file'), uploadPayment)
+  .delete("/deletePayment/:urlRec/:reservaId", authorizeUser, deletePayment)
+  .put("/updatePayment/:urlRec/:reservaId", authorizeUser, updatePayment)
 ;
 
 module.exports = router;
