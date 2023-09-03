@@ -7,8 +7,10 @@ const { DateTime } = require("luxon");
 */
 function createDateTime(date, horario) {
   const [hours, minutes] = horario.split(':').map(x => parseInt(x));
-  if (date instanceof Date)
-    date = DateTime.fromJSDate(date);
+  if (date instanceof Date) {
+    // a data que vem do BD é em utc.. por algum motivo
+    date = DateTime.fromJSDate(date).toUTC().plus({hours:3}).setZone("America/Fortaleza");
+  }
   return date.set({ hours, minutes });
 }
 

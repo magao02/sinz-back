@@ -6,19 +6,11 @@ const {
   HTTP_CODE_OK,
   HTTP_CODE_BAD_REQUEST,
 } = require("../../utils/httpStatus");
-const { DateTime } = require("luxon");
-const { isReservationValid, validaData, validaHorario } = require("../../utils/reservation");
+const { isReservationValid, validaData, validaHorario, createDateTime } = require("../../utils/reservation");
 
 function dayDifference(date1, date2) {
   const oneDay = 24 * 60 * 60 * 1000;
   return Math.round(Math.abs((date2 - date1) / oneDay));
-}
-
-function createDateTime(date, horario) {
-  const [hours, minutes] = horario.split(':').map(x => parseInt(x));
-  if (date instanceof Date)
-    date = DateTime.fromJSDate(date);
-  return date.set({ hours, minutes });
 }
 
 const reserveRecreationArea = async (req, res) => {
