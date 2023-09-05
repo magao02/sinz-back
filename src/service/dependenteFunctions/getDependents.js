@@ -23,7 +23,10 @@ async function getDependents(req, res) {
   if (user._id.equals(req.userId) || req.user.admin) {
     let dependetesDTO = [];
 
-    for await (let dep of Dependent.find({ idAssociado: user._id })) {
+    for (let depId of user.dependentes) {
+      const dep = await Dependent.findById(depId);
+      if (!dep) continue;
+
       dependetesDTO.push({
         name: dep.name,
         cpf: dep.cpf,
