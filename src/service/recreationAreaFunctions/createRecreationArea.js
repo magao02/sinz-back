@@ -16,7 +16,6 @@ const createRecreationArea = async (req, res) => {
       capacidadeMaxima,
       locaisArredores,
       itens,
-      reservas,
       areasComuns,
       regrasConvivencia,
     } = req.body;
@@ -45,7 +44,6 @@ const createRecreationArea = async (req, res) => {
         urlRec,
         locaisArredores,
         itens,
-        reservas,
         areasComuns,
         regrasConvivencia,
       });

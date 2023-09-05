@@ -19,6 +19,7 @@ async function editRecreationArea(req, res) {
     }
 
     const data = req.body;
+    delete data.reservas;
     recreationArea = await RecreationArea.findByIdAndUpdate(
       recreationArea._id,
       data

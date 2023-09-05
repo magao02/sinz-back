@@ -32,7 +32,10 @@ async function getAllApartments(req, res) {
   const data = apartments.map(apt => {
     let pictures = apt.apartmentPictures.map(x => getImageUrl(x));
 
-    const [closestReserva, nextClosestReserva] = calculaProximaReserva(reserva, apt.reservas);
+    let closestReserva, nextClosestReserva;
+    try {
+      [closestReserva, nextClosestReserva] = calculaProximaReserva(reserva, apt.reservas);
+    } catch (e) {}
 
     return {
       titulo: apt.titulo,

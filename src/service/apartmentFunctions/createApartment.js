@@ -20,7 +20,6 @@ const createApartment = async (req, res) => {
       camas,
       locaisArredores,
       itens,
-      reservas,
       areasComuns,
       regrasConvivencia,
     } = req.body;
@@ -50,7 +49,6 @@ const createApartment = async (req, res) => {
         urlApt,
         locaisArredores,
         itens,
-        reservas,
         areasComuns,
         regrasConvivencia,
       });

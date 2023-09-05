@@ -32,7 +32,10 @@ async function getAllRecreationAreas(req, res) {
   const data = areas.map(area => {
     let pictures = area.pictures.map(x => getImageUrl(x));
 
-    const [closestReserva, nextClosestReserva] = calculaProximaReserva(reserva, area.reservas);
+    let closestReserva, nextClosestReserva;
+    try {
+      [closestReserva, nextClosestReserva] = calculaProximaReserva(reserva, area.reservas);
+    } catch (e) {}
 
     return {
       titulo: area.titulo,

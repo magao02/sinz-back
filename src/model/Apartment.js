@@ -68,19 +68,19 @@ const ApartmentSchema = new Schema({
     {
       dataChegada: {
         type: Date,
-        required: false,
+        required: true,
       },
       dataSaida: {
         type: Date,
-        required: false,
+        required: true,
       },
       horarioChegada: {
         type: String,
-        required: false,
+        required: true,
       },
       horarioSaida: {
         type: String,
-        required: false,
+        required: true,
       },
       diaria: {
         type: Number,

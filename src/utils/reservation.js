@@ -17,27 +17,32 @@ function createDateTime(date, horario) {
 module.exports = {
   createDateTime,
   isReservationValid(reserva, reservas) {
-    const chegada = reserva.chegada ?? createDateTime(reserva.dataChegada, reserva.horarioChegada);
-    const saida = reserva.saida ?? createDateTime(reserva.dataSaida, reserva.horarioSaida);
-
-    for (let otherReserva of reservas) {
-      const otherChegada = createDateTime(otherReserva.dataChegada, otherReserva.horarioChegada);
-      const otherSaida = createDateTime(otherReserva.dataSaida, otherReserva.horarioSaida);
-      if (chegada > otherChegada) {
-        // essa reserva inicia apos a outra,
-        // então é invalida se essa inicia antes da outra acabar
-        if (chegada < otherSaida) {
-          return false;
-        }
-      } else {
-        // essa reserva inicia antes da outra,
-        // então é invalida se acaba depois da outra iniciar
-        if (saida > otherChegada) {
-          return false;
+    try {
+      const chegada = reserva.chegada ?? createDateTime(reserva.dataChegada, reserva.horarioChegada);
+      const saida = reserva.saida ?? createDateTime(reserva.dataSaida, reserva.horarioSaida);
+  
+      for (let otherReserva of reservas) {
+        const otherChegada = createDateTime(otherReserva.dataChegada, otherReserva.horarioChegada);
+        const otherSaida = createDateTime(otherReserva.dataSaida, otherReserva.horarioSaida);
+        if (chegada > otherChegada) {
+          // essa reserva inicia apos a outra,
+          // então é invalida se essa inicia antes da outra acabar
+          if (chegada < otherSaida) {
+            return false;
+          }
+        } else {
+          // essa reserva inicia antes da outra,
+          // então é invalida se acaba depois da outra iniciar
+          if (saida > otherChegada) {
+            return false;
+          }
         }
       }
+    } catch (err) {
+      // se houve algum erro como data invalida no apartamento,
+      // considere qualquer reserva como invalida. a algum ponto algum admin tera que resolver esse problema.. talvez
+      return false;
     }
-
     return true;
   },
   validaData(data) {

@@ -13,6 +13,8 @@ async function editApartment(req, res) {
         .json({ message: "Apartamento não encontrado." });
     }
     const data = req.body;
+    delete data.reservas;
+    
     apt = await Apartment.findByIdAndUpdate(apt._id, data);
 
     return res
