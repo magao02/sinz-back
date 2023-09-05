@@ -7,6 +7,10 @@ const {
   HTTP_CODE_OK,
 } = require("../../utils/httpStatus");
 
+function formatDate(date) {
+  return date.getUTCDate().toString().padStart(2, '0') + "/" + (date.getUTCMonth() + 1).toString().padStart(2, '0') + "/" + date.getUTCFullYear();
+};
+
 const getReservations = async (req, res) => {
   if (!req.user.admin) {
     return res
@@ -43,8 +47,8 @@ const getReservations = async (req, res) => {
 
   const data = await Promise.all(filtReservas.map(async reserva => ({
     id: reserva._id.toString(),
-    dataChegada: reserva.dataChegada,
-    dataSaida: reserva.dataSaida,
+    dataChegada: formatDate(reserva.dataChegada),
+    dataSaida: formatDate(reserva.dataSaida),
     horarioChegada: reserva.horarioChegada,
     horarioSaida: reserva.horarioSaida,
     diaria: reserva.diaria,
