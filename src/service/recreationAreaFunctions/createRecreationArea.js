@@ -49,6 +49,7 @@ const createRecreationArea = async (req, res) => {
       });
       return res.status(HTTP_CODE_OK).json({
         message: "Area de lazer " + rec.titulo + " criado com sucesso.",
+        url: urlRec,
       });
     } catch (err) {
       return res.status(HTTP_CODE_BAD_REQUEST).json({ message: err.message });

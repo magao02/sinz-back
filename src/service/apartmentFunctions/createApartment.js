@@ -54,6 +54,7 @@ const createApartment = async (req, res) => {
       });
       return res.status(HTTP_CODE_OK).json({
         message: "Apartamento " + apt.titulo + " criado com sucesso.",
+        url: urlApt,
       });
     } catch (err) {
       return res.status(HTTP_CODE_BAD_REQUEST).json({ message: err.message });
