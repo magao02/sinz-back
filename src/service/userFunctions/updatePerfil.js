@@ -7,6 +7,7 @@ const {
   HTTP_CODE_UNAUTHORIZED,
   HTTP_CODE_OK,
 } = require("../../utils/httpStatus");
+const { validacaoPassword } = require("../../utils/validationFunctions");
 
 async function updatePerfil(req, res) {
   const urlUser = req.params.urlUser;
@@ -42,6 +43,13 @@ async function updatePerfil(req, res) {
       password,
       profissao,
     } = req.body;
+
+    if (!isBlank(password) && !validacaoPassword(password)) {
+      return res.status(HTTP_CODE_BAD_REQUEST).json({
+        message:
+          "Senha invalida. Insira uma senha sem caracteres especiais com um tamanho de pelo menos 8",
+      });
+    }
 
     try {
       if (nascimento !== undefined && nascimento !== "") {
