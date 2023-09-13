@@ -1,4 +1,5 @@
 const User = require("../../model/User");
+const getImageUrl = require("../../utils/getImageUrl");
 const compare = require("../../utils/compareFunctions.js");
 const isBlank = require("../../utils/isBlank");
 const {
@@ -26,6 +27,7 @@ async function getUsers(req, res) {
         urlUser: user.urlUser !== "" ? user.urlUser : "",
         emissao: isBlank(user.emissao) ? formatDate(user.emissao) : "",
         profissao: isBlank(user.profissao) ? user.profissao : "", 
+        profilePic: getImageUrl(user.profilePic),
       });
     });
 
