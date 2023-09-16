@@ -1,6 +1,6 @@
 const User = require("../../model/User");
 const formataData = require("../../utils/dateFunctions");
-const isBlank = require("../../utils/isBlank");
+const isNotBlank = require("../../utils/isNotBlank");
 const {
   HTTP_CODE_NOT_FOUND,
   HTTP_CODE_BAD_REQUEST,
@@ -45,7 +45,7 @@ async function updatePerfil(req, res) {
       profissao,
     } = req.body;
 
-    if (!isBlank(password) && !validacaoPassword(password)) {
+    if (!isNotBlank(password) && !validacaoPassword(password)) {
       return res.status(HTTP_CODE_BAD_REQUEST).json({
         message:
           "Senha invalida. Insira uma senha sem caracteres especiais com um tamanho de pelo menos 8",
@@ -76,68 +76,68 @@ async function updatePerfil(req, res) {
 
     try {
       user = await User.findByIdAndUpdate(user._id, {
-        name: isBlank(name) ? name : user.name,
-        email: isBlank(email) ? email : user.email,
-        telefone: isBlank(telefone) ? telefone : user.telefone,
-        telefoneFixo: isBlank(telefoneFixo) ? telefoneFixo : user.telefoneFixo,
-        nascimento: isBlank(nascimento) ? nascimento : user.nascimento,
-        rg: isBlank(rg) ? rg : user.rg,
-        filiacao: isBlank(filiacao) ? filiacao : user.filiacao,
-        emissao: isBlank(emissao) ? emissao : user.emissao,
-        numInscricao: isBlank(numInscricao) ? numInscricao : user.numInscricao,
-        dataAfiliacao: isBlank(dataAfiliacao)
+        name: isNotBlank(name) ? name : user.name,
+        email: isNotBlank(email) ? email : user.email,
+        telefone: isNotBlank(telefone) ? telefone : user.telefone,
+        telefoneFixo: isNotBlank(telefoneFixo) ? telefoneFixo : user.telefoneFixo,
+        nascimento: isNotBlank(nascimento) ? nascimento : user.nascimento,
+        rg: isNotBlank(rg) ? rg : user.rg,
+        filiacao: isNotBlank(filiacao) ? filiacao : user.filiacao,
+        emissao: isNotBlank(emissao) ? emissao : user.emissao,
+        numInscricao: isNotBlank(numInscricao) ? numInscricao : user.numInscricao,
+        dataAfiliacao: isNotBlank(dataAfiliacao)
           ? dataAfiliacao
           : user.dataAfiliacao,
-        formacaoSuperior: isBlank(formacaoSuperior)
+        formacaoSuperior: isNotBlank(formacaoSuperior)
           ? formacaoSuperior
           : user.formacaoSuperior,
-        instituicaoSuperior: isBlank(instituicaoSuperior)
+        instituicaoSuperior: isNotBlank(instituicaoSuperior)
           ? instituicaoSuperior
           : user.instituicaoSuperior,
-        dataFormacao: isBlank(dataFormacao) ? dataFormacao : user.dataFormacao,
-        numRegistroConselho: isBlank(numRegistroConselho)
+        dataFormacao: isNotBlank(dataFormacao) ? dataFormacao : user.dataFormacao,
+        numRegistroConselho: isNotBlank(numRegistroConselho)
           ? numRegistroConselho
           : user.numRegistroConselho,
-        dataRegistroConselho: isBlank(dataRegistroConselho)
+        dataRegistroConselho: isNotBlank(dataRegistroConselho)
           ? dataRegistroConselho
           : user.dataRegistroConselho,
-        empresa: isBlank(empresa) ? empresa : user.empresa,
-        salario: isBlank(salario) ? salario : user.salario,
-        password: isBlank(password) ? password : user.password,
-        profissao: isBlank(profissao) ? profissao : user.profissao,
+        empresa: isNotBlank(empresa) ? empresa : user.empresa,
+        salario: isNotBlank(salario) ? salario : user.salario,
+        password: isNotBlank(password) ? password : user.password,
+        profissao: isNotBlank(profissao) ? profissao : user.profissao,
         endereco: {
           rua:
-            endereco !== undefined && isBlank(endereco.rua)
+            endereco !== undefined && isNotBlank(endereco.rua)
               ? endereco.rua
               : user.endereco.rua,
           bairro:
-            endereco !== undefined && isBlank(endereco.bairro)
+            endereco !== undefined && isNotBlank(endereco.bairro)
               ? endereco.bairro
               : user.endereco.bairro,
           complemento:
-            endereco !== undefined && isBlank(endereco.complemento)
+            endereco !== undefined && isNotBlank(endereco.complemento)
               ? endereco.complemento
               : user.endereco.complemento,
           numero:
-            endereco !== undefined && isBlank(endereco.numero)
+            endereco !== undefined && isNotBlank(endereco.numero)
               ? endereco.numero
               : user.endereco.numero,
         },
         regional: {
           municipio:
-            regional !== undefined && isBlank(regional.municipio)
+            regional !== undefined && isNotBlank(regional.municipio)
               ? regional.municipio
               : user.regional.municipio,
           estado:
-            regional !== undefined && isBlank(regional.estado)
+            regional !== undefined && isNotBlank(regional.estado)
               ? regional.estado
               : user.regional.estado,
           naturalidade:
-            regional !== undefined && isBlank(regional.naturalidade)
+            regional !== undefined && isNotBlank(regional.naturalidade)
               ? regional.naturalidade
               : user.regional.naturalidade,
           nacionalidade:
-            regional !== undefined && isBlank(regional.nacionalidade)
+            regional !== undefined && isNotBlank(regional.nacionalidade)
               ? regional.nacionalidade
               : user.regional.nacionalidade,
         },

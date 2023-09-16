@@ -1,5 +1,5 @@
-function isBlank(str) {
+function isNotBlank(str) {
     return str !== null && str !== undefined && str.toString().trim() !== "";
 }
 
-module.exports = isBlank;
+module.exports = isNotBlank;

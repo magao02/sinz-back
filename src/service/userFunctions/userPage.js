@@ -1,7 +1,7 @@
 const User = require("../../model/User");
 const getImageUrl = require("../../utils/getImageUrl");
 const { HTTP_CODE_OK, HTTP_CODE_NOT_FOUND } = require("../../utils/httpStatus");
-const isBlank = require("../../utils/isBlank");
+const isNotBlank = require("../../utils/isNotBlank");
 
 function formatDate(date) {
   return (
@@ -32,15 +32,15 @@ async function userPage(req, res) {
     password: user.password,
     telefone: user.telefone,
     telefoneFixo: user.telefoneFixo,
-    nascimento: isBlank(user.nascimento) ? formatDate(user.nascimento) : "",
+    nascimento: isNotBlank(user.nascimento) ? formatDate(user.nascimento) : "",
     cpf: user.cpf,
     rg: user.rg,
-    emissao: isBlank(user.emissao) ? formatDate(user.emissao) : "",
+    emissao: isNotBlank(user.emissao) ? formatDate(user.emissao) : "",
     filiacao: user.filiacao,
-    dataAfiliacao: isBlank(user.dataAfiliacao)
+    dataAfiliacao: isNotBlank(user.dataAfiliacao)
       ? formatDate(user.dataAfiliacao)
       : "",
-    regional: isBlank(user.regional) ? user.regional : "",
+    regional: isNotBlank(user.regional) ? user.regional : "",
     profissao: user.profissao,
     endereco: user.endereco,
     salario: user.salario,
@@ -48,11 +48,11 @@ async function userPage(req, res) {
     numInscricao: user.numInscricao,
     formacaoSuperior: user.formacaoSuperior,
     instituicaoSuperior: user.instituicaoSuperior,
-    dataFormacao: isBlank(user.dataFormacao)
+    dataFormacao: isNotBlank(user.dataFormacao)
       ? formatDate(user.dataFormacao)
       : "",
     numRegistroConselho: user.numRegistroConselho,
-    dataRegistroConselho: isBlank(user.dataRegistroConselho)
+    dataRegistroConselho: isNotBlank(user.dataRegistroConselho)
       ? user.dataRegistroConselho.getDate() +
         1 +
         "/" +

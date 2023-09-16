@@ -1,7 +1,7 @@
 const User = require("../../model/User");
 const getImageUrl = require("../../utils/getImageUrl");
 const compare = require("../../utils/compareFunctions.js");
-const isBlank = require("../../utils/isBlank");
+const isNotBlank = require("../../utils/isNotBlank");
 const {
   HTTP_CODE_OK,
   HTTP_CODE_UNAUTHORIZED,
@@ -21,12 +21,12 @@ async function getUsers(req, res) {
     users.forEach((user) => {
       usersDTO.push({
         name: user.name !== "" ? user.name : "",
-        nascimento: isBlank(user.nascimento) ? formatDate(user.nascimento) : "",
+        nascimento: isNotBlank(user.nascimento) ? formatDate(user.nascimento) : "",
         cpf: user.cpf !== "" ? user.cpf : "",
-        rg: isBlank(user.rg) ? user.rg : "",
+        rg: isNotBlank(user.rg) ? user.rg : "",
         urlUser: user.urlUser !== "" ? user.urlUser : "",
-        emissao: isBlank(user.emissao) ? formatDate(user.emissao) : "",
-        profissao: isBlank(user.profissao) ? user.profissao : "", 
+        emissao: isNotBlank(user.emissao) ? formatDate(user.emissao) : "",
+        profissao: isNotBlank(user.profissao) ? user.profissao : "", 
         profilePic: getImageUrl(user.profilePic),
       });
     });
