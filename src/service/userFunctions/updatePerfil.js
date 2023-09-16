@@ -28,6 +28,7 @@ async function updatePerfil(req, res) {
       telefoneFixo,
       nascimento,
       rg,
+      emissao,
       filiacao,
       endereco,
       regional,
@@ -64,6 +65,9 @@ async function updatePerfil(req, res) {
       if (dataRegistroConselho !== undefined && dataRegistroConselho !== "") {
         dataRegistroConselho = await formataData(dataRegistroConselho);
       }
+      if (emissao !== undefined && emissao !== "") {
+        emissao = await formataData(emissao);
+      }
     } catch (err) {
       return res
         .status(HTTP_CODE_BAD_REQUEST)
@@ -79,6 +83,7 @@ async function updatePerfil(req, res) {
         nascimento: isBlank(nascimento) ? nascimento : user.nascimento,
         rg: isBlank(rg) ? rg : user.rg,
         filiacao: isBlank(filiacao) ? filiacao : user.filiacao,
+        emissao: isBlank(emissao) ? emissao : user.emissao,
         numInscricao: isBlank(numInscricao) ? numInscricao : user.numInscricao,
         dataAfiliacao: isBlank(dataAfiliacao)
           ? dataAfiliacao
