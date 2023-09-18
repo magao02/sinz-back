@@ -30,6 +30,12 @@ const getReservations = async (req, res) => {
 
   const fetchAssociadoData = async id => {
     const user = await User.findById(id);
+    if (!user) {
+      return {
+        nome: "???",
+        profissao: "???",
+      };
+    }
     return {
       nome: user.name,
       profissao: user.profissao,
