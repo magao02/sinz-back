@@ -53,12 +53,7 @@ async function userPage(req, res) {
       : "",
     numRegistroConselho: user.numRegistroConselho,
     dataRegistroConselho: isNotBlank(user.dataRegistroConselho)
-      ? user.dataRegistroConselho.getDate() +
-        1 +
-        "/" +
-        (user.dataRegistroConselho.getMonth() + 1) +
-        "/" +
-        user.dataRegistroConselho.getFullYear()
+      ? formatDate(user.dataRegistroConselho)
       : "",
     profilePic: getImageUrl(user.profilePic),
   };
