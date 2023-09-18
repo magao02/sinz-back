@@ -117,9 +117,10 @@ async function signUpDep(req, res) {
     }
 
     try {
-      let dependentes = user.dependentes.concat(`${dependent._id}`);
-      user = await User.findByIdAndUpdate(user._id, {
-        dependentes,
+      await User.findByIdAndUpdate(user._id, {
+        $push: {
+          dependentes: dependent._id
+        }
       });
     } catch (e) {
       if (e.hasOwnProperty("code") && e.code === 11000) {
