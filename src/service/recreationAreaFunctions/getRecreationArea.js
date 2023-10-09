@@ -31,6 +31,7 @@ async function getRecreationArea(req, res) {
     regrasConvivencia: rec.regrasConvivencia,
     itens: rec.itens,
     areasComuns: rec.areasComuns,
+    capacidadeMaxima: rec.capacidadeMaxima
   };
 
   return res.status(HTTP_CODE_OK).json(data);
