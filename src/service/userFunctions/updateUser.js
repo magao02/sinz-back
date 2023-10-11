@@ -16,7 +16,41 @@ async function updateUser(req, res) {
         .json({ message: "Perfil não encontrado." });
     }
 
-    let data = req.body;
+    let rawData = req.body;
+    const allowedFields = [
+      "name",
+      "email",
+      "password",
+      "telefone",
+      "telefoneFixo",
+      "nascimento",
+      "cpf",
+      "rg",
+      "emissao",
+      "filiacao",
+      "dataAfiliacao",
+      "profissao",
+      "numInscricao",
+      "formacaoSuperior",
+      "instituicaoSuperior",
+      "dataFormacao",
+      "numRegistroConselho",
+      "dataRegistroConselho",
+      "empresa",
+      "salario",
+      "endereco",
+      "regional",
+      "primeiroAcesso",
+    ];
+    if (req.user.adminMaster) {
+      allowedFields.push("admin");
+    }
+    const data = {};
+    for (let field of allowedFields) {
+      if (rawData[field] !== undefined) {
+        data[field] = rawData[field];
+      }
+    }
     user = await User.findByIdAndUpdate(user._id, data);
 
     return res
