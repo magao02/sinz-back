@@ -11,6 +11,7 @@ const deleteUser = require("../service/userFunctions/deleteUser");
 const passwordToken = require("../service/userFunctions/passwordToken");
 const updatePassword = require("../service/userFunctions/updatePassword");
 const setPhoto = require("../service/userFunctions/setPhoto");
+const createIncompleteUser = require("../service/userFunctions/createIncompleteUser");
 
 module.exports = {
   //POST METHODS
@@ -20,6 +21,9 @@ module.exports = {
   },
   async login(req, res) {
     return login(req, res);
+  },
+  async createIncompleteUser(req, res) {
+    return createIncompleteUser(req, res);
   },
 
   //GET METHODS

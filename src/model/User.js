@@ -171,7 +171,13 @@ const UserSchema = new Schema(
         type: Number,
         required: false
       }
-    }
+    },
+
+    isPendingSignup: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
   },
   {
     timestamps: true,

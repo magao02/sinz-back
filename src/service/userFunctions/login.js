@@ -36,6 +36,7 @@ async function login(req, res) {
         admin: user.admin,
         adminMaster: user.adminMaster,
         primeiroAcesso: user.primeiroAcesso,
+        isPendingSignup: user.isPendingSignup,
 
         name: user.name,
         urlUser: user.urlUser,

@@ -22,6 +22,12 @@ async function signUpDep(req, res) {
       .json({ message: "Perfil não encontrado." });
   }
 
+  if (user.isPendingSignup) {
+    return res
+      .status(HTTP_CODE_UNAUTHORIZED)
+      .json({ message: "Usuario tem precadastro pendente." });
+  }
+
   let { name, nascimento, cpf, rg, emissao, parentesco } = req.body;
 
   if (isStringBlank(name)) {
