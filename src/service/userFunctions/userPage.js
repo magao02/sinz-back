@@ -56,6 +56,7 @@ async function userPage(req, res) {
       ? formatDate(user.dataRegistroConselho)
       : "",
     profilePic: getImageUrl(user.profilePic),
+    admin: user.admin,
   };
   return res.status(HTTP_CODE_OK).json(dataPage);
 }
