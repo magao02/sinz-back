@@ -22,6 +22,12 @@ const reserveRecreationArea = async (req, res) => {
       .json({ message: "Usuario não encontrado." });
   }
 
+  if (user.isPendingSignup) {
+    return res
+      .status(HTTP_CODE_UNAUTHORIZED)
+      .json({ message: "Usuario tem precadastro pendente." });
+  }
+
   const area = await RecreationArea.findOne({ urlRec: req.params.urlRec });
   if (!area) {
     return res

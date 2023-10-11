@@ -38,6 +38,10 @@ authorize = (req, res, next, type) => {
             return res.status(401).send({ error: 'Token inválido' });
         }
 
+        if (user.isPendingSignup && !req.allowPendingSignup) {
+            return res.status(401).send({ error: 'Usuario tem precadastro pendente.', pending: true });
+        }
+
         req.userId = decoded.idUser;
         req.user = user;
         req.token = token;
