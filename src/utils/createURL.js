@@ -15,7 +15,7 @@ async function createURL(name) {
           urlUnavailable = false;
         } else {
           urlUser = temporalUrl;
-          let randonNum = Math.floor(Math.random() * 1001);
+          let randonNum = Math.floor(Math.random() * 10001);
           urlUser = temporalUrl + randonNum.toString();
         }
       }
