@@ -20,6 +20,11 @@ const UserSchema = new Schema(
       required: false,
       default: false,
     },
+    adminMaster: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     telefone: {
       type: String,
       required: false,
