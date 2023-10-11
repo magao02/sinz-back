@@ -7,7 +7,6 @@ const getUserYears = require("../service/userFunctions/getUserYears");
 const getUsers = require("../service/userFunctions/getUsers");
 const updatePerfil = require("../service/userFunctions/updatePerfil");
 const updateUser = require("../service/userFunctions/updateUser");
-const setNewAdmin = require("../service/userFunctions/setNewAdmin");
 const deleteUser = require("../service/userFunctions/deleteUser");
 const passwordToken = require("../service/userFunctions/passwordToken");
 const updatePassword = require("../service/userFunctions/updatePassword");
@@ -61,10 +60,6 @@ module.exports = {
 
   async updateUser(req, res) {
     return updateUser(req, res);
-  },
-
-  async setNewAdmin(req, res) {
-    return setNewAdmin(req, res);
   },
 
   async setPhoto(req, res) {
