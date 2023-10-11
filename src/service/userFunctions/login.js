@@ -34,6 +34,7 @@ async function login(req, res) {
         auth: true,
         token: `Bearer ` + token,
         admin: user.admin,
+        adminMaster: user.adminMaster,
         primeiroAcesso: user.primeiroAcesso,
 
         name: user.name,

@@ -16,8 +16,6 @@ router.put('/setPerfil/:urlUser', auth.authorizeUser, UserController.updatePerfi
 
 router.put('/setUser/:urlUser', auth.authorizeUser, UserController.updateUser);
 
-router.put('/setNewAdmin/:urlUser', auth.authorizeUser, UserController.setNewAdmin);
-
 router.delete('/deleteUser/:urlUser', auth.authorizeUser, UserController.deleteUser);
 
 router.post('/setPhoto/:urlUser', auth.authorizeUser, upload.single('photo'), UserController.setPhoto);
