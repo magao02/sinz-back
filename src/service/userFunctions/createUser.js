@@ -37,6 +37,7 @@ async function createUser(req, res) {
     dataRegistroConselho,
     empresa,
     salario,
+    universidade,
   } = req.body;
 
   if (name === "") {
@@ -154,6 +155,7 @@ async function createUser(req, res) {
         empresa,
         salario,
         urlUser,
+        universidade,
       });
       let imposto = await Imposto.create({ idUser: user._id });
       user = await User.findByIdAndUpdate(user._id, {

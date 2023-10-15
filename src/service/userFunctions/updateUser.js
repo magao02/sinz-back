@@ -47,6 +47,7 @@ async function updateUser(req, res) {
       "endereco",
       "regional",
       "primeiroAcesso",
+      "universidade",
     ];
     if (req.user.adminMaster) {
       allowedFields.push("admin");

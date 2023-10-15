@@ -49,6 +49,7 @@ async function updatePerfil(req, res) {
       salario,
       password,
       profissao,
+      universidade,
     } = req.body;
 
     if (!isNotBlank(password) && !validacaoPassword(password)) {
