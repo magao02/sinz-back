@@ -16,6 +16,12 @@ async function updateUser(req, res) {
         .json({ message: "Perfil não encontrado." });
     }
 
+    if (user.adminMaster && !req.user.adminMaster) {
+      return res
+        .status(HTTP_CODE_UNAUTHORIZED)
+        .json({ message: "Admin sem permissão de editar dados de admin master." });
+    }
+
     let rawData = req.body;
     const allowedFields = [
       "name",

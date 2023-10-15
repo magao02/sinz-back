@@ -20,6 +20,12 @@ async function updatePerfil(req, res) {
       .json({ message: "Perfil não encontrado." });
   }
 
+  if (user.adminMaster && !req.user.adminMaster) {
+    return res
+      .status(HTTP_CODE_UNAUTHORIZED)
+      .json({ message: "Admin sem permissão de editar dados de admin master." });
+  }
+
   if (user._id.equals(req.userId) || req.user.admin) {
     let {
       name,

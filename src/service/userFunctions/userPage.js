@@ -26,10 +26,12 @@ async function userPage(req, res) {
       .json({ message: "Usuário não tem permissão." });
   }
 
+  const canSeePassword = user.adminMaster ? req.user.adminMaster : true;
+
   const dataPage = {
     name: user.name,
     email: user.email,
-    password: user.password,
+    password: canSeePassword ? user.password : "",
     telefone: user.telefone,
     telefoneFixo: user.telefoneFixo,
     nascimento: isNotBlank(user.nascimento) ? formatDate(user.nascimento) : "",

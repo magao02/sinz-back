@@ -21,6 +21,12 @@ async function deleteUser(req, res) {
         .json({ message: "Perfil não encontrado." });
     }
 
+    if (user.adminMaster && !req.user.adminMaster) {
+      return res
+        .status(HTTP_CODE_UNAUTHORIZED)
+        .json({ message: "Admin sem permissão de deletar admin master." });
+    }
+
     await Imposto.deleteMany({ idUser: user._id });
 
     user = await User.deleteOne(user)
