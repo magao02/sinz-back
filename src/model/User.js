@@ -79,6 +79,10 @@ const UserSchema = new Schema(
       type: Date,
       required: false,
     },
+    universidade: {
+      type: String,
+      required: false,
+    },
     numRegistroConselho: {
       type: String,
       required: false,
