@@ -129,6 +129,10 @@ async function updatePerfil(req, res) {
             endereco !== undefined && isNotBlank(endereco.numero)
               ? endereco.numero
               : user.endereco.numero,
+          cep:
+              endereco !== undefined && isNotBlank(endereco.cep)
+                ? endereco.cep
+                : user.endereco.cep,
         },
         regional: {
           municipio:
@@ -148,6 +152,7 @@ async function updatePerfil(req, res) {
               ? regional.nacionalidade
               : user.regional.nacionalidade,
         },
+        universidade: isNotBlank(universidade) ? universidade : user.universidade,
       });
 
       return res
