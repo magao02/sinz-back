@@ -69,19 +69,16 @@ async function createUser(req, res) {
     let urlUser = await createURL(name);
 
     try {
-      if (nascimento !== "") {
-        nascimento = await formataData(nascimento);
-      }
-      if (emissao !== "") {
-        emissao = await formataData(emissao);
-      }
-      if (dataAfiliacao !== "") {
+      nascimento = await formataData(nascimento);
+      emissao = await formataData(emissao);
+
+      if (dataAfiliacao !== undefined && dataAfiliacao !== "") {
         dataAfiliacao = await formataData(dataAfiliacao);
       }
-      if (dataFormacao !== "") {
+      if (dataFormacao !== undefined && dataFormacao !== "") {
         dataFormacao = await formataData(dataFormacao);
       }
-      if (dataRegistroConselho !== "") {
+      if (dataRegistroConselho !== undefined && dataRegistroConselho !== "") {
         dataRegistroConselho = await formataData(dataRegistroConselho);
       }
     } catch (err) {
