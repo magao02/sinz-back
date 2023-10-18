@@ -22,5 +22,7 @@ router.delete('/deleteUser/:urlUser', auth.authorizeUser, UserController.deleteU
 router.post('/setPhoto/:urlUser', auth.authorizeUser, upload.single('photo'), UserController.setPhoto);
 
 router.post('/createIncompleteUser', auth.authorizeUser, UserController.createIncompleteUser);
+router.put('/finishIncomplete/:urlUser', auth.authorizeUser, UserController.finishIncompleteUser);
+
 
 module.exports = router;
