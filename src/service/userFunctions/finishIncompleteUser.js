@@ -142,6 +142,7 @@ async function finishIncompleteUser(req, res) {
       salario,
       urlUser,
       universidade,
+      isPendingSignup: false,
     }, { new: true });
 
     return res.status(HTTP_CODE_CREATED).json({
