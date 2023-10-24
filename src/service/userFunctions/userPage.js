@@ -60,6 +60,7 @@ async function userPage(req, res) {
     profilePic: getImageUrl(user.profilePic),
     admin: user.admin,
     universidade: user.universidade,
+    isPendingSignup: user.isPendingSignup,
   };
   return res.status(HTTP_CODE_OK).json(dataPage);
 }
