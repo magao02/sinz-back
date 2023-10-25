@@ -28,6 +28,7 @@ async function getUsers(req, res) {
         emissao: isNotBlank(user.emissao) ? formatDate(user.emissao) : "",
         profissao: isNotBlank(user.profissao) ? user.profissao : "", 
         profilePic: getImageUrl(user.profilePic),
+        admin: user.admin,
       });
     });
 
