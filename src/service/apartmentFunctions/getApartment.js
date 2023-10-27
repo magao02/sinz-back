@@ -15,17 +15,14 @@ async function getApartment(req, res) {
       .json({ message: "Apartamento não encontrado." });
   }
 
-  let reserva;
   const reservaAgora = {
     chegada: DateTime.now(),
     saida: DateTime.now(),
   };
 
-  reserva = reserva ?? reservaAgora;
-
   let closestReserva, nextClosestReserva;
   try {
-    [closestReserva, nextClosestReserva] = calculaProximaReserva(reserva, apt.reservas);
+    [closestReserva, nextClosestReserva] = calculaProximaReserva(reservaAgora, apt.reservas);
   } catch (e) {}
 
   
