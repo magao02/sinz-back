@@ -38,6 +38,7 @@ async function createUser(req, res) {
     empresa,
     salario,
     universidade,
+    admin
   } = req.body;
 
   if (name === "") {
@@ -59,9 +60,9 @@ async function createUser(req, res) {
     }
   }
 
-  if (endereco.complemento === "") {
+  /*if (endereco.complemento === "") {
     endereco.complemento = "Nenhum";
-  }
+  }*/
 
   let user = await User.findOne({ cpf });
 
@@ -126,6 +127,10 @@ async function createUser(req, res) {
     } else {
       password = cpf;
     }
+    
+    if(!admin){
+      admin = false
+    }
 
     try {
       user = await User.create({
@@ -153,6 +158,7 @@ async function createUser(req, res) {
         salario,
         urlUser,
         universidade,
+        admin
       });
       let imposto = await Imposto.create({ idUser: user._id });
       user = await User.findByIdAndUpdate(user._id, {
