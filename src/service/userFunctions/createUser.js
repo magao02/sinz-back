@@ -103,7 +103,7 @@ async function createUser(req, res) {
       if (!validacaoTelefone(telefone)) {
         return res.status(HTTP_CODE_BAD_REQUEST).json({
           message:
-            "Telefone inserido com formato incorreto. Formato correto: xx xxxx-xxxx sem pontuação.",
+            "Telefone inserido com formato incorreto. Formato correto para telefones moveis xx xxxxx-xxxx ou xx xxxx-xxxx para telefones fixos, sem pontuação.",
         });
       }
     }
