@@ -9,7 +9,7 @@ function validacaoRG(rg) {
 }
 
 function validacaoTelefone(telefone) {
-  var padraoTelefone = /^\d{11}$/;
+  var padraoTelefone = /^\d{10,11}$/;
   return padraoTelefone.test(telefone);
 }
 
