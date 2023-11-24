@@ -2,8 +2,6 @@ const User = require("../../model/User");
 const createURL = require("../../utils/createURL.js");
 const isStringBlank = require("../../utils/isStringBlank");
 const {
-  validacaoPassword,
-  validacaoTelefone,
   validacaoCPF,
 } = require("../../utils/validationFunctions");
 const {
@@ -23,7 +21,6 @@ async function createIncompleteUser(req, res) {
     name,
     email,
     cpf,
-    password,
     admin,
   } = req.body;
 
@@ -31,12 +28,6 @@ async function createIncompleteUser(req, res) {
     return res
       .status(HTTP_CODE_BAD_REQUEST)
       .json({ message: "Preencha o campo name" });
-  }
-
-  if (isStringBlank(password)) {
-    return res
-      .status(HTTP_CODE_BAD_REQUEST)
-      .json({ message: "Preencha o campo password" });
   }
 
   if (isStringBlank(cpf)) {
@@ -61,18 +52,11 @@ async function createIncompleteUser(req, res) {
   if (!user) {
     let urlUser = await createURL(name);
 
-    if (!validacaoPassword(password)) {
-      return res.status(HTTP_CODE_BAD_REQUEST).json({
-        message:
-          "Senha inserida com formato incorreto. Insira uma senha apenas com números e sem caracteres especiais com um tamanho de pelo menos 8 dígitos",
-      });
-    }
-
     try {
       user = await User.create({
         name,
-        email,
-        password,
+        email: isStringBlank(email) ? undefined : email,
+        password: cpf,
         cpf,
         urlUser,
         admin,
