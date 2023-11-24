@@ -45,6 +45,7 @@ const UserSchema = new Schema(
     rg: {
       type: String,
       unique: [true, "RG já cadastrado."],
+      sparse: true,
       required: false,
     },
     emissao: {
