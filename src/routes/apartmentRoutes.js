@@ -11,6 +11,7 @@ const {
   uploadPayment,
   deletePayment,
   updatePayment,
+  deleteApartment,
 } = require("../controller/apartmentController");
 const { authorizeUser } = require("../middlewares/Auth");
 
@@ -19,6 +20,7 @@ router
   .get("/getAllApartments", authorizeUser, getAllApartments)
   .get("/getApartment/:urlApt", authorizeUser, getApartment)
   .put("/updateApartment/:urlApt", authorizeUser, updateApartment)
+  .delete("/deleteApartment/:urlApt", authorizeUser, deleteApartment)
   .put("/setApartmentPhotos/:urlApt", authorizeUser, upload.array("photos", 7), setApartmentPhotos)
   .post("/reserveApartment/:urlApt/:urlUser", authorizeUser, reserveApartment)
   .get("/getReservations/:urlApt", authorizeUser, getReservations)

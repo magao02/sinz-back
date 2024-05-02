@@ -71,5 +71,14 @@ module.exports = {
             Bucket: process.env.AWS_BUCKET_NAME,
             Key: key,
         }).promise();
+    },
+
+    async deleteFiles(keys) {
+        await client.deleteObjects({
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Delete: {
+                Objects: keys.map(key => ({ Key: key }))
+            }
+        }).promise();
     }
 }
