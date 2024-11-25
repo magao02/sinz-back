@@ -12,6 +12,8 @@ const {
   deletePayment,
   updatePayment,
   deleteApartment,
+  getReservationsByUser,
+  cancelarReserva
 } = require("../controller/apartmentController");
 const { authorizeUser } = require("../middlewares/Auth");
 
@@ -27,6 +29,9 @@ router
   .put("/uploadPayment/:urlApt/:reservaId", authorizeUser, upload.single('file'), uploadPayment)
   .delete("/deletePayment/:urlApt/:reservaId", authorizeUser, deletePayment)
   .put("/updatePayment/:urlApt/:reservaId", authorizeUser, updatePayment)
+  .get("/getReservationsByUser/:urlUser", getReservationsByUser)
+  .delete("/cancelReservation/:apartmentId/:reservaId", cancelarReserva)
+  
 ;
 
 module.exports = router;

@@ -82,6 +82,11 @@ const ApartmentSchema = new Schema({
         type: String,
         required: true,
       },
+      cancelled: {
+        type: Boolean,
+        required: false,
+        default: false, 
+      },
       diaria: {
         type: Number,
         required: false,
