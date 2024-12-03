@@ -60,6 +60,7 @@ const getReservations = async (req, res) => {
     diaria: reserva.diaria,
     dias: reserva.dias,
     hospedes: reserva.hospedes,
+    cancelled: reserva.cancelled ?? false,
     pagamento: {
       pago: !!reserva.pagamento.foiPago,
       files: reserva.pagamento.files ? reserva.pagamento.files.map(file => ({
