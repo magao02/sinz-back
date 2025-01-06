@@ -5,6 +5,7 @@ const DependenteRoutes = require('./routes/dependenteRoutes');
 const homePageRoutes = require('./routes/homePageRoutes');
 const apartmentRoutes = require("./routes/apartmentRoutes");
 const recreationAreaRoutes = require("./routes/recreationAreaRoutes");
+const lancamentoRoutes = require('./routes/lancamentoRoutes');
 const app  = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -22,5 +23,6 @@ app.use('/user', UserRoutes);
 app.use('/dependente', DependenteRoutes);
 app.use("/apartment", apartmentRoutes);
 app.use("/recreationArea", recreationAreaRoutes);
+app.use('/lancamentos', lancamentoRoutes);
 
 module.exports = app;
