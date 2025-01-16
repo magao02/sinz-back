@@ -2,6 +2,7 @@ const User = require("../../model/User");
 const Imposto = require("../../model/Imposto");
 const createURL = require("../../utils/createURL.js");
 const formataData = require("../../utils/dateFunctions");
+const handler = require("../../utils/nodemailer");
 const {
   validacaoPassword,
   validacaoRG,
@@ -164,6 +165,10 @@ async function createUser(req, res) {
       user = await User.findByIdAndUpdate(user._id, {
         impostoDeRenda: imposto._id,
       });
+
+      handler(`Usuário cadastrado com suceso, email;${email}, nome: ${name}`);
+
+      
 
       return res.status(HTTP_CODE_CREATED).json({
         message: "Usuário cadastrado com sucesso",

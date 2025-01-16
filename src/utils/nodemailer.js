@@ -14,7 +14,7 @@ async function handler(message) {
     try {
       await transporter.sendMail({
         from: 'emailautomaticossoftinnovate@gmail.com',
-        to: 'lucasjuazeiro190@gmail.com',
+        to: 'sinavez@gmail.com',
         subject: 'Novo Cadastro',
         text: message ,
       });
