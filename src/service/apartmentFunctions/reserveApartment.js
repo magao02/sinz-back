@@ -22,11 +22,11 @@ const reserveApartment = async (req, res) => {
       .json({ message: "Usuario não encontrado." });
   }
   
-  if (user.isPendingSignup) {
-    return res
-      .status(HTTP_CODE_UNAUTHORIZED)
-      .json({ message: "Usuario tem precadastro pendente." });
-  }
+  // if (user.isPendingSignup) {
+  //   return res
+  //     .status(HTTP_CODE_UNAUTHORIZED)
+  //     .json({ message: "Usuario tem precadastro pendente." });
+  // }
 
   const apt = await Apartment.findOne({ urlApt: req.params.urlApt });
   if (!apt) {
