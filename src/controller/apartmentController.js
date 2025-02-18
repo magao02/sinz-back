@@ -10,6 +10,7 @@ const deletePayment = require("../service/apartmentFunctions/deletePayment");
 const updatePayment = require("../service/apartmentFunctions/updatePayment");
 const deleteApartment = require("../service/apartmentFunctions/deleteApartment");
 const getReservationsByUser = require("../service/apartmentFunctions/getReservationsByUser");
+const getReservationsByDate = require("../service/apartmentFunctions/getReservationsByDate");
 const cancelReservation = require("../service/apartmentFunctions/cancelReservation");
 
 
@@ -38,6 +39,9 @@ module.exports = {
   },
   async getReservationsByUser(req, res) {
     return getReservationsByUser(req, res);
+  },
+  async getReservationsByDate(req, res) {
+    return getReservationsByDate(req, res);
   },
   async cancelarReserva(req, res) {
     return cancelReservation(req, res);

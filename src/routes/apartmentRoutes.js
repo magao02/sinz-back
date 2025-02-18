@@ -13,7 +13,8 @@ const {
   updatePayment,
   deleteApartment,
   getReservationsByUser,
-  cancelarReserva
+  cancelarReserva,
+  getReservationsByDate,
 } = require("../controller/apartmentController");
 const { authorizeUser } = require("../middlewares/Auth");
 
@@ -30,6 +31,7 @@ router
   .delete("/deletePayment/:urlApt/:reservaId", authorizeUser, deletePayment)
   .put("/updatePayment/:urlApt/:reservaId", authorizeUser, updatePayment)
   .get("/getReservationsByUser/:urlUser", getReservationsByUser)
+  .get("/getReservationsByDate/:urlUser", getReservationsByDate)
   .delete("/cancelReservation/:apartmentId/:reservaId", cancelarReserva)
   
 ;
