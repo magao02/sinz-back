@@ -62,7 +62,8 @@ const getReservationsByDate = async (req, res) => {
 
     for (let reserva of reservas) {
       const reservax = {
-    id: reserva._id.toString(),
+        id: reserva._id.toString(),
+        apt: apt.urlApt,
     dataChegada: formatDate(reserva.dataChegada),
     dataSaida: formatDate(reserva.dataSaida),
     horarioChegada: reserva.horarioChegada,

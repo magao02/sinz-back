@@ -24,6 +24,10 @@ module.exports = {
       for (let otherReserva of reservas) {
         const otherChegada = createDateTime(otherReserva.dataChegada, otherReserva.horarioChegada);
         const otherSaida = createDateTime(otherReserva.dataSaida, otherReserva.horarioSaida);
+        if (otherReserva.cancelled) {
+          // reserva cancelada não conta
+          continue;
+        }
         if (chegada > otherChegada) {
           // essa reserva inicia apos a outra,
           // então é invalida se essa inicia antes da outra acabar
