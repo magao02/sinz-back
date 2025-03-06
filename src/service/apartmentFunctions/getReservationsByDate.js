@@ -31,14 +31,7 @@ const getReservationsByDate = async (req, res) => {
 
   const dataEscolhida = req.params.urlUser ? new Date(req.params.urlUser) : new Date();
 
-  let apts = await Apartment.find({
-  "reservas": {
-  $elemMatch: {
-    "dataChegada": { $lte: dataEscolhida },
-    "dataSaida": { $gte: dataEscolhida }
-  }
-}
-  });
+  let apts = await Apartment.find();
 
   if (!apts) {
     return res
@@ -46,17 +39,12 @@ const getReservationsByDate = async (req, res) => {
       .json({ message: "Apartamento não encontrado." });
   }
   const aptsData = [];
-  console.log(apts);
 
 
   for (let apt of apts) {
 
-    console.log(apt.reservas);
-    const reservasFiltradas = apt.reservas.filter(reserva => 
-  new Date(reserva.dataChegada) <= dataEscolhida &&
-  new Date(reserva.dataSaida) >= dataEscolhida
-);
-    console.log(apt.reservas);
+    const reservasFiltradas = apt.reservas
+
     const reservas = reservasFiltradas ?? [];
 
 
