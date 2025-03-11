@@ -71,8 +71,13 @@ async function createUser(req, res) {
     let urlUser = await createURL(name);
 
     try {
-      nascimento = await formataData(nascimento);
-      emissao = await formataData(emissao);
+      if (nascimento !== undefined && nascimento !== "") {
+        nascimento = await formataData(nascimento);
+      }
+
+      if (emissao !== undefined && emissao !== "") {
+        emissao = await formataData(emissao);
+      }
 
       if (dataAfiliacao !== undefined && dataAfiliacao !== "") {
         dataAfiliacao = await formataData(dataAfiliacao);
@@ -84,6 +89,7 @@ async function createUser(req, res) {
         dataRegistroConselho = await formataData(dataRegistroConselho);
       }
     } catch (err) {
+      console.log(err)
       return res
         .status(HTTP_CODE_BAD_REQUEST)
         .json(
@@ -91,7 +97,7 @@ async function createUser(req, res) {
         );
     }
 
-    if (rg !== "") {
+    if (rg !== "" & rg  !== undefined) {
       if (!validacaoRG(rg)) {
         return res.status(HTTP_CODE_BAD_REQUEST).json({
           message:
@@ -100,7 +106,7 @@ async function createUser(req, res) {
       }
     }
 
-    if (telefone !== "") {
+    if (telefone !== "" & telefone  !== undefined) {
       if (!validacaoTelefone(telefone)) {
         return res.status(HTTP_CODE_BAD_REQUEST).json({
           message:
