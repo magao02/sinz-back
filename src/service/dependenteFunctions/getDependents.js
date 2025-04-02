@@ -48,7 +48,7 @@ async function getDependents(req, res) {
               "/" +
               dep.emissao.getFullYear()
             : "",
-        parentesco: dep.parentesco,
+        
       });
     }
 

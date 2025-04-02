@@ -45,11 +45,6 @@ async function signUpDep(req, res) {
     }
   }
 
-  if (isStringBlank(parentesco)) {
-    return res
-      .status(HTTP_CODE_BAD_REQUEST)
-      .json({ message: "Preencha o campo de parentesco do Dependente." });
-  }
 
   if (req.user.admin || user._id.equals(req.userId)) {
     var temporalUrl = name
@@ -96,7 +91,6 @@ async function signUpDep(req, res) {
         cpf,
         rg,
         emissao,
-        parentesco,
         urlDep,
         idAssociado: user._id,
       });

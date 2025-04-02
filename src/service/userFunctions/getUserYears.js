@@ -12,7 +12,12 @@ async function getUserYears(req, res) {
       .json({ message: "Perfil não encontrado." });
   }
 
-  let impostos = await Imposto.find({ idUser: user._id });
+  let impostos = await Imposto.find({ 
+  $or: [
+    { idUser: user._id }, 
+    { idUser: user.oldId }
+  ] 
+});
 
   let anos = [];
 

@@ -42,6 +42,10 @@ const UserSchema = new Schema(
       required: true,
       unique: [true, "CPF já cadastrado."],
     },
+    oldId: {
+      type: String,
+      required: false,
+    },
     rg: {
       type: String,
       sparse: true,

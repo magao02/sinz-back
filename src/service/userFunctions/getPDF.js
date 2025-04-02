@@ -23,12 +23,21 @@ async function getPDF(req, res) {
       let impRendaDeps = [];
       let dep;
       let depDTO;
+      
 
-      let impostosDoUser = await Imposto.find({ idUser: user._id });
+      let impostosDoUser = await Imposto.find({ 
+  $or: [
+    { idUser: user._id }, 
+    { idUser: user.oldId }
+  ] 
+});
       for (let i = 0; i < impostosDoUser.length; i++) {
         if (impostosDoUser[i].ano === +req.params.ano) {
           var impostoAtualUser = await Imposto.find({
-            idUser: user.id,
+            $or: [
+    { idUser: user._id }, 
+    { idUser: user.oldId }
+  ] ,
             ano: +req.params.ano,
           });
           break;

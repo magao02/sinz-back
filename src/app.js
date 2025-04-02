@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 
 app.use('/', homePageRoutes);
 app.use('/user', UserRoutes);
-// app.use('/imposto', ImpostoRoutes);
+app.use('/imposto', ImpostoRoutes);
 app.use('/dependente', DependenteRoutes);
 app.use("/apartment", apartmentRoutes);
 app.use("/recreationArea", recreationAreaRoutes);

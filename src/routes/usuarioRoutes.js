@@ -7,9 +7,9 @@ const upload = require('../middlewares/Multer');
 //USER
 router.get('/getUser/:urlUser', allowPendingSignup, auth.authorizeUser, UserController.userPage);
 
-// router.get('/getPDF/:urlUser/:ano', auth.authorizeUser, UserController.getPDF);
+router.get('/getPDF/:urlUser/:ano', auth.authorizeUser, UserController.getPDF);
 
-// router.get('/getUserYears/:urlUser', auth.authorizeUser, UserController.getUserYears);
+router.get('/getUserYears/:urlUser', auth.authorizeUser, UserController.getUserYears);
 
 router.get('/getUsers', auth.authorizeUser, UserController.getUsers);
 
