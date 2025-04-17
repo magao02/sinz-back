@@ -29,6 +29,7 @@ async function signUpDep(req, res) {
   }
 
   let { name, nascimento, cpf, rg, emissao, parentesco } = req.body;
+  console.log(req.body);
 
   if (isStringBlank(name)) {
     return res

@@ -1,7 +1,7 @@
 const Apartment = require("../../model/Apartment");
 const { HTTP_CODE_OK, HTTP_CODE_BAD_REQUEST } = require("../../utils/httpStatus");
 const getImageUrl = require("../../utils/getImageUrl");
-const { isReservationValid, validaData, validaHorario, createDateTime, calculaProximaReserva, formatReserva } = require("../../utils/reservation");
+const { isReservationValid, validaData, validaHorario, createDateTime, calculaProximaReserva, formatReserva, temReservaHoje  } = require("../../utils/reservation");
 const { DateTime } = require("luxon");
 
 async function getAllApartments(req, res) {
@@ -46,7 +46,7 @@ async function getAllApartments(req, res) {
       animais: apt.animais,
       pictures,
       // o apartamento está reservado se uma reserva feita agora é invalida
-      reservado: !isReservationValid(reservaAgora, apt.reservas),
+      reservado: temReservaHoje( apt.reservas),
       closestReserva: closestReserva ? formatReserva(closestReserva) : undefined,
       nextClosestReserva: nextClosestReserva ? formatReserva(nextClosestReserva) : undefined,
     };

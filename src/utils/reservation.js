@@ -14,9 +14,11 @@ function createDateTime(date, horario) {
   return date.set({ hours, minutes });
 }
 
+
 module.exports = {
   createDateTime,
   isReservationValid(reserva, reservas) {
+    
     try {
       const chegada = reserva.chegada ?? createDateTime(reserva.dataChegada, reserva.horarioChegada);
       const saida = reserva.saida ?? createDateTime(reserva.dataSaida, reserva.horarioSaida);
@@ -24,6 +26,10 @@ module.exports = {
       for (let otherReserva of reservas) {
         const otherChegada = createDateTime(otherReserva.dataChegada, otherReserva.horarioChegada);
         const otherSaida = createDateTime(otherReserva.dataSaida, otherReserva.horarioSaida);
+        console.log("otherChegada", otherChegada.toString());
+        console.log("otherSaida", otherSaida.toString());
+        console.log("chegada", chegada.toString());
+        console.log("saida", saida.toString());
         if (otherReserva.cancelled) {
           // reserva cancelada não conta
           continue;
@@ -107,6 +113,9 @@ module.exports = {
 
     return [closestReserva, nextClosestReserva];
   },
+
+  
+
   formatReserva(reserva) {
     function formatDate(date) {
       return date.getUTCDate().toString().padStart(2, '0') + "/" + (date.getUTCMonth() + 1).toString().padStart(2, '0') + "/" + date.getUTCFullYear();
@@ -119,5 +128,19 @@ module.exports = {
   dayDifference(date1, date2) {
     const oneDay = 24 * 60 * 60 * 1000;
     return Math.round(Math.abs((date2 - date1) / oneDay));
+  },
+
+  temReservaHoje(reservas) {
+    const hoje = DateTime.now().setZone("America/Fortaleza");
+    return reservas.some(reserva => {
+    const chegada = createDateTime(reserva.dataChegada, reserva.horarioChegada);
+    const saida = createDateTime(reserva.dataSaida, reserva.horarioSaida);
+
+    return hoje >= chegada && hoje <= saida;
+  });
+
+    
+
+  
   },
 };
