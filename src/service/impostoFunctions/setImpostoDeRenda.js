@@ -19,13 +19,21 @@ async function setImpostoDeRenda(req, res) {
     }
 
     let impostoDeRenda = req.body;
-    let impostos = await Imposto.find({ idUser: user._id });
+    let impostos = await Imposto.find({ 
+  $or: [
+    { idUser: user._id }, 
+    { idUser: user.oldId }
+  ] 
+});
 
     //Seleciona o imposto do ano correto.
     for (var i = 0; i < impostos.length; i++) {
       if (impostos[i].ano === +req.params.ano) {
         var antigoImposto = await Imposto.find({
-          idUser: user.id,
+          $or: [
+    { idUser: user._id }, 
+    { idUser: user.oldId }
+  ] ,
           ano: +req.params.ano,
         });
         break;
@@ -42,7 +50,7 @@ async function setImpostoDeRenda(req, res) {
 
     try {
       const novoImposto = await Imposto.updateOne(
-        { idUser: user.id, ano: +req.params.ano },
+        { idUser: { $in: [user.id, user.oldId] }, ano: +req.params.ano },
         {
           $set: {
             janeiro:
