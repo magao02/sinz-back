@@ -1,4 +1,4 @@
-FROM node:12.18.3
+FROM node:18
 WORKDIR ./backend-node
 COPY . .
 RUN npm install --only=prod
