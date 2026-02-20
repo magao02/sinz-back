@@ -14,10 +14,13 @@ module.exports = {
         await client.putObject({
             Bucket: process.env.AWS_BUCKET_NAME,
             Key: key,
-            ACL: 'public-read',
+            
             Body: buffer,
             ContentType: contentType ? contentType : undefined,
         }).promise();
+
+        console.log(`File saved to S3 with key: ${key}`);
+        console.log(`Accessible at: ${process.env.AWS_BUCKET_URL + key}`);
 
         return {
             url: process.env.AWS_BUCKET_URL + key,
