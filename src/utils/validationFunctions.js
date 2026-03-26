@@ -1,6 +1,5 @@
 function validacaoPassword(password) {
-  var padraoSenha = /^[a-zA-Z0-9]{8,}$/;
-  return padraoSenha.test(password);
+  return true
 }
 
 function validacaoRG(rg) {
