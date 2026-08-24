@@ -12,6 +12,10 @@ const LivroCaixaSchema = new Schema(
       type: Number,
       required: true,
     },
+    tipo: {
+      type: String,
+      required: true,
+    },
     urlImagem: {
       type: String,
       required: false,

@@ -8,7 +8,7 @@ const S3Storage = require("../../utils/S3Storage");
 
 const createLivroCaixa = async (req, res) => {
   if (req.user.admin) {
-    const { mes, ano } = req.body;
+    const { mes, ano, tipo } = req.body;
     let obj = { url: "" };
 
     if (req.file) {
@@ -46,6 +46,7 @@ const createLivroCaixa = async (req, res) => {
       const livroCaixa = await LivroCaixa.create({
         mes,
         ano,
+        tipo,
         urlImagem: obj.url,
       });
       return res.status(HTTP_CODE_OK).json({
